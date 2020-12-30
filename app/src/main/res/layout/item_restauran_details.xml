@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:layoutDirection="rtl">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="328dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:cardCornerRadius="10dp"
+        android:layoutDirection="rtl"
+        android:layout_marginTop="12dp">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layoutDirection="rtl">
+
+
+            <ImageView
+                android:id="@+id/restaurant_main_image_view_restaurant_details_item"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                android:id="@+id/restaurant_logo_image_view_restaurant_item"
+                android:layout_width="87dp"
+                android:layout_height="67dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+            <!--  SET THE KOSHER AT THE SIDE OF THE PICTURE    -->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="24dp"-->
+<!--                android:background="@drawable/kasher_background"-->
+<!--                android:gravity="center"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
+
+
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:fontFamily="@font/arimo_regular"-->
+<!--                    android:text="כשר"-->
+<!--                    android:textColor="@color/white"-->
+<!--                    android:textSize="10sp" />-->
+
+
+<!--            </LinearLayout>-->
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:background="@drawable/full_address_background_restaurant_item"
+                android:gravity="right"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/restaurant_main_image_view_restaurant_details_item"
+                android:layoutDirection="rtl">
+
+
+                <TextView
+                    android:id="@+id/restaurant_name_text_view_restaurant_detail_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="4dp"
+                    android:fontFamily="@font/assistant_bold"
+                    android:text="שם המסעדה |"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+
+
+                <TextView
+                    android:id="@+id/full_address_text_view_restaurant_detail_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="12dp"
+                    android:fontFamily="@font/assistant_regular"
+                    android:text="כתובת מלאה"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linear_layout_restaurant_details_area_with_icons_restaurant_detail_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/restaurant_main_image_view_restaurant_details_item"
+                android:padding="8dp"
+                android:layoutDirection="rtl">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layoutDirection="rtl">
+
+
+                    <ImageView
+                        android:layout_width="9dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/ic_filter_locator"
+                        android:layout_marginLeft="2dp"/>
+
+                    <TextView
+                        android:id="@+id/distance_from_user_restaurant_detail_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2.17"
+                        android:layout_marginRight="2dp"
+                        android:fontFamily="@font/assistant_light"
+                        android:textColor="@color/custom_blue"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ק״מ"
+                        android:layout_marginRight="2dp"
+                        android:fontFamily="@font/assistant_light"
+                        android:textColor="@color/custom_blue"/>
+
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#f2be42"
+                        android:layout_marginRight="4dp"/>
+
+
+
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layoutDirection="rtl">
+
+
+                    <ImageView
+                        android:layout_width="9dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/ic_filter_take_away"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"/>
+
+
+                    <TextView
+                        android:id="@+id/delivery_amount_restaurant_detail_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10"
+                        android:layout_marginRight="2dp"
+                        android:fontFamily="@font/assistant_light"
+                        android:textColor="@color/custom_blue"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₪"
+                        android:layout_marginRight="2dp"
+                        android:fontFamily="@font/assistant_light"
+                        android:textColor="@color/custom_blue"/>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#f2be42"
+                        android:layout_marginRight="4dp"/>
+
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layoutDirection="rtl">
+
+
+                    <ImageView
+                        android:layout_width="9dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/ic_filter_delivery_time"
+                        app:tint="@color/custom_blue"
+                        android:layout_marginRight="2dp"
+                        android:layout_marginLeft="2dp"/>
+
+                    <TextView
+                        android:id="@+id/delivery_time_restaurant_detail_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="40-60"
+                        android:layout_marginRight="2dp"
+                        android:fontFamily="@font/assistant_light"
+                        android:textColor="@color/custom_blue"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="דקות"
+                        android:layout_marginRight="2dp"
+                        android:fontFamily="@font/assistant_light"
+                        android:textColor="@color/custom_blue"/>
+
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#f2be42"
+                        android:layout_marginRight="4dp"/>
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layoutDirection="rtl">
+
+
+                    <ImageView
+                        android:layout_width="9dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/filter_shekel_logo"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"/>
+
+
+                    <TextView
+                        android:id="@+id/min_to_deliver_amount_restaurant_detail_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="60"
+                        android:layout_marginRight="2dp"
+                        android:fontFamily="@font/assistant_light"
+                        android:textColor="@color/custom_blue"/>
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="₪"
+                        android:layout_marginRight="2dp"
+                        android:fontFamily="@font/assistant_light"
+                        android:textColor="@color/custom_blue"/>
+
+
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#f2be42"
+                        android:layout_marginRight="4dp"/>
+
+
+
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layoutDirection="rtl">
+
+
+                    <ImageView
+                        android:layout_width="9dp"
+                        android:layout_height="10dp"
+                        android:src="@drawable/ic_filter_recommendation"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"/>
+
+                    <TextView
+                        android:id="@+id/avg_restaurant_feedback_text_view_restaurant_detail_item"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="9"
+                        android:layout_marginRight="2dp"
+                        android:fontFamily="@font/assistant_light"
+                        android:textColor="@color/custom_blue"/>
+
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linear_layout_restaurant_details_area_with_icons_restaurant_detail_item"
+                android:layout_marginBottom="12dp"
+                android:layoutDirection="rtl">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/virtual_coin_user" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:fontFamily="@font/assistant_light"
+                    android:text="צברו 25% לקרדיט להזמנה הבאה"
+                    android:textColor="@color/custom_blue"
+                    android:textSize="12sp" />
+
+
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+</LinearLayout>

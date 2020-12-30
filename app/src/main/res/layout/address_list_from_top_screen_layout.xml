@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/filter_background_layout"
+    android:layoutDirection="rtl">
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout_head_area_address_list_from_to_screen_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:gravity="right"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageButton
+            android:id="@+id/open_my_address_pop_up_image_btn_address_pop_up_window"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginRight="14dp"
+            android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
+            android:backgroundTint="@color/custom_blue"
+            android:rotation="180" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="8dp"
+            android:fontFamily="@font/assistant_bold"
+            android:text="רוצה להזמין"
+            android:textColor="@color/custom_blue" />
+
+
+    </LinearLayout>
+
+
+    <RadioGroup
+        android:id="@+id/way_of_delivery_radio_group_address_list_pop_up_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:layoutDirection="rtl"
+
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout_head_area_address_list_from_to_screen_layout">
+
+
+        <RadioButton
+            android:id="@+id/delivery_way_to_deliver_radio_btn_address_list_pop_up_window"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:button="@drawable/radio_button_inset"
+            android:checked="true"
+            android:drawableRight="@drawable/ic_icon_delivery_top_screen"
+            android:drawablePadding="24dp"
+            android:fontFamily="@font/assistant_regular"
+            android:background="@drawable/radio_button_background_top_screen_customize"
+            android:layoutDirection="rtl"
+            android:paddingRight="18dp"
+            android:text="משלוח"
+            android:textColor="@color/custom_blue"
+            android:textSize="13sp" />
+
+
+        <RadioButton
+            android:id="@+id/self_take_way_to_deliver_radio_btn_address_list_pop_up_window"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:layout_marginTop="8dp"
+            android:button="@drawable/radio_button_inset"
+            android:checked="false"
+            android:drawableRight="@drawable/ic_self_take_icon"
+            android:drawablePadding="24dp"
+            android:fontFamily="@font/assistant_regular"
+            android:background="@drawable/radio_button_background_top_screen_customize"
+            android:layoutDirection="rtl"
+            android:paddingRight="18dp"
+            android:text="איסוף עצמי"
+            android:textColor="@color/custom_blue"
+            android:textSize="13sp" />
+
+
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/address_list_head_line_text_view_address_list_pop_up_window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="42dp"
+        android:fontFamily="@font/assistant_bold"
+        android:text="כתובת למשלוח"
+        android:textColor="@color/custom_blue"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/way_of_delivery_radio_group_address_list_pop_up_window" />
+
+
+    <RadioGroup
+        android:id="@+id/list_of_address_radio_group_address_list_pop_up_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/address_list_head_line_text_view_address_list_pop_up_window">
+
+
+        <RadioButton
+            android:id="@+id/my_location_address_to_deliver_radio_btn_address_list_pop_up_window"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:button="@drawable/radio_button_inset"
+            android:checked="true"
+            android:drawableRight="@drawable/ic_icon_my_location"
+            android:drawablePadding="24dp"
+            android:fontFamily="@font/assistant_regular"
+            android:background="@drawable/radio_button_background_top_screen_customize"
+            android:layoutDirection="rtl"
+            android:paddingRight="18dp"
+            android:text="מיקום נוכחי"
+            android:textColor="@color/custom_blue"
+            android:textSize="13sp" />
+
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/first_address_address_to_deliver_radio_btn_address_list_pop_up_window"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="27dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:button="@drawable/radio_button_inset"-->
+<!--            android:checked="false"-->
+<!--            android:drawableRight="@drawable/ic_icon_placeholder_small"-->
+<!--            android:drawablePadding="24dp"-->
+<!--            android:fontFamily="@font/assistant_regular"-->
+<!--            android:layoutDirection="rtl"-->
+<!--            android:paddingRight="18dp"-->
+<!--            android:text="כתובת ראשונה"-->
+<!--            android:textColor="@color/custom_blue"-->
+<!--            android:textSize="13sp"-->
+<!--            android:background="@drawable/radio_button_background_top_screen_customize" />-->
+
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/add_address_to_deliver_radio_btn_address_list_pop_up_window"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="27dp"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:button="@drawable/radio_button_inset"-->
+<!--            android:checked="false"-->
+<!--            android:drawableRight="@drawable/ic_icon_add_button"-->
+<!--            android:drawablePadding="24dp"-->
+<!--            android:fontFamily="@font/assistant_regular"-->
+<!--            android:layoutDirection="rtl"-->
+<!--            android:paddingRight="18dp"-->
+<!--            android:text="אני כרגע בכתובת אחרת"-->
+<!--            android:textColor="@color/custom_blue"-->
+<!--            android:textSize="13sp"-->
+<!--            android:background="@drawable/radio_button_background_top_screen_customize" />-->
+
+    </RadioGroup>
+
+
+    <Button
+        android:id="@+id/save_btn_address_list_pop_up_window"
+        android:layout_width="168dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginBottom="42dp"
+        android:background="@drawable/btn_sign_in_clicked_background"
+        android:fontFamily="@font/assistant_bold"
+        android:text="שמירה"
+        android:textColor="@drawable/btn_sign_in_clicked_text_view_opposite"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_of_address_radio_group_address_list_pop_up_window" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

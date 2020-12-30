@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="100dp"
+    android:layoutDirection="rtl">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        android:id="@+id/type_constrain_layout_restaurant_type_item"
+        android:layoutDirection="rtl">
+
+        <ImageView
+            android:id="@+id/oval_image_view_restaurant_type_item"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_oval_empty"/>
+
+
+
+        <ImageView
+            android:id="@+id/type_image_view_restaurant_type_item"
+            android:layout_width="32dp"
+            android:layout_height="35dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_chicken_type"/>
+
+
+        <TextView
+            android:id="@+id/name_of_type_text_view_restaurant_type_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="נשנושים"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/oval_image_view_restaurant_type_item"
+            android:textSize="12sp"
+            android:textColor="@color/custom_blue"
+            android:fontFamily="@font/assistant_semibold"
+            android:visibility="invisible"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+
+
+
+
+
+
+</LinearLayout>

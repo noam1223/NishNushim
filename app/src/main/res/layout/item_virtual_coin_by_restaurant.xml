@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:orientation="vertical"
+    android:layoutDirection="rtl">
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout_virtual_coin_by_restaurant_item"
+        android:layout_width="89dp"
+        android:layout_height="80dp"
+        android:background="@drawable/background_virtual_coin_user"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layoutDirection="rtl">
+
+
+        <ImageView
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:src="@drawable/virtual_coin_user" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/assistant_semibold"
+            android:text="10.00"
+            android:textColor="@color/custom_blue"
+            android:textSize="13sp"/>
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/restaurant_virtual_coin_name_text_view_virtual_coin_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/assistant_regular"
+        android:gravity="center"
+        android:text="שם המסעדה"
+        android:textColor="@color/custom_blue"
+        android:textSize="8sp"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout_virtual_coin_by_restaurant_item"
+        android:layout_marginTop="4dp"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

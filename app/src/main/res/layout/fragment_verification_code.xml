@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sign_in_fragment_background_rounded"
+    android:orientation="vertical"
+    tools:context=".fragments.signinfragment.VerificationCodeFragment"
+    android:layoutDirection="rtl">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="81dp"
+        android:fontFamily="@font/assistant_bold"
+        android:text="אימות טלפון"
+        android:textColor="#002144"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="47dp"
+        android:fontFamily="@font/assistant_regular"
+        android:text="הזינו את קוד האימות שנשלח למכשיר שמספרו"
+        android:textColor="#002144"
+        android:textSize="12sp" />
+
+
+    <TextView
+        android:id="@+id/phone_number_text_view_verification_code_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/assistant_regular"
+        android:text="050"
+        android:textColor="#002144"
+        android:textSize="12sp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginRight="16dp"
+        android:layoutDirection="rtl">
+
+
+        <com.example.nishnushim.helpUIClass.PinEntryEditText
+            android:id="@+id/pin_entry_edit_text_verification_code_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cursorVisible="true"
+            android:digits="1234567890"
+            android:fontFamily="@font/assistant_regular"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textColor="@color/custom_blue"
+            android:textIsSelectable="false"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layoutDirection="rtl">
+
+
+        <ProgressBar
+            android:id="@+id/progress_bar_verification_code_fragment"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/verify_code_btn_verification_code_fragment"
+            app:layout_constraintTop_toTopOf="@+id/verify_code_btn_verification_code_fragment" />
+
+        <Button
+            android:id="@+id/verify_code_btn_verification_code_fragment"
+            android:layout_width="168dp"
+            android:layout_height="33dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/btn_sign_in_clicked_background"
+            android:fontFamily="@font/assistant_bold"
+            android:text="אישור"
+            android:textColor="@drawable/btn_sign_in_clicked_text_view_opposite"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="38dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:fontFamily="@font/assistant_regular"
+            android:text="שלחו שוב"
+            android:textColor="@color/custom_red"
+            android:textSize="12sp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/assistant_regular"
+            android:text="לא קיבלתי קוד אימות."
+            android:textColor="#002144"
+            android:textSize="12sp"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

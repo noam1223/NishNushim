@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".nishnushFragments.NishnushinAnonymousUserFragment"
+    android:layoutDirection="rtl">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layoutDirection="rtl">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constrain_layout_up_coin_nishnushim_anonymous_user_fragment"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="16dp"
+            android:layoutDirection="rtl">
+
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_credit_coin" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/assistant_bold"
+                android:text="20"
+                android:textColor="@color/custom_blue"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linear_layout_nishnushin_title_area_anonymous_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/constrain_layout_up_coin_nishnushim_anonymous_user_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="parent"
+            android:layoutDirection="rtl">
+
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/ic_yellow_chicken_logo" />
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layoutDirection="rtl">
+
+
+                <ImageView
+                    android:layout_width="164dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_nishnushim" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/assistant_regular"
+                    android:letterSpacing="0.09"
+                    android:text="פשוט להזמין משלוח"
+                    android:textColor="@color/custom_blue"
+                    android:textSize="17sp" />
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/linear_layout_nishnushin_title_area_anonymous_fragment"
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout_nishnushin_title_area_anonymous_fragment"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="16dp"
+            android:layoutDirection="rtl">
+
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_credit_coin" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/assistant_bold"
+                android:text="20"
+                android:textColor="@color/custom_blue"
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="@+id/linear_layout_nishnushin_title_area_anonymous_fragment"
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout_nishnushin_title_area_anonymous_fragment"
+            android:layout_marginRight="8dp"
+            android:layoutDirection="rtl">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_credit_coin" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/assistant_bold"
+                android:text="20"
+                android:textColor="@color/custom_blue"
+                android:textSize="9sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    <Button
+        android:id="@+id/phone_sign_in_nishnushim_anonymous_user_fragment"
+        android:layout_width="168dp"
+        android:layout_height="33dp"
+        android:background="@drawable/yellow_rounded_custom_btn"
+        android:fontFamily="@font/assistant_bold"
+        android:text="המשך"
+        android:textColor="@color/browser_actions_text_color"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"/>
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="או דרך רשתות חברתיות"
+        android:layout_marginTop="38dp"
+        android:fontFamily="@font/assistant_regular"
+        android:textSize="12sp"
+        android:textColor="@color/custom_blue"/>
+
+
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="6dp"
+        android:layoutDirection="rtl">
+
+
+        <ImageView
+            android:id="@+id/google_sign_in_anishnushim_anonymous_user_fragment"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:src="@drawable/ic_google_plus"
+            android:layout_marginLeft="24dp"/>
+
+
+        <ImageView
+            android:id="@+id/facebook_sign_in_anishnushim_anonymous_user_fragment"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:src="@drawable/ic_facebook" />
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

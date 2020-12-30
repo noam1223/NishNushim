@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.signinfragment.AddressDetailsFragment"
+    android:background="@drawable/sign_in_fragment_background_rounded"
+    android:orientation="vertical"
+    android:layoutDirection="rtl">
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="כתובת חדשה"
+        android:layout_marginTop="81dp"
+        android:textSize="16sp"
+        android:textColor="@color/custom_blue"
+        android:layout_gravity="center"
+        android:fontFamily="@font/assistant_bold"/>
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="יש להזין כתובת אחרת למשלוח"
+        android:layout_marginTop="46dp"
+        android:textSize="12sp"
+        android:textColor="@color/custom_blue"
+        android:layout_gravity="center"
+        android:fontFamily="@font/assistant_regular"/>
+
+
+
+    <EditText
+        android:id="@+id/city_address_edit_text_address_details_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="46dp"
+        android:layout_marginRight="46dp"
+        android:hint="עיר"
+        android:fontFamily="@font/assistant_regular"
+        android:textColorHint="@color/custom_blue"
+        android:paddingBottom="24dp"/>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center"
+        android:layoutDirection="rtl">
+
+
+        <EditText
+            android:id="@+id/street_address_edit_text_address_details_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="רחוב"
+            android:fontFamily="@font/assistant_regular"
+            android:textColorHint="@color/custom_blue"
+            android:paddingBottom="24dp"
+            android:layout_weight="1" />
+
+
+
+
+        <EditText
+            android:id="@+id/number_street_address_edit_text_address_details_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="מספר"
+            android:fontFamily="@font/assistant_regular"
+            android:textColorHint="@color/custom_blue"
+            android:paddingBottom="24dp"
+            android:layout_weight="0.5" />
+
+
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/save_first_address_btn_address_manually_activity"
+        android:layout_width="168dp"
+        android:layout_height="33dp"
+        android:background="@drawable/btn_sign_in_clicked_background"
+        android:textColor="@drawable/btn_sign_in_clicked_text_view"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:text="שמירה"
+        android:fontFamily="@font/assistant_bold"
+        android:textSize="16sp"/>
+
+
+
+</LinearLayout>

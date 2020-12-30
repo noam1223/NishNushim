@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".nishnushFragments.RestaurantsFragment"
+    android:layoutDirection="rtl">
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout_open_restaurants_text_views_area_restaurants_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:orientation="horizontal"
+        android:gravity="right"
+        android:layout_marginTop="12dp"
+        android:layoutDirection="rtl">
+
+
+        <TextView
+            android:id="@+id/number_of_open_restaurants_text_view_restaurant_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/custom_blue"
+            android:fontFamily="@font/assistant_regular"
+            android:text="כמות מסעדות פתוחות כרגע "
+            android:layout_marginRight="18dp"/>
+
+
+        <TextView
+            android:id="@+id/average_delivery_time_text_view_restaurants_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:fontFamily="@font/assistant_regular"
+            android:textColor="@color/custom_red"
+            android:text="(זמן משלוח)"/>
+
+
+
+
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/restaurant_details_recycler_view_restaurants_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linear_layout_open_restaurants_text_views_area_restaurants_fragment"
+        android:layout_marginTop="16dp"/>
+
+
+</RelativeLayout>

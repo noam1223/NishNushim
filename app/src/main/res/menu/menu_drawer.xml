@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:id="@+id/profile_detail_menu_item"
+        android:title="פרטים אישיים"/>
+
+    <item android:id="@+id/address_list_menu_item"
+        android:title="הכתובות שלי"/>
+
+    <item android:id="@+id/credit_cards_list_menu_item"
+        android:title="אמצעי תשלום"/>
+
+    <item android:id="@+id/question_answers_menu_item"
+        android:title="שאלות ותשובות"/>
+
+    <item android:id="@+id/contact_us_menu_item"
+        android:title="צרו קשר"/>
+
+    <item android:id="@+id/app_share_menu_item"
+        android:title="שתפו"/>
+
+    <item android:id="@+id/rate_menu_item"
+        android:title="דרגו אותנו" />
+
+
+</menu>

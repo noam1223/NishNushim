@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/filter_background_layout"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="46dp"
+        android:fontFamily="@font/arimo_bold"
+        android:text="סידור לפי:"
+        android:textColor="@color/custom_blue"
+        android:textSize="12sp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/time_delivery_filter_pop_up_window"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginLeft="32dp"
+                android:background="@drawable/filter_image_btn_selector"
+                android:drawableTop="@drawable/ic_filter_delivery_time"
+                android:drawableTint="@color/custom_blue"
+                android:fontFamily="@font/assistant_bold"
+                android:gravity="center"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="זמן משלוח"
+                android:textAlignment="gravity"
+                android:textColor="@drawable/btn_sign_in_clicked_text_view"
+                android:textSize="12sp" />
+
+
+            <Button
+                android:id="@+id/distance_filter_pop_up_window"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginLeft="32dp"
+                android:background="@drawable/filter_image_btn_selector"
+                android:drawableTop="@drawable/ic_filter_locator"
+                android:fontFamily="@font/assistant_bold"
+                android:gravity="center"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="מרחק ממני"
+                android:textAlignment="gravity"
+                android:textColor="@drawable/btn_sign_in_clicked_text_view"
+                android:textSize="12sp" />
+
+
+            <Button
+                android:id="@+id/min_amount_for_delivery_filter_pop_up_window"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/filter_image_btn_selector"
+                android:drawableTop="@drawable/filter_shekel_logo"
+                android:fontFamily="@font/assistant_bold"
+                android:gravity="center"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="מינימום"
+                android:textAlignment="gravity"
+                android:textColor="@drawable/btn_sign_in_clicked_text_view"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="36dp"
+            android:gravity="center"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal">
+
+
+            <Button
+                android:id="@+id/delivery_amount_filter_pop_up_window"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/filter_image_btn_selector"
+                android:drawableTop="@drawable/ic_filter_take_away"
+                android:fontFamily="@font/assistant_bold"
+                android:gravity="center"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="דמי משלוח"
+                android:textAlignment="gravity"
+                android:textColor="@drawable/btn_sign_in_clicked_text_view"
+                android:textSize="12sp" />
+
+
+            <Button
+                android:id="@+id/credits_filter_pop_up_window"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/filter_image_btn_selector"
+                android:drawableTop="@drawable/ic_filter_chicken"
+                android:fontFamily="@font/assistant_bold"
+                android:gravity="center"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="קרדיטים"
+                android:textAlignment="gravity"
+                android:textColor="@drawable/btn_sign_in_clicked_text_view"
+                android:textSize="12sp" />
+
+
+            <Button
+                android:id="@+id/recommendation_filter_pop_up_window"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:background="@drawable/filter_image_btn_selector"
+                android:drawableTop="@drawable/ic_filter_recommendation"
+                android:fontFamily="@font/assistant_bold"
+                android:gravity="center"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="המלצות"
+                android:textAlignment="gravity"
+                android:textColor="@drawable/btn_sign_in_clicked_text_view"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:background="@drawable/search_background_layout">
+
+    <EditText
+        android:id="@+id/edit_text_search_restaurant_by_string_search_pop_up_window"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@color/custom_yellow"
+        android:cursorVisible="true"
+        android:layoutDirection="rtl"
+        android:hint="חיפוש"
+        android:drawableRight="@drawable/ic_baseline_close"
+        android:textColorHint="@color/custom_blue"
+        android:fontFamily="@font/assistant_regular"
+        android:textDirection="rtl"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        android:paddingRight="26dp"
+        android:visibility="visible"
+        android:maxLines="1"/>
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout_search_area_search_pop_up_window"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layoutDirection="rtl"
+        android:gravity="center">
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout_search_logo_area_search_pop_up_window_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:visibility="visible">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="מה באלך לנשנש?"
+        android:textColor="@color/custom_blue"
+        android:fontFamily="@font/assistant_bold"
+        android:textSize="16sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
+        />
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/search_chicken_logo"
+        android:layout_marginTop="76dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="36dp"
+        android:layout_marginLeft="18dp"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/results_lists_linear_layout_area_serach_pop_up_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layoutDirection="rtl"
+        android:visibility="gone">
+
+    <ListView
+        android:id="@+id/search_list_view_search_pop_up_window_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:divider="?attr/dividerVertical"/>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:text="היסטוריית חיפושים"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="36dp"
+        android:textSize="14sp"
+        android:textColor="@color/custom_yellow"
+        android:fontFamily="@font/assistant_bold"
+        android:background="#f7f7f7"/>
+
+
+    <ListView
+        android:id="@+id/history_of_search_list_view_search_pop_up_window_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:divider="?attr/dividerVertical"
+        />
+
+    </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

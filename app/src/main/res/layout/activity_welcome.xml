@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F7F7"
+    android:orientation="vertical"
+    tools:context=".WelcomeActivity"
+    android:layoutDirection="rtl">
+
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="106dp"
+        android:src="@drawable/ic_yellow_chicken_logo" />
+
+
+    <ImageView
+        android:layout_width="211dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/ic_nishnushim" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/assistant_regular"
+        android:text="פשוט להזמין משלוח"
+        android:textColor="#002144"
+        android:textSize="17sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="38dp"
+        android:fontFamily="@font/assistant_regular"
+        android:text="ברוכים הבאים"
+        android:textColor="#002144"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="19dp"
+        android:fontFamily="@font/assistant_regular"
+        android:text="אפליקציית משלוחים בפריסה ארצית"
+        android:textColor="#002144"
+        android:textSize="14sp" />
+
+
+    <Button
+        android:id="@+id/sign_in_by_phone_btn_welcome_activity"
+        android:layout_width="168dp"
+        android:layout_height="33dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/yellow_rounded_custom_btn"
+        android:fontFamily="@font/assistant_regular"
+        android:text="טלפון"
+        android:textColor="@color/browser_actions_text_color"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/sign_in_by_guest_text_view_welcome_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/assistant_regular"
+        android:text="אורח"
+        android:textColor="#002144"
+        android:textSize="12sp" />
+
+
+    <View
+        android:layout_width="20dp"
+        android:layout_height="1dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="4.5dp"
+        android:background="#002144" />
+
+
+</LinearLayout>
