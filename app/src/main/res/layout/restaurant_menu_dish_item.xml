@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="18dp"
+    android:layoutDirection="rtl">
+
+
+
+        <TextView
+            android:id="@+id/title_text_view_restaurant_menu_dish_item"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:text="תת כותרת"
+            android:fontFamily="@font/assistant_bold"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:textColor="@color/custom_blue"
+            android:paddingRight="19dp"
+            android:background="@drawable/sub_title_text_view_menu_restaurant_fragment"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dish_detail_recycler_view_restaurant_menu_dish_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layoutDirection="rtl"
+        android:layout_marginTop="10dp"/>
+
+
+
+</LinearLayout>

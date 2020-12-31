@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layoutDirection="rtl"
+    android:background="@drawable/sub_title_menu_background_clicked"
+    android:id="@+id/linear_layout_sub_title_menu_classification_item">
+
+
+
+    <TextView
+        android:id="@+id/sub_title_text_view_menu_classification_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="מבצעים"
+        android:fontFamily="@font/assistant_regular"
+        android:textSize="12sp"
+        android:textColor="@color/custom_blue"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"/>
+
+</LinearLayout>

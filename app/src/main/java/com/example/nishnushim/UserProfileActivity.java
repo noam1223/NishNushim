@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.example.nishnushim.helpclasses.User;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ProfileActivity extends AppCompatActivity {
+public class UserProfileActivity extends AppCompatActivity {
 
     TextView nameTextView, phoneNumberTextView;
     Button logOutBtn;
@@ -20,7 +20,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_user_profile);
 
         auth = FirebaseAuth.getInstance();
 

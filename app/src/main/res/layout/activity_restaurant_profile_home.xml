@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f7f7f7"
+    android:layoutDirection="rtl"
+    tools:context=".RestaurantProfileHomeActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constrain_layout_profile_area_restaurant_profile_home_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/profile_image_view_restaurant_profile_home_activity"
+            android:layout_width="match_parent"
+            android:layout_height="207dp"
+            android:background="#000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/logo_image_view_restaurant_profile_home_activity"
+            android:layout_width="87dp"
+            android:layout_height="67dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.9"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/name_restaurant_text_view_restaurant_profile_home_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/arimo_bold"
+                    android:gravity="right"
+                    android:text="שם המסעדה"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center"
+                    android:layoutDirection="rtl"
+                    android:orientation="horizontal">
+
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_filter_delivery_time" />
+
+
+                    <TextView
+                        android:id="@+id/open_close_hours_text_view_restaurant_profile_home_activity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:drawablePadding="12dp"
+                        android:fontFamily="@font/assistant_regular"
+                        android:gravity="center"
+                        android:text="שעות פתיחה"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/linear_layout_restaurant_details_area_with_icons_restaurant_profile_home_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="9dp"
+                    android:gravity="right"
+                    android:layoutDirection="rtl"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/profile_image_view_restaurant_profile_home_activity">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="9dp"
+                            android:layout_height="10dp"
+                            android:layout_marginLeft="2dp"
+                            android:src="@drawable/ic_filter_locator"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:id="@+id/distance_from_user_restaurant_detail_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="2dp"
+                            android:fontFamily="@font/assistant_light"
+                            android:text="2.17"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="2dp"
+                            android:fontFamily="@font/assistant_light"
+                            android:text="ק״מ"
+                            android:textColor="@color/white" />
+
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="4dp"
+                            android:background="@color/white" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="9dp"
+                            android:layout_height="10dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:src="@drawable/ic_filter_take_away"
+                            app:tint="@color/white" />
+
+
+                        <TextView
+                            android:id="@+id/delivery_amount_restaurant_profile_home_activity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="2dp"
+                            android:fontFamily="@font/assistant_light"
+                            android:text="10"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="2dp"
+                            android:fontFamily="@font/assistant_light"
+                            android:text="₪"
+                            android:textColor="@color/white" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="4dp"
+                            android:background="@color/white" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="9dp"
+                            android:layout_height="10dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:src="@drawable/ic_filter_delivery_time"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:id="@+id/delivery_time_restaurant_profile_home_activity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="2dp"
+                            android:fontFamily="@font/assistant_light"
+                            android:text="40-60"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="2dp"
+                            android:fontFamily="@font/assistant_light"
+                            android:text="דקות"
+                            android:textColor="@color/white" />
+
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="4dp"
+                            android:background="@color/white" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="9dp"
+                            android:layout_height="10dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:src="@drawable/filter_shekel_logo"
+                            app:tint="@color/white" />
+
+
+                        <TextView
+                            android:id="@+id/min_to_deliver_amount_restaurant_profile_home_activity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="2dp"
+                            android:fontFamily="@font/assistant_light"
+                            android:text="60"
+                            android:textColor="@color/white" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="2dp"
+                            android:fontFamily="@font/assistant_light"
+                            android:text="₪"
+                            android:textColor="@color/white" />
+
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="4dp"
+                            android:background="@color/white" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="9dp"
+                            android:layout_height="10dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:src="@drawable/ic_filter_recommendation"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:id="@+id/avg_restaurant_feedback_text_view_restaurant_profile_home_activity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="2dp"
+                            android:fontFamily="@font/assistant_light"
+                            android:text="9"
+                            android:textColor="@color/white" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:gravity="center">
+
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ImageView
+        android:id="@+id/menu_image_view_restaurant_profile_home_activity"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:background="@drawable/ic_oval_empty"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constrain_layout_profile_area_restaurant_profile_home_activity"
+        android:layout_marginRight="47dp"
+        android:layout_marginTop="15dp"/>
+
+
+    <ImageView
+        android:id="@+id/last_orders_made_image_view_restaurant_profile_home_activity"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ic_oval_empty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constrain_layout_profile_area_restaurant_profile_home_activity" />
+
+
+
+    <ImageView
+        android:id="@+id/more_details_image_view_restaurant_profile_home_activity"
+        android:layout_width="43dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/ic_oval_empty"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constrain_layout_profile_area_restaurant_profile_home_activity"
+        android:layout_marginLeft="47dp"/>
+
+
+    <FrameLayout
+        android:id="@+id/nav_host_fragment_restaurant_profile_home_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/last_orders_made_image_view_restaurant_profile_home_activity"
+        android:layout_marginTop="12dp"/>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
