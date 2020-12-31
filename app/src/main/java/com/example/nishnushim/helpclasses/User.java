@@ -8,7 +8,7 @@ public class User implements Serializable {
 
     String name;
     String phoneNumber;
-    List<Address> addresses = new ArrayList<>();
+    List<MyAddress> addresses = new ArrayList<>();
 
     public User() {
     }
@@ -33,23 +33,23 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public List<Address> getAddresses() {
+    public List<MyAddress> getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(List<Address> addresses) {
+    public void setAddresses(List<MyAddress> addresses) {
         this.addresses = addresses;
     }
 
     public String getChosenAddressString() {
 
-        for (int i = 0; i < this.getAddresses().size(); i++) {
-
-            if (this.getAddresses().get(i).isChosenAddress()) {
-                return "" + getAddresses().get(i).getCityName() + ", " + getAddresses().get(i).getStreetName() +
-                        " " + getAddresses().get(i).getHouseNumber();
-            }
-        }
+//        for (int i = 0; i < this.getAddresses().size(); i++) {
+//
+//            if (this.getAddresses().get(i).isChosenAddress()) {
+//                return "" + getAddresses().get(i).getCityName() + ", " + getAddresses().get(i).getStreetName() +
+//                        " " + getAddresses().get(i).getHouseNumber();
+//            }
+//        }
 
         return "אנא הכנס כתובת למשלוח";
     }

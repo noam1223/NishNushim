@@ -1,6 +1,7 @@
 package com.example.nishnushim.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nishnushim.R;
+import com.example.nishnushim.RestaurantProfileHomeActivity;
 import com.example.nishnushim.helpUIClass.RestaurantTypeHelper;
 import com.example.nishnushim.helpclasses.Restaurant;
 
@@ -43,6 +46,18 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
     public void onBindViewHolder(@NonNull RestaurantDetailsViewHolder holder, int position) {
 
         holder.setIsRecyclable(false);
+        
+        holder.detailsRestaurantCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, RestaurantProfileHomeActivity.class);
+                intent.putExtra(context.getString(R.string.restaurant_detail), restaurants.get(position));
+                context.startActivity(intent);
+                
+                
+            }
+        });
 
         holder.restaurantNameTextView.setText(restaurants.get(position).getName());
         holder.fullAddressRestaurantTextView.setText(restaurants.get(position).getMyAddress().getCityName() + ", " +
@@ -73,6 +88,7 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
         ImageView logoRestaurantImageView, mainRestaurantImageView;
         TextView restaurantNameTextView, fullAddressRestaurantTextView, distanceTextView, deliveryAmountAmountTextView,
                 timeFullDeliveryTextView, minAmountToDeliveryTextView, avgCreditTextView;
+        CardView detailsRestaurantCardView;
 
 
         public RestaurantDetailsViewHolder(@NonNull View itemView) {
@@ -88,6 +104,7 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
             timeFullDeliveryTextView = itemView.findViewById(R.id.delivery_time_restaurant_detail_item);
             minAmountToDeliveryTextView = itemView.findViewById(R.id.min_to_deliver_amount_restaurant_detail_item);
             avgCreditTextView = itemView.findViewById(R.id.avg_restaurant_feedback_text_view_restaurant_detail_item);
+            detailsRestaurantCardView = itemView.findViewById(R.id.card_view_restaurant_details_item);
 
 
         }

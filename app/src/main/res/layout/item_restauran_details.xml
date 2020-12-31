@@ -9,6 +9,7 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_restaurant_details_item"
         android:layout_width="328dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

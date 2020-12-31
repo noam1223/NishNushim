@@ -11,13 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.nishnushim.FirstAddressActivity;
 import com.example.nishnushim.HomePageActivity;
 import com.example.nishnushim.R;
-import com.example.nishnushim.helpclasses.Address;
+import com.example.nishnushim.helpclasses.MyAddress;
 import com.example.nishnushim.helpclasses.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -78,7 +76,7 @@ public class AddressDetailsFragment extends Fragment {
                     if (!city.isEmpty() && !street.isEmpty() && !houseNumber.isEmpty()) {
 
 
-                        user.getAddresses().add(new Address(city, street, houseNumber));
+                        user.getAddresses().add(new MyAddress(city, street, houseNumber));
 
                         if (getActivity() != null) {
                             user.setPhoneNumber(getActivity().getIntent().getStringExtra("phone"));

@@ -1,21 +1,16 @@
 package com.example.nishnushim.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nishnushim.R;
-import com.example.nishnushim.helpclasses.Restaurant;
 
-import java.util.List;
-
-public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAdapter.RestaurantMenuViewHolder> {
+public class SubTitleAdapter extends RecyclerView.Adapter<SubTitleAdapter.RestaurantMenuViewHolder> {
 
 
 
@@ -23,7 +18,7 @@ public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAd
     @NonNull
     @Override
     public RestaurantMenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_menu_dish_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sub_title_menu_classification_item, parent, false);
         return new RestaurantMenuViewHolder(view);
     }
 
@@ -47,15 +42,13 @@ public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAd
 
     public class RestaurantMenuViewHolder extends RecyclerView.ViewHolder{
 
-        RecyclerView dishRecyclerView;
-        TextView subTitleMenuNameTextView;
+        TextView subTitleTextView;
 
 
         public RestaurantMenuViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            subTitleMenuNameTextView = itemView.findViewById(R.id.title_text_view_restaurant_menu_dish_item);
-            dishRecyclerView = itemView.findViewById(R.id.dish_detail_recycler_view_restaurant_menu_dish_item);
+            subTitleTextView = itemView.findViewById(R.id.sub_title_text_view_menu_classification_item);
 
         }
     }

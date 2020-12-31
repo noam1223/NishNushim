@@ -138,7 +138,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushinAnonymousUserFragment()).commit();
 
 
-                    addressAppBarTextView.setText(user.getChosenAddressString());
+                    //TODO: SET ADDRESS BY MY ADDRESS CLASS //
+
+//                    addressAppBarTextView.setText(user.getChosenAddressString());
 
 
                 } else if (task.isCanceled()) {

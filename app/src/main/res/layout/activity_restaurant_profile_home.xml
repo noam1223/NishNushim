@@ -326,9 +326,10 @@
                 android:gravity="center">
 
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                <ImageButton
+                    android:id="@+id/restaurant_favorite_image_btn_restaurant_profile_home_activity"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center" />
 
 
@@ -340,8 +341,8 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <ImageView
-        android:id="@+id/menu_image_view_restaurant_profile_home_activity"
+    <ImageButton
+        android:id="@+id/menu_btn_view_restaurant_profile_home_activity"
         android:layout_width="43dp"
         android:layout_height="43dp"
         android:background="@drawable/ic_oval_empty"
@@ -351,8 +352,8 @@
         android:layout_marginTop="15dp"/>
 
 
-    <ImageView
-        android:id="@+id/last_orders_made_image_view_restaurant_profile_home_activity"
+    <ImageButton
+        android:id="@+id/last_orders_made_btn_btn_restaurant_profile_home_activity"
         android:layout_width="43dp"
         android:layout_height="43dp"
         android:layout_marginTop="15dp"
@@ -363,8 +364,8 @@
 
 
 
-    <ImageView
-        android:id="@+id/more_details_image_view_restaurant_profile_home_activity"
+    <ImageButton
+        android:id="@+id/more_details_btn_view_restaurant_profile_home_activity"
         android:layout_width="43dp"
         android:layout_height="43dp"
         android:layout_marginTop="15dp"
@@ -378,7 +379,7 @@
         android:id="@+id/nav_host_fragment_restaurant_profile_home_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/last_orders_made_image_view_restaurant_profile_home_activity"
+        app:layout_constraintTop_toBottomOf="@+id/last_orders_made_btn_btn_restaurant_profile_home_activity"
         android:layout_marginTop="12dp"/>
 
 
