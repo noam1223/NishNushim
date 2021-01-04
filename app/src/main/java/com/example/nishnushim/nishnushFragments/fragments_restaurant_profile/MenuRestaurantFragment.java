@@ -1,28 +1,47 @@
 package com.example.nishnushim.nishnushFragments.fragments_restaurant_profile;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.nishnushim.R;
-import com.example.nishnushim.adapters.RestaurantDetailsAdapter;
 import com.example.nishnushim.adapters.RestaurantMenuAdapter;
 import com.example.nishnushim.adapters.SubTitleAdapter;
+import com.example.nishnushim.helpclasses.Dish;
+import com.example.nishnushim.helpclasses.helpInterfaces.CartListener;
+import com.example.nishnushim.helpclasses.helpInterfaces.MenuItemListener;
+import com.example.nishnushim.helpclasses.Classification;
+import com.example.nishnushim.helpclasses.Restaurant;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
-public class MenuRestaurantFragment extends Fragment {
+public class MenuRestaurantFragment extends Fragment implements MenuItemListener, CartListener {
 
 
     RecyclerView subTitlesRecyclerView, menuRestaurantRecyclerView;
     RecyclerView.Adapter subTitleAdapter, menuRestaurantAdapter;
 
 
+    Restaurant restaurant;
+    String keyRestaurant;
+
+    Classification cartClassification;
 
 
     @Override
@@ -31,39 +50,93 @@ public class MenuRestaurantFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_menu_restaurant, container, false);
 
+        subTitlesRecyclerView = view.findViewById(R.id.sub_titles_recycler_view_menu_restaurant_fragment);
+        menuRestaurantRecyclerView = view.findViewById(R.id.menu_recycler_view_restaurant_menu_fragment);
+
+        SharedPreferences sp = getContext().getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        Gson gson = new Gson();
+        String cartJsonString = sp.getString(getString(R.string.app_name), null);
+
+
+        if (cartJsonString != null) {
+            cartClassification = gson.fromJson(cartJsonString, Classification.class);
+        } else {
+            cartClassification = new Classification();
+            cartClassification.setClassificationName("עגלת קניות");
+        }
 
 
 
-        initializeMenuRestaurantRecyclerView();
-        initializeSubTitlesRecyclerView();
+        if (getArguments() != null) {
+
+
+            restaurant = (Restaurant) getArguments().getSerializable(getString(R.string.restaurant_detail));
+            keyRestaurant = getArguments().getString("key");
+
+
+            initializeMenuRestaurantRecyclerView();
+            initializeSubTitlesRecyclerView();
+        }
+
 
         return view;
     }
 
 
-
     private void initializeSubTitlesRecyclerView() {
 
         subTitlesRecyclerView.setHasFixedSize(false);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
         subTitlesRecyclerView.setLayoutManager(layoutManager);
-        subTitleAdapter = new SubTitleAdapter();
+        subTitleAdapter = new SubTitleAdapter(getContext(), restaurant.getMenu().getClassifications(), this);
         subTitlesRecyclerView.setAdapter(subTitleAdapter);
 
     }
 
 
-
-
     private void initializeMenuRestaurantRecyclerView() {
 
         menuRestaurantRecyclerView.setHasFixedSize(false);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         menuRestaurantRecyclerView.setLayoutManager(layoutManager);
-        subTitleAdapter = new RestaurantMenuAdapter();
-        subTitlesRecyclerView.setAdapter(menuRestaurantAdapter);
+        menuRestaurantAdapter = new RestaurantMenuAdapter(getContext(), restaurant.getMenu(), cartClassification, this);
+        menuRestaurantRecyclerView.setAdapter(menuRestaurantAdapter);
 
     }
 
 
+    @Override
+    public void changeMenuItemPosition(int position) {
+
+        Toast.makeText(getContext(), "MENU ITEM POSITION CHANGE", Toast.LENGTH_SHORT).show();
+        menuRestaurantRecyclerView.smoothScrollToPosition(position);
+    }
+
+
+    @Override
+    public void addDishToCart(Dish dish) {
+
+        cartClassification.getDishList().add(dish);
+
+    }
+
+
+    @Override
+    public void onDestroy() {
+
+
+        if (!cartClassification.getDishList().isEmpty()) {
+            SharedPreferences sp = getContext().getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+
+            Gson gson = new Gson();
+            String cartJson = gson.toJson(cartClassification);
+            editor.putString("cart", cartJson);
+            editor.apply();
+        }
+
+        super.onDestroy();
+    }
 }

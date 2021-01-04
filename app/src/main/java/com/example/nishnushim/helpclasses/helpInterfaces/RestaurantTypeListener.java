@@ -1,4 +1,4 @@
-package com.example.nishnushim.helpUIClass;
+package com.example.nishnushim.helpclasses.helpInterfaces;
 
 import com.example.nishnushim.helpclasses.RestaurantTypeClass;
 

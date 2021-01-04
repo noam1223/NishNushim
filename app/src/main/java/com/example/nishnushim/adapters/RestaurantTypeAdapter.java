@@ -10,11 +10,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nishnushim.R;
 import com.example.nishnushim.helpUIClass.RestaurantTypeHelper;
-import com.example.nishnushim.helpUIClass.RestaurantTypeListener;
+import com.example.nishnushim.helpclasses.helpInterfaces.RestaurantTypeListener;
 
 public class RestaurantTypeAdapter extends RecyclerView.Adapter<RestaurantTypeAdapter.RestaurantTypeViewHolder> {
 
@@ -45,15 +46,15 @@ public class RestaurantTypeAdapter extends RecyclerView.Adapter<RestaurantTypeAd
 
         if (selectedPos == position){
 
-            holder.ovalImageView.setImageDrawable(context.getDrawable(R.drawable.ic_oval_fullfill));
+            holder.ovalImageView.setImageDrawable(ContextCompat.getDrawable(context ,R.drawable.ic_oval_fullfill));
             holder.typeNameTextView.setVisibility(View.VISIBLE);
             holder.typeNameTextView.setText(restaurantTypeHelper.getRestaurantTypeClassList().get(position).getTitle());
-            holder.typeImageView.setImageDrawable(context.getDrawable(restaurantTypeHelper.getRestaurantTypeClassList().get(position).getSrcHighLightImageId()));
+            holder.typeImageView.setImageDrawable(ContextCompat.getDrawable(context ,restaurantTypeHelper.getRestaurantTypeClassList().get(position).getSrcHighLightImageId()));
 
         } else {
 
-            holder.ovalImageView.setImageDrawable(context.getDrawable(R.drawable.ic_oval_empty));
-            holder.typeImageView.setImageDrawable(context.getDrawable(restaurantTypeHelper.getRestaurantTypeClassList().get(position).getSrcFirstImageId()));
+            holder.ovalImageView.setImageDrawable(ContextCompat.getDrawable(context ,R.drawable.ic_oval_empty));
+            holder.typeImageView.setImageDrawable(ContextCompat.getDrawable(context ,restaurantTypeHelper.getRestaurantTypeClassList().get(position).getSrcFirstImageId()));
 
         }
 

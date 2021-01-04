@@ -40,7 +40,7 @@ import android.widget.Toast;
 
 import com.example.nishnushim.adapters.RestaurantTypeAdapter;
 
-import com.example.nishnushim.helpUIClass.RestaurantTypeListener;
+import com.example.nishnushim.helpclasses.helpInterfaces.RestaurantTypeListener;
 import com.example.nishnushim.helpclasses.RestaurantTypeClass;
 import com.example.nishnushim.helpclasses.User;
 import com.example.nishnushim.nishnushFragments.NishnushimHomeFragment;
@@ -122,6 +122,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+
+
         //TODO: DO NOT FORGET TO REMOVE THE STRING KEY
         //"LCl46tZA2wd53H8If1mWTb2VjGw2"
         db.collection(getString(R.string.USERS_DB)).document("LCl46tZA2wd53H8If1mWTb2VjGw2").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -140,7 +142,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
                     //TODO: SET ADDRESS BY MY ADDRESS CLASS //
 
-//                    addressAppBarTextView.setText(user.getChosenAddressString());
+                    addressAppBarTextView.setText(user.getChosenAddressString());
 
 
                 } else if (task.isCanceled()) {

@@ -25,14 +25,15 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
 
     Context context;
     List<Restaurant> restaurants;
-
+    List<String> keys;
 
     //USED IN RESTAURANT FRAGMENT
 
 
-    public RestaurantDetailsAdapter(Context context, List<Restaurant> restaurants) {
+    public RestaurantDetailsAdapter(Context context, List<Restaurant> restaurants, List<String> keys) {
         this.context = context;
         this.restaurants = restaurants;
+        this.keys = keys;
     }
 
     @NonNull
@@ -53,22 +54,41 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
 
                 Intent intent = new Intent(context, RestaurantProfileHomeActivity.class);
                 intent.putExtra(context.getString(R.string.restaurant_detail), restaurants.get(position));
+                intent.putExtra("key", keys.get(position));
                 context.startActivity(intent);
                 
                 
             }
         });
 
+//        holder.restaurantNameTextView.setText(restaurants.get(position).getName());
+//        holder.fullAddressRestaurantTextView.setText(restaurants.get(position).getMyAddress().getCityName() + ", " +
+//                restaurants.get(position).getMyAddress().getStreetName() + " " + restaurants.get(position).getMyAddress().getHouseNumber());
+//
+//
+//        holder.distanceTextView.setText("3");
+////        holder.deliveryAmountAmountTextView.setText(String.valueOf(restaurants.get(position).getAmountOfMoney()));
+//        holder.timeFullDeliveryTextView.setText(restaurants.get(position).getDeliveryTime());
+//        holder.minAmountToDeliveryTextView.setText("3");
+//        holder.avgCreditTextView.setText("3");
+
+
         holder.restaurantNameTextView.setText(restaurants.get(position).getName());
-        holder.fullAddressRestaurantTextView.setText(restaurants.get(position).getMyAddress().getCityName() + ", " +
-                restaurants.get(position).getMyAddress().getStreetName() + " " + restaurants.get(position).getMyAddress().getHouseNumber());
+        holder.fullAddressRestaurantTextView.setText(restaurants.get(position).getMyAddress().fullMyAddress());
+
+        //TODO: SET THE CALCULATED DISTANCE
+        holder.distanceTextView.setText("2");
 
 
-        holder.distanceTextView.setText("3");
-        holder.deliveryAmountAmountTextView.setText(String.valueOf(restaurants.get(position).getAmountOfMoney()));
+        holder.deliveryAmountAmountTextView.setText(String.valueOf(restaurants.get(position).getAreasForDeliveries().get(0).getDeliveryCost()));
+
         holder.timeFullDeliveryTextView.setText(restaurants.get(position).getDeliveryTime());
-        holder.minAmountToDeliveryTextView.setText("3");
-        holder.avgCreditTextView.setText("3");
+        holder.minAmountToDeliveryTextView.setText(String.valueOf(restaurants.get(position).getAreasForDeliveries().get(0).getMinToDeliver()));
+
+        //TODO: CALCULATE THE AVERAGE OF CREDITS
+        holder.avgCreditTextView.setText("5");
+
+
     }
 
 

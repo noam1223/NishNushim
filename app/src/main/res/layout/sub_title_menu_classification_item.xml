@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:layoutDirection="rtl"
     android:background="@drawable/sub_title_menu_background_clicked"
-    android:id="@+id/linear_layout_sub_title_menu_classification_item">
+    android:id="@+id/linear_layout_sub_title_menu_classification_item"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp">
 
 
 

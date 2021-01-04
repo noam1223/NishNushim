@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="18dp"
+    android:layout_marginTop="6dp"
+    android:layoutDirection="rtl"
+    android:orientation="horizontal"
+    android:weightSum="4">
+
+
+    <LinearLayout
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="16dp"
+        android:fontFamily="@font/assistant_bold"
+        android:text="אזורי חלוקה"
+        android:textColor="@color/custom_blue"
+        android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".9"
+        android:gravity="center">
+
+    <ImageView
+        android:layout_width="9dp"
+        android:layout_height="11dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_filter_take_away" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="2dp"
+        android:fontFamily="@font/assistant_bold"
+        android:text="דמי משלוח"
+        android:textColor="@color/custom_blue"
+        android:textSize="12sp" />
+
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="8dp"
+        android:background="@color/custom_yellow" />
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.6"
+        android:gravity="right">
+
+    <ImageView
+        android:layout_width="9dp"
+        android:layout_height="11dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/filter_shekel_logo" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="2dp"
+        android:fontFamily="@font/assistant_bold"
+        android:text="מינימום"
+        android:textColor="@color/custom_blue"
+        android:textSize="12sp" />
+
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="8dp"
+        android:background="@color/custom_yellow" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="right">
+
+
+    <ImageView
+        android:layout_width="9dp"
+        android:layout_height="11dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_filter_delivery_time"
+        app:tint="@color/custom_blue" />
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="2dp"
+        android:fontFamily="@font/assistant_bold"
+        android:text="זמן"
+        android:textColor="@color/custom_blue"
+        android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

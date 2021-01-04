@@ -1,25 +1,28 @@
 package com.example.nishnushim.helpclasses;
 
+import android.net.Uri;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dish implements Serializable {
 
-
     String name;
     String details;
-    List<Changes> changes;
+    List<DishChanges> changes;
     int price;
+    Uri image;
 
 
     public Dish() {
     }
 
 
-    public Dish(String name, String details, List<Changes> changes, int price) {
+    public Dish(String name, String details, List<DishChanges> changes, int price) {
         this.name = name;
         this.details = details;
-        this.changes = changes;
+        this.changes = changes = new ArrayList<>();
         this.price = price;
     }
 
@@ -40,11 +43,11 @@ public class Dish implements Serializable {
         this.details = details;
     }
 
-    public List<Changes> getChanges() {
+    public List<DishChanges> getChanges() {
         return changes;
     }
 
-    public void setChanges(List<Changes> changes) {
+    public void setChanges(List<DishChanges> changes) {
         this.changes = changes;
     }
 
@@ -57,38 +60,5 @@ public class Dish implements Serializable {
     }
 
 
-
-
-    private class Changes implements Serializable{
-
-
-        String change;
-        int price;
-
-
-        public Changes() {
-        }
-
-        public Changes(String change, int price) {
-            this.change = change;
-            this.price = price;
-        }
-
-        public String getChange() {
-            return change;
-        }
-
-        public void setChange(String change) {
-            this.change = change;
-        }
-
-        public int getPrice() {
-            return price;
-        }
-
-        public void setPrice(int price) {
-            this.price = price;
-        }
-    }
-
 }
+

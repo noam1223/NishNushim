@@ -1,58 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="78dp"
+    android:layout_height="wrap_content"
     android:layoutDirection="rtl"
-    android:orientation="horizontal"
-    android:weightSum="2"
-    android:id="@+id/linear_layout_dish_detail_restaurant_menu_item">
-
-
-    <ImageView
-        android:id="@+id/dish_image_view_menu_restaurant_menu_dish_item"
-        android:layout_width="166dp"
-        android:layout_height="match_parent" />
+    android:orientation="horizontal">
 
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_marginRight="14dp"
-        android:layout_weight="1.8"
+        android:id="@+id/linear_layout_dish_detail_restaurant_menu_item"
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:orientation="horizontal"
         android:layoutDirection="rtl"
-        android:orientation="vertical">
+        android:layout_marginLeft="18dp"
+        android:visibility="visible">
 
 
-        <TextView
-            android:id="@+id/dish_name_text_view_dish_restaurant_menu_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/assistant_bold"
-            android:text="שם המנה"
-            android:textColor="@color/custom_blue"
-            android:textSize="14sp" />
+        <ImageView
+            android:id="@+id/dish_image_view_menu_restaurant_menu_dish_item"
+            android:layout_width="166dp"
+            android:layout_height="match_parent" />
 
 
-        <TextView
-            android:id="@+id/dish_detail_text_view_dish_restaurant_menu_item"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:layoutDirection="rtl"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/dish_name_text_view_dish_restaurant_menu_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/assistant_bold"
+                android:text="שם המנה"
+                android:textColor="@color/custom_blue"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/dish_detail_text_view_dish_restaurant_menu_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/assistant_regular"
+                android:text="פירוט המנה בלה בלה בלה בלה בלה בלה בלה בלה בלה בלה "
+                android:textColor="@color/custom_blue"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/dish_cosh_text_view_dish_restaurant_menu_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/assistant_regular"
+                android:text="עלות המנה"
+                android:textColor="@color/custom_red"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout_dish_long_clicked_detail_restaurant_menu_item"
+        android:layout_width="match_parent"
+        android:layout_height="330dp"
+        android:orientation="vertical"
+        android:layoutDirection="rtl"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:id="@+id/dish_long_clicked_image_view_menu_restaurant_menu_dish_item"
+            android:layout_width="match_parent"
+            android:layout_height="169dp" />
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/assistant_regular"
-            android:text="פירוט המנה בלה בלה בלה בלה בלה בלה בלה בלה בלה בלה "
-            android:textColor="@color/custom_blue"
-            android:textSize="12sp" />
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="8dp"
+            android:layoutDirection="rtl"
+            android:orientation="vertical">
 
 
-        <TextView
-            android:id="@+id/dish_cosh_text_view_dish_restaurant_menu_item"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/dish_long_clicked_name_text_view_dish_restaurant_menu_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/assistant_bold"
+                android:text="שם המנה"
+                android:gravity="right"
+                android:textColor="@color/custom_blue"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/dish_long_clicked_detail_text_view_dish_restaurant_menu_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:fontFamily="@font/assistant_regular"
+                android:text="פירוט המנה בלה בלה בלה בלה בלה בלה בלה בלה בלה בלה "
+                android:textColor="@color/custom_blue"
+                android:textSize="18sp" />
+
+
+            <TextView
+                android:id="@+id/dish_long_clicked_cosh_text_view_dish_restaurant_menu_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/assistant_regular"
+                android:text="עלות המנה"
+                android:textColor="@color/custom_red"
+                android:textSize="20sp"
+                android:gravity="right" />
+
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#e0e0e0"
+            android:layout_marginTop="12dp"/>
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/assistant_regular"
-            android:text="עלות המנה"
-            android:textColor="@color/custom_red"
-            android:textSize="12sp" />
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
 
+
+            <Button
+                android:id="@+id/add_dish_long_clicked_to_order_btn_dish_restaurant_menu_item"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="36dp"
+                android:background="@drawable/yellow_rounded_custom_btn"
+                android:fontFamily="@font/assistant_regular"
+                android:text="הוסף הזמנה"
+                android:textColor="@color/custom_blue"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/num_of_dishs_added_long_clicked_text_view_dish_restaurant_menu_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:fontFamily="@font/assistant_light"
+                android:text="מס׳ מנות : 0"
+                android:textColor="@color/custom_blue"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

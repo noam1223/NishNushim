@@ -63,4 +63,10 @@ public class MyAddress implements Serializable {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
+    public String fullMyAddress(){
+
+        return cityName + ", " + streetName + " " + houseNumber;
+
+    }
 }
