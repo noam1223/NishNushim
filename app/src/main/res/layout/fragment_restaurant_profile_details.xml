@@ -8,17 +8,7 @@
     android:orientation="vertical"
     tools:context=".nishnushFragments.fragments_restaurant_profile.RestaurantProfileDetailsFragment">
 
-    <ScrollView
-        android:id="@+id/scroll_view_restaurant_profile_details_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layoutDirection="rtl"
-            android:orientation="vertical">
 
 
             <LinearLayout
@@ -92,11 +82,13 @@
 
 
             <LinearLayout
+                android:id="@+id/linear_layout_profile_details_area_profile_details_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layoutDirection="rtl"
                 android:orientation="vertical"
-                android:tag="1">
+                android:tag="1"
+                android:layout_marginTop="12dp">
 
 
                 <LinearLayout
@@ -112,7 +104,7 @@
                         android:id="@+id/restaurant_name_text_view_restaurant_profile_details_fragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginRight="32dp"
                         android:fontFamily="@font/arimo_bold"
                         android:gravity="center"
                         android:text="שם המסעדה"
@@ -150,7 +142,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="26dp"
-                    android:layout_marginRight="18dp"
+                    android:layout_marginRight="32dp"
                     android:gravity="center_vertical"
                     android:layoutDirection="rtl"
                     android:orientation="horizontal">
@@ -185,13 +177,12 @@
                 </LinearLayout>
 
 
-                <ListView
+                <com.example.nishnushim.helpUIClass.NonScrollListView
                     android:id="@+id/area_for_delivery_list_view_restaurant_profile_details_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="18dp"
-                    android:background="@drawable/more_details_areas_background"
-                    />
+                    android:layout_marginTop="8dp" />
 
 
             </LinearLayout>
@@ -207,26 +198,28 @@
 
 
             <LinearLayout
+                android:id="@+id/linear_layout_open_close_hours_profile_details_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
                 android:layoutDirection="rtl"
                 android:orientation="vertical"
                 android:background="@drawable/more_details_areas_background"
-                android:tag="2">
+                android:tag="2"
+                android:layout_marginTop="12dp">
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="28dp"
+                    android:layout_marginRight="32dp"
                     android:fontFamily="@font/assistant_bold"
                     android:text="לו״ז משלוחים"
                     android:textColor="@color/custom_blue"
                     android:textSize="12sp" />
 
 
-                <ListView
+                <com.example.nishnushim.helpUIClass.NonScrollListView
                     android:id="@+id/open_close_hours_list_view_restaurant_profile_details_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -245,6 +238,7 @@
 
 
             <LinearLayout
+                android:id="@+id/linear_layout_recommendation_area_profile_detail_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
@@ -252,13 +246,14 @@
                 android:layoutDirection="rtl"
                 android:orientation="vertical"
                 android:background="@drawable/more_details_areas_background"
-                android:tag="3">
+                android:tag="3"
+                android:layout_marginTop="12dp">
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="28dp"
+                    android:layout_marginRight="32dp"
                     android:fontFamily="@font/assistant_bold"
                     android:text="המלצות"
                     android:textColor="@color/custom_blue"
@@ -297,7 +292,7 @@
                 </LinearLayout>
 
 
-                <ListView
+                <com.example.nishnushim.helpUIClass.NonScrollListView
                     android:id="@+id/recommendation_list_view_restaurant_profile_details_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -307,7 +302,3 @@
 
 
         </LinearLayout>
-
-    </ScrollView>
-
-</LinearLayout>

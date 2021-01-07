@@ -66,7 +66,7 @@ public class VerificationCodeFragment extends Fragment {
             PhoneAuthOptions options =
                     PhoneAuthOptions.newBuilder(mAuth)
                             .setPhoneNumber(phone)       // Phone number to verify
-                            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                            .setTimeout(120L, TimeUnit.SECONDS) // Timeout and unit
                             .setActivity(getActivity())                 // Activity (for callback binding)
                             .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                             .build();
@@ -90,7 +90,6 @@ public class VerificationCodeFragment extends Fragment {
 
                         PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(mVerificationId, txtPinEntry.getText().toString());
                         signInWithPhoneAuthCredential(phoneAuthCredential);
-                        Toast.makeText(getContext(), txtPinEntry.getText().toString() + " WORKS", Toast.LENGTH_SHORT).show();
 
 
                     } else Toast.makeText(getContext(), "אנא הכנס מספר חוקי", Toast.LENGTH_SHORT).show();

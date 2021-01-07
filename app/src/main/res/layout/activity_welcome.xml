@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,6 +9,13 @@
     tools:context=".WelcomeActivity"
     android:layoutDirection="rtl">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F7F7F7"
+        android:orientation="vertical"
+        android:layoutDirection="rtl">
 
     <ImageView
         android:layout_width="80dp"
@@ -66,10 +73,57 @@
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:background="@drawable/yellow_rounded_custom_btn"
-        android:fontFamily="@font/assistant_regular"
+        android:fontFamily="@font/assistant_bold"
         android:text="טלפון"
         android:textColor="@color/browser_actions_text_color"
         android:textStyle="bold" />
+
+
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="או דרך רשתות חברתיות"
+        android:layout_marginTop="38dp"
+        android:fontFamily="@font/assistant_regular"
+        android:textSize="12sp"
+        android:textColor="@color/custom_blue"/>
+
+
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_marginTop="6dp"
+        android:layoutDirection="rtl">
+
+
+        <ImageView
+            android:id="@+id/google_sign_in_anishnushim_welcome_activity"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:src="@drawable/ic_google_plus"
+            android:layout_marginLeft="24dp"/>
+
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebook_sign_in_anishnushim_welcome_activity"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:background="@drawable/ic_facebook"
+            android:src="@android:color/transparent"/>
+
+
+
+    </LinearLayout>
+
 
 
     <TextView
@@ -84,12 +138,15 @@
         android:textSize="12sp" />
 
 
+
     <View
         android:layout_width="20dp"
         android:layout_height="1dp"
         android:layout_gravity="center"
         android:layout_marginTop="4.5dp"
-        android:background="#002144" />
+        android:background="#002144"
+        android:layout_marginBottom="24dp"/>
 
+    </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

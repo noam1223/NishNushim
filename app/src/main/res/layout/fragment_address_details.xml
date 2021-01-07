@@ -89,7 +89,7 @@
         android:id="@+id/save_first_address_btn_address_manually_activity"
         android:layout_width="168dp"
         android:layout_height="33dp"
-        android:background="@drawable/btn_sign_in_clicked_background"
+        android:background="@drawable/btn_sign_in_clicked_background_opossite"
         android:textColor="@drawable/btn_sign_in_clicked_text_view"
         android:layout_gravity="center"
         android:layout_marginTop="32dp"

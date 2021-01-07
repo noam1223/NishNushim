@@ -84,34 +84,34 @@ public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAd
 
 
 
-    @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (recyclerView.getScrollState() == View.SCROLL_AXIS_VERTICAL) {
-
-                    int highLight = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
-
-                    if (highLightRawPosition != highLight && highLight > 0) {
-                        highLightRawPosition = highLight;
-
-                        notifyDataSetChanged();
-                    }
-
-                }
-            }
-        });
-    }
+//    @Override
+//    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+//        super.onAttachedToRecyclerView(recyclerView);
+//
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//            }
+//
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//
+//                if (recyclerView.getScrollState() == View.SCROLL_AXIS_VERTICAL) {
+//
+//                    int highLight = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+//
+//                    if (highLightRawPosition != highLight && highLight > 0) {
+//                        highLightRawPosition = highLight;
+//
+//                        notifyDataSetChanged();
+//                    }
+//
+//                }
+//            }
+//        });
+//    }
 
 
 

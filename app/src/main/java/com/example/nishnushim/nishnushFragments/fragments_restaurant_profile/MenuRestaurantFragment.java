@@ -2,6 +2,7 @@ package com.example.nishnushim.nishnushFragments.fragments_restaurant_profile;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
@@ -14,6 +15,7 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.example.nishnushim.R;
@@ -138,5 +140,32 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
         }
 
         super.onDestroy();
+    }
+
+
+
+
+    public void onScrollListener(ScrollView scrollView, View view){
+
+
+
+    }
+
+
+
+
+
+    private boolean isViewVisible(ScrollView scrollView, View view) {
+        Rect scrollBounds = new Rect();
+        scrollView.getDrawingRect(scrollBounds);
+
+        float top = view.getY();
+        float bottom = top + view.getHeight();
+
+        if (scrollBounds.top < top && scrollBounds.bottom > bottom) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

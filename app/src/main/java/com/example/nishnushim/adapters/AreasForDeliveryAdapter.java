@@ -60,10 +60,10 @@ public class AreasForDeliveryAdapter extends BaseAdapter {
         TextView deliveryTimeTextView = convertView.findViewById(R.id.delivery_time_text_view_area_for_delivery_details_item);
 
 
-        areaForDeliverTextView.setText(areasForDeliveries.get(position).getAreaName());
-        deliveryCostTextView.setText(String.valueOf(areasForDeliveries.get(position).getDeliveryCost()));
-        minToDeliverTextView.setText(String.valueOf(areasForDeliveries.get(position).getMinToDeliver()));
-        deliveryTimeTextView.setText(String.valueOf(areasForDeliveries.get(position).getTimeOfDelivery()));
+        areaForDeliverTextView.setText(areasForDeliveries.get(position - 1).getAreaName());
+        deliveryCostTextView.setText(String.valueOf(areasForDeliveries.get(position - 1).getDeliveryCost()));
+        minToDeliverTextView.setText(String.valueOf(areasForDeliveries.get(position - 1).getMinToDeliver()));
+        deliveryTimeTextView.setText(String.valueOf(areasForDeliveries.get(position - 1).getTimeOfDelivery()));
 
 
         return convertView;
