@@ -7,13 +7,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nishnushim.FirstAddressActivity;
@@ -30,12 +29,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.mukesh.OnOtpCompletionListener;
+import com.mukesh.OtpView;
 
 import java.util.concurrent.TimeUnit;
 
 
 public class VerificationCodeFragment extends Fragment {
 
+    TextView phoneNumberTextView, sendVerificationCodeTextView, updatePhoneNumberTextView;
     ProgressBar progressBar;
     Button verifyBtn;
 
@@ -56,72 +58,66 @@ public class VerificationCodeFragment extends Fragment {
 
         progressBar = view.findViewById(R.id.progress_bar_verification_code_fragment);
         verifyBtn = view.findViewById(R.id.verify_code_btn_verification_code_fragment);
+        phoneNumberTextView = view.findViewById(R.id.phone_number_text_view_verification_code_fragment);
+        updatePhoneNumberTextView = view.findViewById(R.id.update_phone_number_text_view_verification_code_fragment);
+        updatePhoneNumberTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //TODO: ASK ORLY HOW TO CHANGE
+
+            }
+        });
+
+
+        sendVerificationCodeTextView = view.findViewById(R.id.send_verification_again_text_view_verification_code_fragment);
+        sendVerificationCodeTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resendVerificationCode();
+            }
+        });
+
 
         mAuth = FirebaseAuth.getInstance();
 
         if (getArguments() != null) {
 
             phone = getArguments().getString("phone");
+            phoneNumberTextView.setText(phone);
 
+
+            //FIRST VERIFICATION
             PhoneAuthOptions options =
                     PhoneAuthOptions.newBuilder(mAuth)
-                            .setPhoneNumber(phone)       // Phone number to verify
-                            .setTimeout(120L, TimeUnit.SECONDS) // Timeout and unit
+                            .setPhoneNumber("+972" + phone)       // Phone number to verify
+                            .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
                             .setActivity(getActivity())                 // Activity (for callback binding)
                             .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                             .build();
             PhoneAuthProvider.verifyPhoneNumber(options);
 
 
-
-
-
             final PinEntryEditText txtPinEntry = (PinEntryEditText) view.findViewById(R.id.pin_entry_edit_text_verification_code_fragment);
-
-
-
 
 
             verifyBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    if (txtPinEntry.getText() != null) {
+                    if (txtPinEntry.getText().toString() != null && txtPinEntry.getText().toString().length() == 6) {
 
                         PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.getCredential(mVerificationId, txtPinEntry.getText().toString());
                         signInWithPhoneAuthCredential(phoneAuthCredential);
 
 
-                    } else Toast.makeText(getContext(), "אנא הכנס מספר חוקי", Toast.LENGTH_SHORT).show();
+                    } else
+                        Toast.makeText(getContext(), "אנא הכנס מספר חוקי", Toast.LENGTH_SHORT).show();
 
                 }
             });
 
         }
-
-//            String code = getArguments().getString("code");
-//            credential = getArguments().getParcelable("credential");
-//
-//            if (credential != null){
-//
-//                Toast.makeText(getContext(), "NOT NULL", Toast.LENGTH_SHORT).show();
-//
-//                verificationCodeEditText.setText(code);
-//                verificationCodeEditText.clearFocus();
-//
-//
-//
-
-//
-//
-//            } else {
-//                getFragmentManager().beginTransaction().replace(R.id.sign_in_frame_layout_sign_in_activity, new PhoneNumberFragment()).commit();
-//            }
-//
-//        } else {
-//            getFragmentManager().beginTransaction().replace(R.id.sign_in_frame_layout_sign_in_activity, new PhoneNumberFragment()).commit();
-//        }
-
 
         return view;
     }
@@ -182,6 +178,7 @@ public class VerificationCodeFragment extends Fragment {
 
             progressBar.setVisibility(View.GONE);
             verifyBtn.setEnabled(true);
+            verifyBtn.setPressed(false);
         }
 
 
@@ -191,6 +188,7 @@ public class VerificationCodeFragment extends Fragment {
 
             mVerificationId = s;
             mResendToken = forceResendingToken;
+            verifyBtn.setPressed(false);
 
         }
 
@@ -201,10 +199,9 @@ public class VerificationCodeFragment extends Fragment {
 
             progressBar.setVisibility(View.GONE);
             verifyBtn.setEnabled(true);
+            verifyBtn.setPressed(false);
         }
     };
-
-
 
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
@@ -217,7 +214,7 @@ public class VerificationCodeFragment extends Fragment {
 
                             FirebaseUser user = task.getResult().getUser();
 
-                            if (user != null){
+                            if (user != null) {
 
                                 Intent intent = new Intent(getContext(), FirstAddressActivity.class);
                                 intent.putExtra("phone", phone);
@@ -231,7 +228,7 @@ public class VerificationCodeFragment extends Fragment {
                             // ...
                         } else {
                             // Sign in failed, display a message and update the UI
-                            if (task.getException() != null){
+                            if (task.getException() != null) {
 
                                 Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
@@ -239,6 +236,21 @@ public class VerificationCodeFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+
+
+    public void resendVerificationCode() {
+        PhoneAuthOptions options =
+                PhoneAuthOptions.newBuilder(mAuth)
+                        .setPhoneNumber("+972" + phone)       // Phone number to verify
+                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setActivity(getActivity())                 // Activity (for callback binding)
+                        .setCallbacks(mCallbacks)
+                        .setForceResendingToken(mResendToken)// OnVerificationStateChangedCallbacks
+                        .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
+
     }
 
 

@@ -37,32 +37,35 @@ public class MainActivity extends AppCompatActivity {
                 auth = FirebaseAuth.getInstance();
                 user = auth.getCurrentUser();
 
-
-                if (user == null){
-
-                    Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
-
-                } else {
-
-                    Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
-
-//                    auth.signOut();
-
-                }
-
-//                Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent);
+//                auth.signOut();
 //                finish();
+
+//                if (user == null){
+//
+//                    Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    startActivity(intent);
+//                    finish();
+//
+//                } else {
+//
+//                    Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    startActivity(intent);
+//                    finish();
+//
+////
+//
+//                }
+
+                //TODO: DO NOT FORGET TO CHANGE TO USER
+                Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
 
 
             }

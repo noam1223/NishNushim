@@ -17,4 +17,5 @@
     <string name="RESTAURANTS_PATH">Restaurants</string>
     <string name="RESTAURANTS_MAIN">RestaurantsMain</string>
     <string name="CITIES_PATH">Cities</string>
+    <string name="PHONE_PATH">phoneNumber</string>
 </resources>

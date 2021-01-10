@@ -13,6 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.nishnushim.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class PhoneNumberFragment extends Fragment {
@@ -24,6 +26,7 @@ public class PhoneNumberFragment extends Fragment {
     ProgressBar progressBar;
 
 
+    FirebaseFirestore db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,6 +38,7 @@ public class PhoneNumberFragment extends Fragment {
         signInBtn = view.findViewById(R.id.sign_in_btn_sign_in_activity);
         progressBar = view.findViewById(R.id.progress_bar_sign_in_activity);
 
+        db = FirebaseFirestore.getInstance();
 
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,12 +48,13 @@ public class PhoneNumberFragment extends Fragment {
 
                 if (phoneNumber.length() == 10){
 
+
                     progressBar.setVisibility(View.VISIBLE);
                     signInBtn.setEnabled(false);
 
                     Fragment fragment = new VerificationCodeFragment();
                     Bundle bundle = new Bundle();
-                    bundle.putString("phone", "+972" + phoneNumber);
+                    bundle.putString("phone", phoneNumber);
                     fragment.setArguments(bundle);
                     getFragmentManager().beginTransaction().replace(R.id.sign_in_frame_layout_sign_in_activity, fragment).commit();
 

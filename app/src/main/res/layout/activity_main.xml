@@ -25,7 +25,7 @@
 
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="243dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_nishnushim"
             android:layout_gravity="center"
@@ -37,7 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/assistant_regular"
-            android:letterSpacing="0.08"
+            android:letterSpacing="0.06"
+            android:layout_marginTop="4dp"
             android:text="פשוט להזמין משלוח"
             android:textColor="#002144"
             android:textSize="28sp"/>

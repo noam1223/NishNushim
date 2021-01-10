@@ -43,13 +43,13 @@ public class User implements Serializable {
 
     public String getChosenAddressString() {
 
-//        for (int i = 0; i < this.getAddresses().size(); i++) {
-//
-//            if (this.getAddresses().get(i).isChosenAddress()) {
-//                return "" + getAddresses().get(i).getCityName() + ", " + getAddresses().get(i).getStreetName() +
-//                        " " + getAddresses().get(i).getHouseNumber();
-//            }
-//        }
+        for (int i = 0; i < this.getAddresses().size(); i++) {
+
+            if (this.getAddresses().get(i) != null) {
+                return "" + getAddresses().get(i).getCityName() + ", " + getAddresses().get(i).getStreetName() +
+                        " " + getAddresses().get(i).getHouseNumber();
+            }
+        }
 
         return "אנא הכנס כתובת למשלוח";
     }

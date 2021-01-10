@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <item android:id="@+id/profile_detail_menu_item"
-        android:title="פרטים אישיים"/>
+    <item android:id="@+id/connect_menu_guest_item"
+        android:title="התחברות"
+        />
 
-    <item android:id="@+id/address_list_menu_item"
-        android:title="הכתובות שלי"/>
-
-    <item android:id="@+id/credit_cards_list_menu_item"
-        android:title="אמצעי תשלום"/>
-
-    <item android:id="@+id/question_answers_menu_item"
+    <item android:id="@+id/answers_questions_menu_guest_item"
         android:title="שאלות ותשובות"/>
 
-    <item android:id="@+id/contact_us_menu_item"
+    <item android:id="@+id/communicate_us_menu_guest_item"
         android:title="צרו קשר"/>
 
-    <item android:id="@+id/app_share_menu_item"
-        android:title="שתפו"/>
+    <item android:id="@+id/share_with_friends_menu_guest_item"
+        android:title="שתפו לחברים"/>
 
-    <item android:id="@+id/rate_menu_item"
-        android:title="דרגו אותנו" />
+    <item android:id="@+id/rate_us_menu_guest_item"
+        android:title="דרגו אותנו"/>
+
+    <item android:id="@+id/term_and_conditions_menu_guest_item"
+        android:title="תנאי שימוש"/>
+
+    <item android:id="@+id/general_settings_menu_guest_item"
+        android:title="הגדרות כלליות" />
 
 
 </menu>

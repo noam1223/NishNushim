@@ -157,10 +157,11 @@
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
         android:background="@color/custom_yellow"
         android:fitsSystemWindows="true"
-        app:menu="@menu/menu_drawer" />
+        app:menu="@menu/menu_drawer"
+        android:theme="@style/DrawerStyleTextView"
+        app:headerLayout="@layout/drawer_header_item"/>
 
 
     <!--        <androidx.constraintlayout.widget.ConstraintLayout-->

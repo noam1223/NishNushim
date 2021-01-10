@@ -82,7 +82,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     FirebaseAuth auth;
 
     List<Button> filterBtnList = new ArrayList<>();
-    View searchPopUpView;
     Dialog filterDialog, searchDialog, myAddressDialog;
     Button timeDeliveryFilterBtn, distanceFilterBtn, minAmountOfMoneyForDeliverFilterBtn, deliveryAmountFilterBtn, creditsFilterBtn, recommendationFilterBtn;
 
@@ -374,8 +373,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             wayOfDeliveryRadioGroup = popUpView.findViewById(R.id.way_of_delivery_radio_group_address_list_pop_up_window);
             myAddressListRadioGroup = popUpView.findViewById(R.id.list_of_address_radio_group_address_list_pop_up_window);
 
-            RadioButton wayOfDeliveryRadioBtn;
-            final RadioButton myAddressListRadioBtn;
 
             RadioButton myLocationToDeliverRadioBtn = popUpView.findViewById(R.id.my_location_address_to_deliver_radio_btn_address_list_pop_up_window);
             radioButtonList.add(myLocationToDeliverRadioBtn);
@@ -383,7 +380,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
             for (int i = 0; i < user.getAddresses().size(); i++) {
 
-                RadioButton radioButton = createRadioButton(myLocationToDeliverRadioBtn, i, 1, R.drawable.ic_icon_placeholder_small, user.getChosenAddressString());
+                RadioButton radioButton = createRadioButton(myLocationToDeliverRadioBtn, i, 1, R.drawable.ic_icon_placeholder_small, user.getAddresses().get(i).fullMyAddress());
 
                 radioButtonList.add(radioButton);
                 myAddressListRadioGroup.addView(radioButton);
@@ -454,7 +451,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         int id = item.getItemId();
         Intent intent;
 
-        if (id == R.id.profile_detail_menu_item) {
+        if (id == R.id.connect_menu_guest_item) {
 
             Toast.makeText(this, "PROFILE", Toast.LENGTH_SHORT).show();
 
@@ -462,31 +459,31 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             intent.putExtra("user", user);
             startActivity(intent);
 
-        } else if (id == R.id.address_list_menu_item) {
+        } else if (id == R.id.answers_questions_menu_guest_item) {
 
             Toast.makeText(this, "ADDRESS", Toast.LENGTH_SHORT).show();
 
-        } else if (id == R.id.credit_cards_list_menu_item) {
+        } else if (id == R.id.communicate_us_menu_guest_item) {
 
             Toast.makeText(this, "CREDIT", Toast.LENGTH_SHORT).show();
 
 
-        } else if (id == R.id.question_answers_menu_item) {
+        } else if (id == R.id.share_with_friends_menu_guest_item) {
 
             Toast.makeText(this, "QUESTIONS", Toast.LENGTH_SHORT).show();
 
 
-        } else if (id == R.id.contact_us_menu_item) {
+        } else if (id == R.id.rate_us_menu_guest_item) {
 
             Toast.makeText(this, "CONTACT", Toast.LENGTH_SHORT).show();
 
 
-        } else if (id == R.id.app_share_menu_item) {
+        } else if (id == R.id.term_and_conditions_menu_guest_item) {
 
             Toast.makeText(this, "SHARE", Toast.LENGTH_SHORT).show();
 
 
-        } else if (id == R.id.rate_menu_item) {
+        } else if (id == R.id.general_settings_menu_guest_item) {
 
             Toast.makeText(this, "RATE", Toast.LENGTH_SHORT).show();
 

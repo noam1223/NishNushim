@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -20,12 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nishnushim.helpclasses.Restaurant;
-import com.example.nishnushim.helpclasses.helpInterfaces.OnScrollChangeListener;
 import com.example.nishnushim.nishnushFragments.fragments_restaurant_profile.MenuRestaurantFragment;
 import com.example.nishnushim.nishnushFragments.fragments_restaurant_profile.RestaurantProfileDetailsFragment;
 import com.google.android.material.appbar.AppBarLayout;
 
-public class RestaurantProfileHomeActivity extends AppCompatActivity implements View.OnClickListener, OnScrollChangeListener {
+public class RestaurantProfileHomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     ScrollView restaurantProfileHomeScrollView;
     AppBarLayout appBarLayout;
@@ -36,7 +36,7 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
     ImageButton addToFavoriteRestaurantListImgBtn;
 
     ConstraintLayout topHeadBarConstrainLayout, restaurantProfileAreaConstrainLayout, constraintLayoutFullScreen;
-
+    FrameLayout moreDetailsRestaurantFrameLayout;
 
 
     TextView moveToMenuTextView, moveToLastOrdersTextView, moveToMoreDetailsTextView;
@@ -71,6 +71,7 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
         topHeadBarConstrainLayout = findViewById(R.id.constrain_layout_top_title_area_profile_home_activity);
         restaurantProfileAreaConstrainLayout = findViewById(R.id.constrain_layout_profile_area_restaurant_profile_home_activity);
         constraintLayoutFullScreen = findViewById(R.id.constrain_layout_scroll_view_parent_profile_home_activity);
+        moreDetailsRestaurantFrameLayout = findViewById(R.id.nav_host_fragment_restaurant_profile_home_activity);
         appBarLayout = findViewById(R.id.app_bar_restaurant_profile_home_activity);
         toolbar = findViewById(R.id.searching_tool_bar_restaurant_profile_home_activity);
         searchEditText = findViewById(R.id.edit_text_search_tool_bar_restaurant_profile_home_activity);
@@ -90,21 +91,58 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
             restaurantProfileHomeScrollView = findViewById(R.id.scroll_view_restaurant_profile_home_activity);
             scrollViewHeight = restaurantProfileHomeScrollView.getChildAt(0).getHeight();
             restaurantProfileHomeScrollView.getHitRect(rect);
+//            restaurantProfileHomeScrollView.setTop(moreDetailsRestaurantFrameLayout.getTop() - 6 - 65);
+//            restaurantProfileHomeScrollView.onStopNestedScroll(moreDetailsRestaurantFrameLayout);
             restaurantProfileHomeScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
                 @Override
                 public void onScrollChanged() {
 
-//                    restaurantProfileHomeScrollView.getScrollY();
-//                    restaurantProfileAreaConstrainLayout.getY();
+
+                    //TODO: WORKING ON SCROLLLING BETWEEN FRAGMENT AND ACTIVITY
+
+                    //WORKING ON COMMUNICATION BETWEEN PROFILE HOME SCROLLING TO THE FRAGMENTS SCROLLING (MENU AT THE MEANTIME)
+                    if (scrollPositionLast == moreDetailsRestaurantFrameLayout.getTop()){
+//                        if (scrollPositionLast == moreDetailsRestaurantFrameLayout.getTop() - 100){
+////                            if (restaurantDetailsFragment instanceof MenuRestaurantFragment){
+////                                ((MenuRestaurantFragment)restaurantDetailsFragment).onScrollDownListener();
+////                            }
+                            restaurantProfileHomeScrollView.setScrollY(scrollPositionLast);
+                            return;
+//                        }
+                    }
+//                    else{
+//
+//                        if (scrollPositionLast == moreDetailsRestaurantFrameLayout.getTop() + 12){
+//
+//                            if (restaurantDetailsFragment instanceof MenuRestaurantFragment){
+//
+//                               if (((MenuRestaurantFragment)restaurantDetailsFragment).onScrollUpListener()){
+//                                   return;
+//                               }
+//
+//                            }
+//
+//                        }
+//
+//                    }
 
 
-                    if (restaurantProfileHomeScrollView.getScrollY() > restaurantProfileAreaConstrainLayout.getTop() && restaurantProfileHomeScrollView.getScrollY() < restaurantProfileAreaConstrainLayout.getBottom() && restaurantProfileHomeScrollView.getScrollY() != 0) {
+                    if (restaurantProfileHomeScrollView.getScrollY() > restaurantProfileAreaConstrainLayout.getTop()  && restaurantProfileHomeScrollView.getScrollY() != 0) {
 
                         float newAlpha = ((float) restaurantProfileHomeScrollView.getScrollY() / (float) restaurantProfileAreaConstrainLayout.getBottom());
 
                         restaurantProfileAreaConstrainLayout.setAlpha(1 - newAlpha);
                         toolbar.setAlpha(newAlpha);
                         searchEditText.setAlpha(newAlpha);
+
+                    }
+
+
+                    if (restaurantProfileHomeScrollView.getScrollY() > restaurantProfileAreaConstrainLayout.getBottom()){
+
+                        restaurantProfileAreaConstrainLayout.setAlpha(0);
+                        toolbar.setAlpha(1);
+                        searchEditText.setAlpha(1);
 
                     }
 
@@ -116,6 +154,8 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
                     }
 
 
+
+
                     if (restaurantDetailsFragment instanceof MenuRestaurantFragment) {
 
 
@@ -125,8 +165,12 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
 
                     }
 
+
+                    scrollPositionLast = restaurantProfileHomeScrollView.getScrollY();
+
                 }
             });
+
 
             logoProfileImageView = findViewById(R.id.logo_image_view_restaurant_profile_home_activity);
             profilePictureImageView = findViewById(R.id.profile_image_view_restaurant_profile_home_activity);
@@ -184,7 +228,7 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
 //            avgCreditsTextView.setText(restaurant.getCreditsRestaurants().get(0).getCreditStar());
 
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_restaurant_profile_home_activity, restaurantDetailsFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(moreDetailsRestaurantFrameLayout.getId(), restaurantDetailsFragment).commit();
 
         }
 
@@ -203,7 +247,7 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
                 bundle.putSerializable(getString(R.string.restaurant_detail), restaurant);
                 bundle.putString("key", restaurantKey);
                 restaurantDetailsFragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_restaurant_profile_home_activity, restaurantDetailsFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(moreDetailsRestaurantFrameLayout.getId(), restaurantDetailsFragment).commit();
 
 
                 moveToMenuImgBtn.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_oval_fullfill));
@@ -234,13 +278,14 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
 
         } else if (id == R.id.more_details_image_view_restaurant_profile_home_activity) {
 
+
             //TODO: CREATE MORE DETAILS FRAGMENT
             if (!(restaurantDetailsFragment instanceof RestaurantProfileDetailsFragment)) {
                 restaurantDetailsFragment = new RestaurantProfileDetailsFragment();
                 bundle.putSerializable(getString(R.string.restaurant_detail), restaurant);
                 bundle.putString("key", restaurantKey);
                 restaurantDetailsFragment.setArguments(bundle);
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_restaurant_profile_home_activity, restaurantDetailsFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(moreDetailsRestaurantFrameLayout.getId(), restaurantDetailsFragment).commit();
 
 
                 moveToMenuImgBtn.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_oval_empty));
@@ -256,13 +301,6 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
         }
 
     }
-
-
-    @Override
-    public void onRestaurantScrollChange(int viewNum) {
-
-    }
-
 
     private void findCompletelyVisibleChildren() {
         for (int i = 0; i < constraintLayoutFullScreen.getChildCount(); i++) {

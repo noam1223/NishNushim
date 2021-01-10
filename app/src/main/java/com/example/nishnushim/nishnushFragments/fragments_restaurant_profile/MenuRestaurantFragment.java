@@ -6,15 +6,18 @@ import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -36,6 +39,7 @@ import java.util.Map;
 public class MenuRestaurantFragment extends Fragment implements MenuItemListener, CartListener {
 
 
+    ScrollView menuScrollView;
     RecyclerView subTitlesRecyclerView, menuRestaurantRecyclerView;
     RecyclerView.Adapter subTitleAdapter, menuRestaurantAdapter;
 
@@ -54,9 +58,18 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
 
         subTitlesRecyclerView = view.findViewById(R.id.sub_titles_recycler_view_menu_restaurant_fragment);
         menuRestaurantRecyclerView = view.findViewById(R.id.menu_recycler_view_restaurant_menu_fragment);
+        menuScrollView = view.findViewById(R.id.scroll_view_menu_restaurant_fragment);
+        menuScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+
+
+
+            }
+        });
+
 
         SharedPreferences sp = getContext().getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
 
         Gson gson = new Gson();
         String cartJsonString = sp.getString(getString(R.string.app_name), null);
@@ -68,7 +81,6 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
             cartClassification = new Classification();
             cartClassification.setClassificationName("עגלת קניות");
         }
-
 
 
         if (getArguments() != null) {
@@ -126,8 +138,38 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
 
 
     @Override
-    public void onDestroy() {
+    public void removeDishFromCart(Dish dish) {
 
+        for (int i = 0; i < cartClassification.getDishList().size(); i++) {
+
+            if (cartClassification.getDishList().get(i).getName().equals(dish.getName())) {
+
+                cartClassification.getDishList().remove(i);
+                return;
+
+            }
+
+        }
+
+    }
+
+
+    @Override
+    public void updateDishLongClicked(int ADAPTER_TAG, int dishPosition) {
+
+        ((RestaurantMenuAdapter) menuRestaurantAdapter).updateMenuLongPressed(ADAPTER_TAG, dishPosition);
+
+    }
+
+
+    @Override
+    public void updateCartSum() {
+
+    }
+
+
+    @Override
+    public void onDestroy() {
 
         if (!cartClassification.getDishList().isEmpty()) {
             SharedPreferences sp = getContext().getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
@@ -144,28 +186,18 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
 
 
 
-
-    public void onScrollListener(ScrollView scrollView, View view){
-
-
-
+    public void onScrollDownListener() {
+        menuScrollView.scrollTo(menuScrollView.getScrollX(), menuScrollView.getScrollY() + 1);
     }
 
 
 
+    public boolean onScrollUpListener() {
 
-
-    private boolean isViewVisible(ScrollView scrollView, View view) {
-        Rect scrollBounds = new Rect();
-        scrollView.getDrawingRect(scrollBounds);
-
-        float top = view.getY();
-        float bottom = top + view.getHeight();
-
-        if (scrollBounds.top < top && scrollBounds.bottom > bottom) {
+        if (menuScrollView.getScrollY() > menuScrollView.getChildAt(0).getTop()) {
+            menuScrollView.scrollTo(menuScrollView.getScrollX(), menuScrollView.getScrollY() - 1);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }

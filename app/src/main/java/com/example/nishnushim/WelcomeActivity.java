@@ -19,6 +19,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -36,6 +37,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import java.util.Arrays;
+
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int RC_SIGN_IN = 12345;
@@ -43,13 +46,14 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     Button signInPhoneBtn;
     TextView getInByGuestTextView;
 
-    ImageView googleSignInImgView;
-    LoginButton facebookSignInBtn;
+    ImageView googleSignInImgView, facebookSignInBtn;
 
     private CallbackManager mCallbackManager;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth auth;
     private FirebaseUser user;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +73,8 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
         auth = FirebaseAuth.getInstance();
 
-        mCallbackManager = CallbackManager.Factory.create();
 
         signInPhoneBtn = findViewById(R.id.sign_in_by_phone_btn_welcome_activity);
         getInByGuestTextView = findViewById(R.id.sign_in_by_guest_text_view_welcome_activity);
@@ -81,61 +83,15 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         facebookSignInBtn = findViewById(R.id.facebook_sign_in_anishnushim_welcome_activity);
 
 
-        facebookSignInBtn.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-                AuthCredential authCredential = FacebookAuthProvider.getCredential(loginResult.getAccessToken().getToken());
-
-                auth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if (task.isSuccessful()) {
-
-                            user = auth.getCurrentUser();
-                            AccessToken accessToken = AccessToken.getCurrentAccessToken();
-
-                            boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-
-
-                            if (user != null) {
-
-                                moveUserToAddressFirst();
-
-                            }
-
-
-                        } else {
-
-                            Toast.makeText(WelcomeActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
-                        }
-
-                    }
-                });
-
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(WelcomeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
+        facebookSignInBtn.setOnClickListener(this);
         googleSignInImgView.setOnClickListener(this);
         signInPhoneBtn.setOnClickListener(this);
         getInByGuestTextView.setOnClickListener(this);
 
 
     }
+
+
 
 
     @Override
@@ -210,18 +166,65 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
         } else if (id == R.id.google_sign_in_anishnushim_welcome_activity) {
 
-//            GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-//
-//            if (account == null) {
-//                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-//                startActivityForResult(signInIntent, RC_SIGN_IN);
-//            } else {
-//                moveUserToAddressFirst();
-//            }
 
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_SIGN_IN);
 
+
+        } else if (id == R.id.facebook_sign_in_anishnushim_welcome_activity){
+
+
+            Toast.makeText(this, "FACEBOOK", Toast.LENGTH_SHORT).show();
+            mCallbackManager = CallbackManager.Factory.create();
+
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("user_photos", "email", "public_profile", "user_posts"));
+            LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+
+                    AuthCredential authCredential = FacebookAuthProvider.getCredential(loginResult.getAccessToken().getToken());
+
+                    auth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+
+                            if (task.isSuccessful()) {
+
+                                user = auth.getCurrentUser();
+                                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+
+                                boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
+
+
+                                if (user != null) {
+
+                                    moveUserToAddressFirst();
+
+                                }
+
+
+                            } else {
+
+                                Toast.makeText(WelcomeActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        }
+                    });
+
+
+                }
+
+                @Override
+                public void onCancel() {
+
+                }
+
+                @Override
+                public void onError(FacebookException error) {
+                    Toast.makeText(WelcomeActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
         }
 

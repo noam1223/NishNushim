@@ -56,15 +56,12 @@
             android:id="@+id/pin_entry_edit_text_verification_code_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:cursorVisible="true"
-            android:digits="1234567890"
-            android:fontFamily="@font/assistant_regular"
             android:inputType="number"
-            android:maxLength="6"
             android:textColor="@color/custom_blue"
-            android:textIsSelectable="false"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:digits="1234567890"
+            />
+
+
 
 
     </LinearLayout>
@@ -114,15 +111,6 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="4dp"
-            android:fontFamily="@font/assistant_regular"
-            android:text="שלחו שוב"
-            android:textColor="@color/custom_red"
-            android:textSize="12sp"/>
-
 
         <TextView
             android:layout_width="wrap_content"
@@ -133,7 +121,53 @@
             android:textSize="12sp"/>
 
 
+        <TextView
+            android:id="@+id/send_verification_again_text_view_verification_code_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:fontFamily="@font/assistant_regular"
+            android:text="שלחו שוב"
+            android:textColor="@color/custom_red"
+            android:textSize="12sp"/>
+
     </LinearLayout>
+
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/assistant_regular"
+            android:text="זה לא המספר שלי."
+            android:textColor="#002144"
+            android:textSize="12sp"/>
+
+
+        <TextView
+            android:id="@+id/update_phone_number_text_view_verification_code_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:fontFamily="@font/assistant_regular"
+            android:text="רוצה לערוך"
+            android:textColor="@color/custom_red"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+
+
 
 
 </LinearLayout>
