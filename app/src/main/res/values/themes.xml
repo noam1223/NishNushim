@@ -22,7 +22,7 @@
     </style>
 
 
-    <style name="DrawerStyleTextView"  parent="Base.TextAppearance.AppCompat">
+    <style name="DrawerStyleTextView" parent="Widget.AppCompat.TextView">
         <item name="fontFamily">@font/assistant_semibold</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/custom_blue</item>

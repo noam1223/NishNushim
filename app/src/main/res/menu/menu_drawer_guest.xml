@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item android:id="@+id/connect_menu_guest_item"
+        android:title="התחברות"
+        android:icon="@drawable/ic_icon_drawer_chicken" />
+
+    <item android:id="@+id/answers_questions_menu_guest_item"
+        android:title="שאלות ותשובות"
+        android:icon="@drawable/ic_icon_answers_questions_drawer"/>
+
+    <item android:id="@+id/communicate_us_menu_guest_item"
+        android:title="צרו קשר"
+        android:icon="@drawable/ic_icon_contact_us_drawer"/>
+
+    <item android:id="@+id/share_with_friends_menu_guest_item"
+        android:title="שתפו לחברים"
+        android:icon="@drawable/ic_icon_share_drawer"/>
+
+    <item android:id="@+id/rate_us_menu_guest_item"
+        android:title="דרגו אותנו"
+        android:icon="@drawable/ic_icon_rate_us_drawer"/>
+
+    <item android:id="@+id/term_and_conditions_menu_guest_item"
+        android:title="תנאי שימוש"
+        android:icon="@drawable/ic_icon_conditions_drawer"/>
+
+    <item android:id="@+id/general_settings_menu_guest_item"
+        android:title="הגדרות כלליות"
+        android:icon="@drawable/ic_icon_settings_drawer"/>
+
+
+</menu>

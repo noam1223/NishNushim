@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -65,7 +66,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     RelativeLayout toolBarRelativeLayout;
 
     ImageButton searchImgBtn, filterImageBtn, menuImageBtn, myAddressArrowImageBtn;
-    TextView addressAppBarTextView;
+    TextView addressAppBarTextView, filterAppBarTextView;
 
     //    EditText searchRestaurantByStringEditTxt;
     FrameLayout frameLayout;
@@ -74,6 +75,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     User user;
     NavigationView navigationView;
+    TextView navigationHeaderTextView;
+    ImageView navigationHeaderImageView;
 
     RecyclerView typeRestaurantRecyclerView;
     RecyclerView.Adapter typeRestaurantAdapter;
@@ -84,6 +87,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     List<Button> filterBtnList = new ArrayList<>();
     Dialog filterDialog, searchDialog, myAddressDialog;
     Button timeDeliveryFilterBtn, distanceFilterBtn, minAmountOfMoneyForDeliverFilterBtn, deliveryAmountFilterBtn, creditsFilterBtn, recommendationFilterBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +103,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         myAddressArrowImageBtn = findViewById(R.id.open_my_address_pop_up_image_btn_home_page_activity);
 
         addressAppBarTextView = findViewById(R.id.my_address_app_bar_text_view_home_page_activity);
+        filterAppBarTextView = findViewById(R.id.filter_app_bar_text_view_home_page_activity);
+
         frameLayout = findViewById(R.id.nav_host_fragment_home_page_activity);
         frameDrawable = frameLayout.getBackground();
 
@@ -110,10 +116,14 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
 
         drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.navigation_drawer_home_page_activity);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         navigationView.setNavigationItemSelectedListener(this);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+        View headerView = navigationView.getHeaderView(0);
+        navigationHeaderTextView = headerView.findViewById(R.id.header_text_view_drawer_header_item);
+        navigationHeaderImageView = headerView.findViewById(R.id.header_image_view_drawer_header_item);
 
         actionBarDrawerToggle.syncState();
         initializeUserPicturesRecyclerView();
@@ -133,9 +143,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
                     user = task.getResult().toObject(User.class);
 
-                    if (user != null)
+
+                    if (user != null) {
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment()).commit();
-                    else
+                        navigationView.getMenu().clear();
+                        navigationView.inflateMenu(R.menu.menu_drawer_login);
+                    } else
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushinAnonymousUserFragment()).commit();
 
 
@@ -212,9 +225,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
 
             LinearLayout firstScreenLinearLayout = popUpView.findViewById(R.id.linear_layout_search_logo_area_search_pop_up_window_layout);
-//            Animation animate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_y_direction);
-//            animate.setDuration(500);
-//            areaSearchLinearLayout.startAnimation(animate);
+
 
             EditText searchEditText = popUpView.findViewById(R.id.edit_text_search_restaurant_by_string_search_pop_up_window);
 
@@ -227,11 +238,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             historyResultsListView = popUpView.findViewById(R.id.history_of_search_list_view_search_pop_up_window_layout);
 
 
-//            toolBarRelativeLayout.setVisibility(View.INVISIBLE);
-//            searchRestaurantByStringEditTxt.setVisibility(View.VISIBLE);
-//            searchRestaurantByStringEditTxt.setClickable(true);
-//
-//
+
+
+
             searchEditText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -247,6 +256,18 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                     if (s.length() > 0) {
                         firstScreenLinearLayout.setVisibility(View.GONE);
                         resultsListsLinearLayout.setVisibility(View.VISIBLE);
+
+
+
+
+
+
+
+
+
+
+
+
                     } else {
                         firstScreenLinearLayout.setVisibility(View.VISIBLE);
                         resultsListsLinearLayout.setVisibility(View.GONE);
@@ -329,8 +350,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
                             filterBtnList.get(finalI).setCompoundDrawables(null, filterDrawable, null, null);
                             filterDrawable = null;
-
-                            Toast.makeText(getBaseContext(), ((Button) v).getText().toString(), Toast.LENGTH_SHORT).show();
+                            filterAppBarTextView.setText(((Button) v).getText().toString());
 
 
                             filterDialog.dismiss();
@@ -453,40 +473,54 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         if (id == R.id.connect_menu_guest_item) {
 
-            Toast.makeText(this, "PROFILE", Toast.LENGTH_SHORT).show();
-
-            intent = new Intent(HomePageActivity.this, UserProfileActivity.class);
-            intent.putExtra("user", user);
-            startActivity(intent);
-
-        } else if (id == R.id.answers_questions_menu_guest_item) {
-
-            Toast.makeText(this, "ADDRESS", Toast.LENGTH_SHORT).show();
-
-        } else if (id == R.id.communicate_us_menu_guest_item) {
-
-            Toast.makeText(this, "CREDIT", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "כניסה לאורל", Toast.LENGTH_SHORT).show();
 
 
-        } else if (id == R.id.share_with_friends_menu_guest_item) {
+        } else if (id == R.id.answers_questions_menu_guest_item || id == R.id.answers_questions_drawer_menu_login) {
 
-            Toast.makeText(this, "QUESTIONS", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "שאלות ותשובות", Toast.LENGTH_SHORT).show();
+
+        } else if (id == R.id.communicate_us_menu_guest_item || id == R.id.make_contact_us_drawer_menu_login) {
+
+            Toast.makeText(this, "צרו קשר", Toast.LENGTH_SHORT).show();
 
 
-        } else if (id == R.id.rate_us_menu_guest_item) {
+        } else if (id == R.id.share_with_friends_menu_guest_item || id == R.id.share_with_friends_drawer_menu_login) {
 
-            Toast.makeText(this, "CONTACT", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "שתף עם חברים", Toast.LENGTH_SHORT).show();
 
 
-        } else if (id == R.id.term_and_conditions_menu_guest_item) {
+        } else if (id == R.id.rate_us_menu_guest_item || id == R.id.rate_us_drawer_menu_login) {
+
+            Toast.makeText(this, "דרגו אותנו", Toast.LENGTH_SHORT).show();
+
+
+        } else if (id == R.id.term_and_conditions_menu_guest_item || id == R.id.terms_condition_drawer_menu_login) {
 
             Toast.makeText(this, "SHARE", Toast.LENGTH_SHORT).show();
 
 
-        } else if (id == R.id.general_settings_menu_guest_item) {
+        } else if (id == R.id.general_settings_menu_guest_item || id == R.id.general_settings_drawer_menu_login) {
 
-            Toast.makeText(this, "RATE", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "הגדרות כלליות", Toast.LENGTH_SHORT).show();
 
+
+        }else if (id == R.id.profile_details_menu_drawer_login){
+
+            Toast.makeText(this, "פרטים אישיים", Toast.LENGTH_SHORT).show();
+
+            intent = new Intent(this, UserProfileActivity.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
+
+        }else if (id == R.id.my_address_menu_drawer_login){
+
+            Toast.makeText(this, "הכתובות שלי", Toast.LENGTH_SHORT).show();
+
+        }else if (id == R.id.credit_cards_menu_drawer_login){
+
+
+            Toast.makeText(this, "אמצעי תשלום", Toast.LENGTH_SHORT).show();
 
         }
 

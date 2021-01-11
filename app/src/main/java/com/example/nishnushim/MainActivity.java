@@ -9,6 +9,9 @@ import android.os.Looper;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,22 +26,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FacebookSdk.fullyInitialize();
-        AppEventsLogger.activateApp(getApplication());
-
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 auth = FirebaseAuth.getInstance();
                 user = auth.getCurrentUser();
 
+
 //                auth.signOut();
+//
+//                if (LoginManager.getInstance() != null){
+//                    LoginManager.getInstance().logOut();
+//                }
+//
+//                GoogleSignInOptions gso = new GoogleSignInOptions.
+//                        Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).
+//                        build();
+//
+//                GoogleSignInClient googleSignInClient= GoogleSignIn.getClient(getApplicationContext() ,gso);
+//
+//                if (googleSignInClient != null) {
+//                    googleSignInClient.signOut();
+//                }
 //                finish();
+
 
 //                if (user == null){
 //
@@ -46,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
 //                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //                    startActivity(intent);
-//                    finish();
 //
 //                } else {
 //
@@ -54,19 +64,18 @@ public class MainActivity extends AppCompatActivity {
 //                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //                    startActivity(intent);
-//                    finish();
-//
-////
-//
 //                }
+
+
 
                 //TODO: DO NOT FORGET TO CHANGE TO USER
                 Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                finish();
 
+
+                finish();
 
             }
         }, 1500);

@@ -115,7 +115,6 @@ public class RestaurantProfileDetailsFragment extends Fragment implements View.O
 
 
             areasForDeliveryListView = view.findViewById(R.id.area_for_delivery_list_view_restaurant_profile_details_fragment);
-            Toast.makeText(getContext(), String.valueOf(restaurant.getAreasForDeliveries().size()), Toast.LENGTH_SHORT).show();
             areasForDeliveryListView.setAdapter(new AreasForDeliveryAdapter(getContext(), restaurant.getAreasForDeliveries()));
 
             openCloseHoursListView = view.findViewById(R.id.open_close_hours_list_view_restaurant_profile_details_fragment);

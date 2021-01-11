@@ -38,53 +38,101 @@
                     android:theme="?attr/actionBarTheme" />
 
 
-                <TextView
-                    android:id="@+id/my_location_head_text_view_tool_bar_item_address_activity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="38dp"
-                    android:fontFamily="@font/assistant_light"
-                    android:text="המיקום שלי"
-                    android:textColor="#ffffff"
-                    android:textSize="12sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/linear_layout_pop_up_btns_area_home_pare_activity"
+                    android:orientation="vertical">
 
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/my_location_head_text_view_tool_bar_item_address_activity"
-                    android:layoutDirection="rtl">
-
-
-                    <ImageButton
-                        android:id="@+id/open_my_address_pop_up_image_btn_home_page_activity"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="12dp"
-                        android:background="@drawable/ic_baseline_keyboard_arrow_down_24" />
-
-
-                    <TextView
-                        android:id="@+id/my_address_app_bar_text_view_home_page_activity"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginRight="6dp"
-                        android:layout_toLeftOf="@id/open_my_address_pop_up_image_btn_home_page_activity"
-                        android:fontFamily="@font/assistant_bold"
-                        android:text="כתובת"
-                        android:textColor="#ffffff"
-                        android:textSize="14sp" />
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="12dp">
 
 
-                </RelativeLayout>
+                        <TextView
+                            android:id="@+id/my_location_head_text_view_tool_bar_item_address_activity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="38dp"
+                            android:fontFamily="@font/assistant_light"
+                            android:text="המיקום שלי"
+                            android:textColor="#ffffff"
+                            android:textSize="12sp" />
 
+
+                        <TextView
+                            android:id="@+id/my_address_app_bar_text_view_home_page_activity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/assistant_bold"
+                            android:text="כתובת"
+                            android:textColor="#ffffff"
+                            android:textSize="14sp"
+                            android:layout_marginRight="6dp"/>
+
+
+                        <ImageButton
+                            android:id="@+id/open_my_address_pop_up_image_btn_home_page_activity"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/ic_icon_arrow" />
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="38dp"
+                            android:fontFamily="@font/assistant_light"
+                            android:text="דירוג לפי"
+                            android:textColor="#ffffff"
+                            android:textSize="12sp" />
+
+
+                        <TextView
+                            android:id="@+id/filter_app_bar_text_view_home_page_activity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/assistant_bold"
+                            android:text="זמן משלוח"
+                            android:textColor="#ffffff"
+                            android:textSize="14sp"
+                            android:layout_marginRight="6dp"/>
+
+
+                        <ImageButton
+                            android:id="@+id/filter_image_btn_tool_bar_item"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/ic_icon_arrow" />
+
+                    </LinearLayout>
+
+
+
+
+                </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/linear_layout_pop_up_btns_area_home_pare_activity"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
@@ -99,14 +147,6 @@
                         android:layout_marginLeft="16dp"
                         android:background="@drawable/ic_search" />
 
-
-                    <ImageButton
-                        android:id="@+id/filter_image_btn_tool_bar_item"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="16dp"
-                        android:background="@drawable/ic_filter" />
 
 
                     <ImageButton
@@ -124,8 +164,6 @@
             </RelativeLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
-
-
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -154,34 +192,15 @@
 
     <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/navigation_drawer_home_page_activity"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_gravity="left"
         android:background="@color/custom_yellow"
-        android:fitsSystemWindows="true"
-        app:menu="@menu/menu_drawer"
+        android:fitsSystemWindows="false"
         android:theme="@style/DrawerStyleTextView"
-        app:headerLayout="@layout/drawer_header_item"/>
-
-
-    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent">-->
-
-
-    <!--            <TextView-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:text="תפריט"-->
-    <!--                app:layout_constraintEnd_toEndOf="parent"-->
-    <!--                app:layout_constraintTop_toTopOf="parent"-->
-    <!--                android:layout_marginRight="22dp"-->
-    <!--                android:layout_marginTop="22dp"-->
-    <!--                android:fontFamily="@font/assistant_semibold"-->
-    <!--                android:textColor="@color/custom_blue"/>-->
-
-
-    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+        app:headerLayout="@layout/drawer_header_item"
+        app:menu="@menu/menu_drawer_guest" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
