@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -89,6 +90,9 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
         holder.avgCreditTextView.setText("5");
 
 
+        holder.whenOpenHourTextView.setText(restaurants.get(0).getOpenHour().get(0));
+
+
     }
 
 
@@ -107,8 +111,9 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
 
         ImageView logoRestaurantImageView, mainRestaurantImageView;
         TextView restaurantNameTextView, fullAddressRestaurantTextView, distanceTextView, deliveryAmountAmountTextView,
-                timeFullDeliveryTextView, minAmountToDeliveryTextView, avgCreditTextView;
+                timeFullDeliveryTextView, minAmountToDeliveryTextView, avgCreditTextView, whenOpenHourTextView;
         CardView detailsRestaurantCardView;
+        LinearLayout whenCloseBackgroundLinearLayout;
 
 
         public RestaurantDetailsViewHolder(@NonNull View itemView) {
@@ -120,11 +125,13 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
             restaurantNameTextView = itemView.findViewById(R.id.restaurant_name_text_view_restaurant_detail_item);
             fullAddressRestaurantTextView = itemView.findViewById(R.id.full_address_text_view_restaurant_detail_item);
             distanceTextView = itemView.findViewById(R.id.distance_from_user_restaurant_detail_item);
+            whenOpenHourTextView = itemView.findViewById(R.id.when_open_hour_text_view_restaurant_details_item);
             deliveryAmountAmountTextView = itemView.findViewById(R.id.delivery_amount_restaurant_detail_item);
             timeFullDeliveryTextView = itemView.findViewById(R.id.delivery_time_restaurant_detail_item);
             minAmountToDeliveryTextView = itemView.findViewById(R.id.min_to_deliver_amount_restaurant_detail_item);
             avgCreditTextView = itemView.findViewById(R.id.avg_restaurant_feedback_text_view_restaurant_detail_item);
             detailsRestaurantCardView = itemView.findViewById(R.id.card_view_restaurant_details_item);
+            whenCloseBackgroundLinearLayout = itemView.findViewById(R.id.linear_layout_close_restaurant_background_restaurant_details_item);
 
 
         }

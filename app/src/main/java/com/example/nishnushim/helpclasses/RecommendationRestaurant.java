@@ -2,7 +2,7 @@ package com.example.nishnushim.helpclasses;
 
 import java.io.Serializable;
 
-public class CreditsRestaurant implements Serializable {
+public class RecommendationRestaurant implements Serializable {
 
     String name;
     String date;
@@ -10,11 +10,11 @@ public class CreditsRestaurant implements Serializable {
     int creditStar;
 
 
-    public CreditsRestaurant() {
+    public RecommendationRestaurant() {
     }
 
 
-    public CreditsRestaurant(String name, String date, String creditLetter, int creditStar) {
+    public RecommendationRestaurant(String name, String date, String creditLetter, int creditStar) {
         this.name = name;
         this.date = date;
         this.creditLetter = creditLetter;

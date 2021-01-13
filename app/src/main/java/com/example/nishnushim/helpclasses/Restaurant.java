@@ -20,10 +20,14 @@ public class Restaurant implements Serializable {
 
     Uri logoUri;
     Uri profileImageUri;
-    List<CreditsRestaurant> creditsRestaurants = new ArrayList<>();
+    List<RecommendationRestaurant> recommendationRestaurants = new ArrayList<>();
     boolean kosher, discount;
     List<Integer> classificationList = new ArrayList<>();
     Menu menu;
+
+    //ADDED
+    float recommendationAvg = -1;
+    double distanceFromCurrentUser;
 
     public Restaurant() {
 
@@ -128,12 +132,12 @@ public class Restaurant implements Serializable {
         this.profileImageUri = profileImageUri;
     }
 
-    public List<CreditsRestaurant> getCreditsRestaurants() {
-        return creditsRestaurants;
+    public List<RecommendationRestaurant> getRecommendationRestaurants() {
+        return recommendationRestaurants;
     }
 
-    public void setCreditsRestaurants(List<CreditsRestaurant> creditsRestaurants) {
-        this.creditsRestaurants = creditsRestaurants;
+    public void setRecommendationRestaurants(List<RecommendationRestaurant> recommendationRestaurants) {
+        this.recommendationRestaurants = recommendationRestaurants;
     }
 
     public boolean isKosher() {
@@ -166,5 +170,34 @@ public class Restaurant implements Serializable {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+
+
+    public float getRecommendationAvg() {
+
+        if (recommendationAvg == -1) {
+
+            float avg = 0;
+
+            for (int i = 0; i < recommendationRestaurants.size(); i++) {
+
+                avg += recommendationRestaurants.get(i).getCreditStar();
+
+            }
+
+            recommendationAvg = (float) (avg/recommendationRestaurants.size());
+        }
+
+        return recommendationAvg;
+    }
+
+
+    public double getDistanceFromCurrentUser() {
+        return distanceFromCurrentUser;
+    }
+
+    public void setDistanceFromCurrentUser(double distanceFromCurrentUser) {
+        this.distanceFromCurrentUser = distanceFromCurrentUser;
     }
 }

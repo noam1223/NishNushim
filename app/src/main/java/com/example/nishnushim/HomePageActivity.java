@@ -20,6 +20,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -39,8 +40,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nishnushim.adapters.RestaurantDetailsAdapter;
 import com.example.nishnushim.adapters.RestaurantTypeAdapter;
 
+import com.example.nishnushim.adapters.SearchAdapter;
+import com.example.nishnushim.helpclasses.Restaurant;
 import com.example.nishnushim.helpclasses.helpInterfaces.RestaurantTypeListener;
 import com.example.nishnushim.helpclasses.RestaurantTypeClass;
 import com.example.nishnushim.helpclasses.User;
@@ -54,9 +58,14 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HomePageActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, RestaurantTypeListener {
 
@@ -87,6 +96,28 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     List<Button> filterBtnList = new ArrayList<>();
     Dialog filterDialog, searchDialog, myAddressDialog;
     Button timeDeliveryFilterBtn, distanceFilterBtn, minAmountOfMoneyForDeliverFilterBtn, deliveryAmountFilterBtn, creditsFilterBtn, recommendationFilterBtn;
+
+
+    //MAIN RESTAURANTS LIST
+    List<Restaurant> restaurants = new ArrayList<>();
+    List<String> keys = new ArrayList<>();
+
+    //SUB MAIN RESTAURANT LIST
+
+
+
+
+
+
+    List<String> searchResultsList = new ArrayList<>();
+    List<Restaurant> restaurantsResults = new ArrayList<>();
+    List<String> keysResults = new ArrayList<>();
+
+    Map<String, List<Restaurant>> mapRestaurantsSearch = new HashMap<>();
+    Map<String, List<String>> mapSearchResultString = new HashMap<>();
+    Map<String, List<String>> mapRestaurantKeyString = new HashMap<>();
+
+    String[] classificationArray = {"פיצה", "המבורגר", "בשר", "סושי", "אסיאתי", "סלט", "קינוח", "איטלקי", "חומוס", "סנדוויץ", "מקסיקני", "ג׳חנון/בורקסים", "דגים", "כשר", "ים תיכוני", "ארוחות בוקר", "פירות ים", "מרק", "יפני", "נודלס"};
 
 
     @Override
@@ -143,26 +174,85 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
                     user = task.getResult().toObject(User.class);
 
-
                     if (user != null) {
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment()).commit();
                         navigationView.getMenu().clear();
                         navigationView.inflateMenu(R.menu.menu_drawer_login);
+
+                        //TODO: SET ADDRESS BY MY ADDRESS CLASS //
+                        addressAppBarTextView.setText(user.getChosenAddressString());
+
+
+                        db.collection(getResources().getString(R.string.RESTAURANTS_PATH)).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                if (task.isSuccessful()) {
+
+                                    if (task.getResult() != null) {
+
+                                        for (DocumentSnapshot documentSnapshot :
+                                                task.getResult()) {
+
+                                            Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
+
+                                            //TODO: CHANGE THE ADDRESS LOGIC IN USER AND MYADDRESS
+                                            if (restaurant != null) {
+
+                                                if (user.getAddresses().get(0).getCityName().equals(restaurant.getMyAddress().getCityName())) {
+                                                    restaurants.add(restaurant);
+                                                    keys.add(documentSnapshot.getId());
+                                                }else {
+
+                                                    for (int i = 0; i < restaurant.getAreasForDeliveries().size(); i++) {
+
+                                                        if (user.getAddresses().get(0).getCityName().equals(restaurant.getAreasForDeliveries().get(i).getAreaName())){
+                                                            restaurant.getAreasForDeliveries().get(i).setArea(true);
+                                                            restaurant.setDistanceFromCurrentUser(distance(user.getAddresses().get(0).getLatitude(), user.getAddresses().get(0).getLongitude(), restaurant.getMyAddress().getLatitude(), restaurant.getMyAddress().getLongitude()));
+                                                            restaurants.add(restaurant);
+                                                            keys.add(documentSnapshot.getId());
+                                                        }
+
+                                                    }
+                                                }
+
+                                            }
+
+
+                                        }
+
+
+                                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment(restaurants, keys)).commit();
+
+
+                                    } else
+                                        Toast.makeText(getApplicationContext(), "אין מסעדות כרגע להציג", Toast.LENGTH_SHORT).show();
+
+                                } else if (task.isCanceled() && task.getException() != null) {
+
+                                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment()).commit();
+                                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                }
+
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment()).commit();
+                            }
+                        });
+
+
                     } else
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushinAnonymousUserFragment()).commit();
-
-
-                    //TODO: SET ADDRESS BY MY ADDRESS CLASS //
-
-                    addressAppBarTextView.setText(user.getChosenAddressString());
 
 
                 } else if (task.isCanceled()) {
                     Toast.makeText(HomePageActivity.this, "ישנה בעיית חיבור", Toast.LENGTH_SHORT).show();
                     finish();
                 }
-
-
             }
 
             ;
@@ -171,9 +261,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
                 Toast.makeText(HomePageActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment()).commit();
             }
         });
 
@@ -237,8 +326,10 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             searchResultsListView = popUpView.findViewById(R.id.search_list_view_search_pop_up_window_layout);
             historyResultsListView = popUpView.findViewById(R.id.history_of_search_list_view_search_pop_up_window_layout);
 
-
-
+            restaurantsResults = new ArrayList<>();
+            keysResults = new ArrayList<>();
+            SearchAdapter searchAdapter = new SearchAdapter(this, searchResultsList, restaurantsResults, keys);
+            searchResultsListView.setAdapter(searchAdapter);
 
 
             searchEditText.addTextChangedListener(new TextWatcher() {
@@ -254,19 +345,44 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                 public void afterTextChanged(Editable s) {
 
                     if (s.length() > 0) {
+
                         firstScreenLinearLayout.setVisibility(View.GONE);
                         resultsListsLinearLayout.setVisibility(View.VISIBLE);
 
+                        if (mapRestaurantsSearch.containsKey(s.toString()) && mapSearchResultString.containsKey(s.toString()) && mapRestaurantKeyString.containsKey(s.toString())) {
+
+                            restaurantsResults.clear();
+                            searchResultsList.clear();
+                            keysResults.clear();
+
+                            restaurantsResults.addAll(mapRestaurantsSearch.get(s.toString()));
+                            searchResultsList.addAll(mapSearchResultString.get(s.toString()));
+                            keysResults.addAll(mapRestaurantKeyString.get(s.toString()));
 
 
+                            searchAdapter.setRestaurants(restaurantsResults);
+                            searchAdapter.setSearchList(searchResultsList);
+                            searchAdapter.setKeys(keysResults);
+                            searchAdapter.notifyDataSetChanged();
 
 
+                        } else {
 
+                            restaurantsResults.addAll(searchInRestaurants(s.toString()));
 
+                            if (mapSearchResultString.containsKey(s.toString())) {
+                                searchResultsList.clear();
+                                keysResults.clear();
+                                searchResultsList.addAll(mapSearchResultString.get(s.toString()));
+                                keysResults.addAll(mapRestaurantKeyString.get(s.toString()));
+                            } else searchResultsList.clear();
 
+                            searchAdapter.setRestaurants(restaurantsResults);
+                            searchAdapter.setSearchList(searchResultsList);
+                            searchAdapter.setKeys(keysResults);
+                            searchAdapter.notifyDataSetChanged();
 
-
-
+                        }
 
                     } else {
                         firstScreenLinearLayout.setVisibility(View.VISIBLE);
@@ -295,6 +411,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
             searchDialog.create();
             searchDialog.show();
+
 
             Window window = searchDialog.getWindow();
             window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -331,9 +448,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             filterBtnList.add(recommendationFilterBtn);
 
 
+            //TODO: WORK ON FILTER RESTAURANTS //TIME DELIVERY //DISTANCE FROM USER //MINIMUM TO ORDER //DELIVERY COST //CREDITS //RECOMMENDATIONS
+
             for (int i = 0; i < filterBtnList.size(); i++) {
                 int finalI = i;
                 filterBtnList.get(i).setOnTouchListener(new View.OnTouchListener() {
+                    @SuppressLint("ClickableViewAccessibility")
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
 
@@ -351,6 +471,45 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                             filterBtnList.get(finalI).setCompoundDrawables(null, filterDrawable, null, null);
                             filterDrawable = null;
                             filterAppBarTextView.setText(((Button) v).getText().toString());
+
+                            //HERE THE FUNCTION WILL BE FOR FILTER THE RESTAURANTS
+
+                            int id = filterBtnList.get(finalI).getId();
+
+
+                            //TIME DELIVERY
+                            if (id == R.id.time_delivery_filter_pop_up_window){
+
+                                filterByTimeDelivery();
+
+                                //DISTANCE FROM USER
+                            }else if (id == R.id.distance_filter_pop_up_window){
+
+                                filterByDistance();
+
+                                //MINIMUM TO ORDER
+                            }else if (id == R.id.min_amount_for_delivery_filter_pop_up_window){
+
+                                filterByMinToDeliver();
+
+                                //DELIVERY COST
+                            }else if (id == R.id.delivery_amount_filter_pop_up_window){
+
+                                filterByDeliveryAmount();
+
+                                //CREDITS
+                            }else if (id == R.id.credits_filter_pop_up_window){
+
+
+
+
+                                //RECOMMENDATIONS
+                            }else if (id == R.id.recommendation_filter_pop_up_window){
+
+                                filterByRecommendation();
+
+                            }
+
 
 
                             filterDialog.dismiss();
@@ -445,6 +604,280 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////WORKING ON FILTER POP UP WINDOW
+
+    private void filterByRecommendation() {
+
+        Collections.sort(restaurants, new Comparator<Restaurant>() {
+            @Override
+            public int compare(Restaurant o1, Restaurant o2) {
+                return Float.compare(o1.getRecommendationAvg(), o2.getRecommendationAvg());
+            }
+        });
+
+
+    }
+
+
+
+
+    private void filterByTimeDelivery() {
+
+        Collections.sort(restaurants, new Comparator<Restaurant>() {
+            @Override
+            public int compare(Restaurant o1, Restaurant o2) {
+
+                int amount1 = 0, amount2 = 0;
+
+
+                for (int i = 0; i < o1.getAreasForDeliveries().size(); i++) {
+
+                    if (o1.getAreasForDeliveries().get(i).isArea()){
+                        amount1 = o1.getAreasForDeliveries().get(i).getTimeOfDelivery();
+                    }
+
+                }
+
+
+                for (int i = 0; i < o2.getAreasForDeliveries().size(); i++) {
+                    if (o2.getAreasForDeliveries().get(i).isArea()){
+                        amount2 = o2.getAreasForDeliveries().get(i).getTimeOfDelivery();
+                    }
+                }
+
+
+                if (amount1 > amount2){
+                    return 1;
+                }else if (amount1 == amount2){
+                    return 0;
+                }else return -1;
+            }
+        });
+
+    }
+
+
+
+
+    private void filterByDistance() {
+
+        Collections.sort(restaurants, new Comparator<Restaurant>() {
+            @Override
+            public int compare(Restaurant o1, Restaurant o2) {
+                return Double.compare(o1.getDistanceFromCurrentUser(), o2.getDistanceFromCurrentUser());
+            }
+        });
+
+    }
+
+
+
+
+    private void filterByMinToDeliver() {
+
+        Collections.sort(restaurants, new Comparator<Restaurant>() {
+            @Override
+            public int compare(Restaurant o1, Restaurant o2) {
+
+                int amount1 = 0, amount2 = 0;
+
+
+                for (int i = 0; i < o1.getAreasForDeliveries().size(); i++) {
+
+                    if (o1.getAreasForDeliveries().get(i).isArea()){
+                        amount1 = o1.getAreasForDeliveries().get(i).getMinToDeliver();
+                    }
+
+                }
+
+
+                for (int i = 0; i < o2.getAreasForDeliveries().size(); i++) {
+                    if (o2.getAreasForDeliveries().get(i).isArea()){
+                        amount2 = o2.getAreasForDeliveries().get(i).getMinToDeliver();
+                    }
+                }
+
+
+                if (amount1 > amount2){
+                    return 1;
+                }else if (amount1 == amount2){
+                    return 0;
+                }else return -1;
+            }
+        });
+
+    }
+
+
+
+
+    private void filterByDeliveryAmount() {
+
+        Collections.sort(restaurants, new Comparator<Restaurant>() {
+            @Override
+            public int compare(Restaurant o1, Restaurant o2) {
+                Collections.sort(restaurants, new Comparator<Restaurant>() {
+                    @Override
+                    public int compare(Restaurant o1, Restaurant o2) {
+
+                        int amount1 = 0, amount2 = 0;
+
+
+                        for (int i = 0; i < o1.getAreasForDeliveries().size(); i++) {
+
+                            if (o1.getAreasForDeliveries().get(i).isArea()){
+                                amount1 = o1.getAreasForDeliveries().get(i).getDeliveryCost();
+                            }
+
+                        }
+
+
+                        for (int i = 0; i < o2.getAreasForDeliveries().size(); i++) {
+                            if (o2.getAreasForDeliveries().get(i).isArea()){
+                                amount2 = o2.getAreasForDeliveries().get(i).getDeliveryCost();
+                            }
+                        }
+
+
+                        if (amount1 > amount2){
+                            return 1;
+                        }else if (amount1 == amount2){
+                            return 0;
+                        }else return -1;
+                    }
+                });
+            }
+        });
+
+    }
+
+
+
+
+
+    private double distance(double lat1, double lng1, double lat2, double lng2) {
+
+        double earthRadius = 6371; // in kilometers
+
+        double dLat = Math.toRadians(lat2-lat1);
+        double dLng = Math.toRadians(lng2-lng1);
+
+        double sindLat = Math.sin(dLat / 2);
+        double sindLng = Math.sin(dLng / 2);
+
+        double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
+                * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        return earthRadius * c; // output distance, in LOKOMETERS
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////WORKING ON SEARCH POP UP WINDOW
+    private List<Restaurant> searchInRestaurants(String s) {
+
+        List<Restaurant> restaurantList = new ArrayList<>();
+
+        for (Restaurant restaurant : restaurants) {
+            boolean isAdded = false;
+
+            for (int i = 0; i < restaurant.getClassificationList().size(); i++) {
+                if (classificationArray[restaurant.getClassificationList().get(i)].contains(s)) {
+                    addTextToSearchMap(s, classificationArray[restaurant.getClassificationList().get(i)]);
+                    isAdded = true;
+                }
+            }
+
+            for (int i = 0; i < restaurant.getMenu().getClassifications().size(); i++) {
+
+                if (restaurant.getMenu().getClassifications().get(i).getClassificationName().contains(s)) {
+                    addTextToSearchMap(s, restaurant.getMenu().getClassifications().get(i).getClassificationName());
+                    isAdded = true;
+                }
+
+
+                //TODO: TAKE THIS PART TO SEARCH A INGREDIENT
+                for (int j = 0; j < restaurant.getMenu().getClassifications().get(i).getDishList().size(); j++) {
+                    if (restaurant.getMenu().getClassifications().get(i).getDishList().get(j).getName().contains(s)) {
+                        addTextToSearchMap(s, restaurant.getMenu().getClassifications().get(i).getDishList().get(j).getName());
+                        isAdded = true;
+                    }
+                }
+            }
+
+
+            if (isAdded) {
+                restaurantList.add(restaurant);
+                addRestaurantToRestaurantMap(restaurant, s);
+            }
+
+        }
+
+
+        return restaurantList;
+
+    }
+
+
+
+
+    private void addRestaurantToRestaurantMap(Restaurant restaurant, String s) {
+
+        List<Restaurant> restaurantList = new ArrayList<>();
+
+        if (mapRestaurantsSearch.containsKey(s)){
+            if (mapRestaurantsSearch.get(s).isEmpty()){
+                restaurantList.add(restaurant);
+                mapRestaurantsSearch.get(s).addAll(restaurantList);
+            }mapRestaurantsSearch.get(s).add(restaurant);
+        } else {
+            restaurantList.add(restaurant);
+            mapRestaurantsSearch.put(s, restaurantList);
+        }
+
+    }
+
+
+
+
+
+    private void addTextToSearchMap(String searchText, String addText) {
+
+        List<String> strings = new ArrayList<>();
+
+        if (!mapSearchResultString.containsKey(searchText)) {
+            strings.add(addText);
+            mapSearchResultString.put(searchText, strings);
+        } else if (mapSearchResultString.get(searchText).isEmpty()) {
+
+            if (mapSearchResultString.get(searchText).contains(addText)) {
+                mapSearchResultString.get(searchText).add(addText);
+            }
+        }
+    }
+
+
     private RadioButton createRadioButton(RadioButton myLocationToDeliverRadioBtn, int size, int idNum, int drawableResource, String text) {
         RadioButton radioButton = new RadioButton(this);
         radioButton.setId(size + idNum);
@@ -505,7 +938,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(this, "הגדרות כלליות", Toast.LENGTH_SHORT).show();
 
 
-        }else if (id == R.id.profile_details_menu_drawer_login){
+        } else if (id == R.id.profile_details_menu_drawer_login) {
 
             Toast.makeText(this, "פרטים אישיים", Toast.LENGTH_SHORT).show();
 
@@ -513,11 +946,11 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             intent.putExtra("user", user);
             startActivity(intent);
 
-        }else if (id == R.id.my_address_menu_drawer_login){
+        } else if (id == R.id.my_address_menu_drawer_login) {
 
             Toast.makeText(this, "הכתובות שלי", Toast.LENGTH_SHORT).show();
 
-        }else if (id == R.id.credit_cards_menu_drawer_login){
+        } else if (id == R.id.credit_cards_menu_drawer_login) {
 
 
             Toast.makeText(this, "אמצעי תשלום", Toast.LENGTH_SHORT).show();
@@ -543,6 +976,23 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
             getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new RestaurantsFragment()).commit();
 
+        }
+
+
+    }
+
+
+    private void filter(String text, List<String> resultSearchList) {
+        //new array list that will hold the filtered data
+        ArrayList<String> filterdNames = new ArrayList<>();
+
+        //looping through existing elements
+        for (String s : resultSearchList) {
+            //if the existing elements contains the search input
+            if (s.toLowerCase().contains(text.toLowerCase())) {
+                //adding the element to filtered list
+                filterdNames.add(s);
+            }
         }
 
 

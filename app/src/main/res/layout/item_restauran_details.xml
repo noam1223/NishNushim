@@ -24,6 +24,42 @@
             android:layoutDirection="rtl">
 
 
+
+
+            <LinearLayout
+                android:id="@+id/linear_layout_close_restaurant_background_restaurant_details_item"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:orientation="vertical"
+                android:layoutDirection="rtl"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@color/custom_yellow"
+                android:alpha="0.95"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+
+
+                <TextView
+                    android:id="@+id/when_open_hour_text_view_restaurant_details_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="לצערינו המסעדה סגורה כעת"
+                    android:textSize="12sp"
+                    android:textColor="@color/custom_blue"
+                    android:fontFamily="@font/assistant_regular"
+                    android:layout_marginRight="32dp"/>
+
+
+
+
+            </LinearLayout>
+
+
+
+
             <ImageView
                 android:id="@+id/restaurant_main_image_view_restaurant_details_item"
                 android:layout_width="match_parent"

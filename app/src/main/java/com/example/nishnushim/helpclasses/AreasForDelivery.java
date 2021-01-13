@@ -9,6 +9,9 @@ public class AreasForDelivery implements Serializable {
     int minToDeliver;
     int timeOfDelivery;
 
+    //ADDED
+    boolean isArea = false;
+
 
     public AreasForDelivery() {
     }
@@ -52,5 +55,13 @@ public class AreasForDelivery implements Serializable {
 
     public void setTimeOfDelivery(int timeOfDelivery) {
         this.timeOfDelivery = timeOfDelivery;
+    }
+
+    public boolean isArea() {
+        return isArea;
+    }
+
+    public void setArea(boolean area) {
+        isArea = area;
     }
 }

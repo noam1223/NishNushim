@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="rtl"
     android:orientation="vertical"
-    tools:context=".nishnushFragments.NishnushimHomeFragment"
-    android:layoutDirection="rtl">
+    tools:context=".nishnushFragments.NishnushimHomeFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,323 +15,303 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layoutDirection="rtl">
+            android:layoutDirection="rtl"
+            android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="326dp"
-        android:layout_height="174dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginLeft="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_gravity="center"
-        app:cardCornerRadius="12dp"
-        android:layoutDirection="rtl">
+            <androidx.cardview.widget.CardView
+                android:layout_width="326dp"
+                android:layout_height="174dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="18dp"
+                android:layoutDirection="rtl"
+                app:cardCornerRadius="12dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layoutDirection="rtl">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layoutDirection="rtl"
+                    android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/assistant_semibold"
-                android:gravity="center"
-                android:minLines="2"
-                android:text="מחכים לך קרדיטים למימוש מיידי\n במסעדה שתבחר"
-                android:textColor="@color/custom_blue"
-                android:textSize="16sp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/assistant_semibold"
+                        android:gravity="center"
+                        android:minLines="2"
+                        android:text="מחכים לך קרדיטים למימוש מיידי\n במסעדה שתבחר"
+                        android:textColor="@color/custom_blue"
+                        android:textSize="16sp" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/assistant_light"
+                        android:gravity="center"
+                        android:minLines="2"
+                        android:text="1 מטבע = 1 ₪"
+                        android:textColor="@color/custom_blue"
+                        android:textSize="12sp" />
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/relative_layout_images_area_nishnushim_home_fragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layoutDirection="rtl">
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout"
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:layoutDirection="rtl"
+                            app:layout_constraintLeft_toRightOf="@id/chicken_on_bike_image_view_nishnushim_home_fragment"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:layout_editor_absoluteX="64dp">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/ic_credit_coin" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/assistant_bold"
+                                android:text="20"
+                                android:textColor="@color/custom_blue"
+                                android:textSize="9sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="27dp"
+                            android:layout_height="27dp"
+                            android:layout_marginTop="14dp"
+                            android:layout_marginRight="14dp"
+                            android:layoutDirection="rtl"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/ic_credit_coin" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/assistant_bold"
+                                android:text="20"
+                                android:textColor="@color/custom_blue"
+                                android:textSize="13sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_marginLeft="22dp"
+                            android:layout_marginBottom="14dp"
+                            android:layoutDirection="rtl"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toRightOf="@+id/chicken_on_bike_image_view_nishnushim_home_fragment">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/ic_credit_coin" />
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/assistant_bold"
+                                android:text="20"
+                                android:textColor="@color/custom_blue"
+                                android:textSize="11sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        <ImageView
+                            android:id="@+id/chicken_on_bike_image_view_nishnushim_home_fragment"
+                            android:layout_width="156dp"
+                            android:layout_height="85dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic_chicken_on_bike"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="326dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/assistant_light"
-                android:textColor="@color/custom_blue"
-                android:minLines="2"
-                android:gravity="center"
-                android:text="1 מטבע = 1 ₪"
-                android:textSize="12sp" />
+                android:layout_marginTop="16dp"
+                android:layoutDirection="rtl"
+                app:cardCornerRadius="12dp">
 
 
-
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/relative_layout_images_area_nishnushim_home_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layoutDirection="rtl">
-
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout"
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layoutDirection="rtl"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/chicken_on_bike_image_view_nishnushim_home_fragment"
-                    tools:layout_editor_absoluteX="64dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_credit_coin" />
+                    android:orientation="vertical">
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/assistant_bold"
-                        android:text="20"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="14dp"
+                        android:fontFamily="@font/assistant_semibold"
+                        android:text="הארנק הוירטואלי"
                         android:textColor="@color/custom_blue"
-                        android:textSize="9sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="27dp"
-                    android:layout_height="27dp"
-                    android:layout_marginRight="14dp"
-                    android:layout_marginTop="14dp"
-                    android:layoutDirection="rtl"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_credit_coin" />
+                        android:textSize="12sp" />
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/assistant_bold"
-                        android:text="20"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="14dp"
+                        android:fontFamily="@font/assistant_semibold"
+                        android:text="המסעדות בהן צברת קרדיטים למימוש בקניה הבאה"
                         android:textColor="@color/custom_blue"
-                        android:textSize="13sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:textSize="8sp" />
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layoutDirection="rtl"
-                    android:layout_marginBottom="14dp"
-                    android:layout_marginLeft="22dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/chicken_on_bike_image_view_nishnushim_home_fragment">
-
-                    <ImageView
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/credit_coin_user_by_restaurants_nishnushim_home_fragment"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_credit_coin" />
+                        android:layout_height="120dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:orientation="horizontal" />
+
+
+                </LinearLayout>
+
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="326dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layoutDirection="rtl"
+                app:cardCornerRadius="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layoutDirection="rtl"
+                    android:orientation="vertical">
 
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/assistant_bold"
-                        android:text="20"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="14dp"
+                        android:fontFamily="@font/assistant_semibold"
+                        android:text="הזמנות חוזרות"
                         android:textColor="@color/custom_blue"
-                        android:textSize="11sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:textSize="12sp" />
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="14dp"
+                        android:fontFamily="@font/assistant_semibold"
+                        android:text="אלו המנות שהזמנת לאחרונה"
+                        android:textColor="@color/custom_blue"
+                        android:textSize="8sp" />
 
 
-                <ImageView
-                    android:id="@+id/chicken_on_bike_image_view_nishnushim_home_fragment"
-                    android:layout_width="156dp"
-                    android:layout_height="85dp"
-                    android:layout_centerInParent="true"
-                    android:src="@drawable/ic_chicken_on_bike"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/last_orders_user_by_restaurants_nishnushim_home_fragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="86dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:orientation="horizontal" />
 
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="14dp"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/assistant_semibold"
+                        android:text="לחץ להזמנה חוזרת"
+                        android:textColor="@color/custom_blue"
+                        android:textSize="8sp" />
 
 
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+                </LinearLayout>
 
 
-
-
-
-
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="326dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="12dp"
-        android:layoutDirection="rtl">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layoutDirection="rtl">
-
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="הארנק הוירטואלי"
-                android:layout_gravity="right"
-                android:layout_marginRight="14dp"
-                android:layout_marginTop="12dp"
-                android:textSize="12sp"
-                android:fontFamily="@font/assistant_semibold"
-                android:textColor="@color/custom_blue"/>
-
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="14dp"
-                android:textSize="8sp"
-                android:layout_marginTop="4dp"
-                android:text="המסעדות בהן צברת קרדיטים למימוש בקניה הבאה"
-                android:textColor="@color/custom_blue"
-                android:fontFamily="@font/assistant_semibold"/>
-
+            </androidx.cardview.widget.CardView>
 
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/credit_coin_user_by_restaurants_nishnushim_home_fragment"
+                android:id="@+id/restaurant_details_recycler_view_nishnushim_home_fragment"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:orientation="horizontal"
-                android:layout_marginBottom="12dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"/>
-
-
-        </LinearLayout>
-
-
-    </androidx.cardview.widget.CardView>
-
-
-
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="326dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="12dp"
-        android:layoutDirection="rtl">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layoutDirection="rtl">
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="הזמנות חוזרות"
-                android:layout_gravity="right"
-                android:layout_marginRight="14dp"
-                android:layout_marginTop="12dp"
-                android:textSize="12sp"
-                android:fontFamily="@font/assistant_semibold"
-                android:textColor="@color/custom_blue"/>
-
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="14dp"
-                android:textSize="8sp"
-                android:layout_marginTop="4dp"
-                android:text="אלו המנות שהזמנת לאחרונה"
-                android:textColor="@color/custom_blue"
-                android:fontFamily="@font/assistant_semibold"/>
-
-
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/last_orders_user_by_restaurants_nishnushim_home_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="86dp"
-                android:orientation="horizontal"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp"/>
-
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="14dp"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
-                android:text="לחץ להזמנה חוזרת"
-                android:textSize="8sp"
-                android:textColor="@color/custom_blue"
-                android:fontFamily="@font/assistant_semibold"
-                android:layout_gravity="right" />
+                android:nestedScrollingEnabled="false"/>
 
 
-
-
-
-        </LinearLayout>
-
-
-
-
-
-
-    </androidx.cardview.widget.CardView>
 
         </LinearLayout>
 
