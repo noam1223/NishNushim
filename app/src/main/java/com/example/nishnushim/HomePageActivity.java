@@ -719,36 +719,31 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         Collections.sort(restaurants, new Comparator<Restaurant>() {
             @Override
             public int compare(Restaurant o1, Restaurant o2) {
-                Collections.sort(restaurants, new Comparator<Restaurant>() {
-                    @Override
-                    public int compare(Restaurant o1, Restaurant o2) {
 
-                        int amount1 = 0, amount2 = 0;
+                int amount1 = 0, amount2 = 0;
 
 
-                        for (int i = 0; i < o1.getAreasForDeliveries().size(); i++) {
+                for (int i = 0; i < o1.getAreasForDeliveries().size(); i++) {
 
-                            if (o1.getAreasForDeliveries().get(i).isArea()){
-                                amount1 = o1.getAreasForDeliveries().get(i).getDeliveryCost();
-                            }
-
-                        }
-
-
-                        for (int i = 0; i < o2.getAreasForDeliveries().size(); i++) {
-                            if (o2.getAreasForDeliveries().get(i).isArea()){
-                                amount2 = o2.getAreasForDeliveries().get(i).getDeliveryCost();
-                            }
-                        }
-
-
-                        if (amount1 > amount2){
-                            return 1;
-                        }else if (amount1 == amount2){
-                            return 0;
-                        }else return -1;
+                    if (o1.getAreasForDeliveries().get(i).isArea()){
+                        amount1 = o1.getAreasForDeliveries().get(i).getDeliveryCost();
                     }
-                });
+
+                }
+
+
+                for (int i = 0; i < o2.getAreasForDeliveries().size(); i++) {
+                    if (o2.getAreasForDeliveries().get(i).isArea()){
+                        amount2 = o2.getAreasForDeliveries().get(i).getDeliveryCost();
+                    }
+                }
+
+
+                if (amount1 > amount2){
+                    return 1;
+                }else if (amount1 == amount2){
+                    return 0;
+                }else return -1;
             }
         });
 
