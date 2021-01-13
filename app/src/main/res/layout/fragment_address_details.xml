@@ -85,6 +85,59 @@
 
 
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center"
+        android:layoutDirection="rtl">
+
+
+        <EditText
+            android:id="@+id/num_floor_edit_text_address_details_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="קומה"
+            android:fontFamily="@font/assistant_regular"
+            android:textColorHint="@color/custom_blue"
+            android:paddingBottom="24dp"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:maxLength="3"/>
+
+
+
+
+        <EditText
+            android:id="@+id/entry_address_edit_text_address_details_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="כניסה"
+            android:fontFamily="@font/assistant_regular"
+            android:textColorHint="@color/custom_blue"
+            android:paddingBottom="24dp"
+            android:layout_weight="0.5" />
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:gravity="center"
+        android:layoutDirection="rtl">
+
+
+
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/save_first_address_btn_address_manually_activity"
         android:layout_width="168dp"

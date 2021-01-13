@@ -195,26 +195,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
                                             Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
 
-                                            //TODO: CHANGE THE ADDRESS LOGIC IN USER AND MYADDRESS
-                                            if (restaurant != null) {
-
-                                                if (user.getAddresses().get(0).getCityName().equals(restaurant.getMyAddress().getCityName())) {
-                                                    restaurants.add(restaurant);
-                                                    keys.add(documentSnapshot.getId());
-                                                }else {
-
-                                                    for (int i = 0; i < restaurant.getAreasForDeliveries().size(); i++) {
-
-                                                        if (user.getAddresses().get(0).getCityName().equals(restaurant.getAreasForDeliveries().get(i).getAreaName())){
-                                                            restaurant.getAreasForDeliveries().get(i).setArea(true);
-                                                            restaurant.setDistanceFromCurrentUser(distance(user.getAddresses().get(0).getLatitude(), user.getAddresses().get(0).getLongitude(), restaurant.getMyAddress().getLatitude(), restaurant.getMyAddress().getLongitude()));
-                                                            restaurants.add(restaurant);
-                                                            keys.add(documentSnapshot.getId());
-                                                        }
-
-                                                    }
-                                                }
-
+                                            if (isRestaurantAdded(restaurant, documentSnapshot.getId())){
+                                                restaurant.setDistanceFromCurrentUser(distance(user.getAddresses().get(0).getLatitude(), user.getAddresses().get(0).getLongitude(),
+                                                                                                restaurant.getMyAddress().getLatitude(), restaurant.getMyAddress().getLongitude()));
                                             }
 
 
@@ -270,6 +253,41 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
+    //ADDING RESTAURANT TO MAIN LIST RESTAURANTS
+    private boolean isRestaurantAdded(Restaurant restaurant, String key) {
+
+
+        //TODO: CHANGE THE ADDRESS LOGIC IN USER AND MYADDRESS
+        if (restaurant != null) {
+
+            if (user.getAddresses().get(0).getCityName().equals(restaurant.getMyAddress().getCityName())) {
+                restaurants.add(restaurant);
+                keys.add(key);
+                return true;
+            }else {
+
+                for (int i = 0; i < restaurant.getAreasForDeliveries().size(); i++) {
+
+                    if (user.getAddresses().get(0).getCityName().equals(restaurant.getAreasForDeliveries().get(i).getAreaName())){
+                        restaurant.getAreasForDeliveries().get(i).setArea(true);
+                        restaurants.add(restaurant);
+                        keys.add(key);
+                        return true;
+                    }
+
+                }
+            }
+
+        }
+
+        return false;
+    }
+
+
+
+
+
+
     private void initializeUserPicturesRecyclerView() {
 
         typeRestaurantRecyclerView = findViewById(R.id.filter_restaurant_type_recycler_view_address_activity);
@@ -286,6 +304,10 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         typeRestaurantRecyclerView.setAdapter(typeRestaurantAdapter);
 
     }
+
+
+
+
 
 
     @Override
@@ -500,8 +522,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                                 //CREDITS
                             }else if (id == R.id.credits_filter_pop_up_window){
 
-
-
+                                filterByCredits();
 
                                 //RECOMMENDATIONS
                             }else if (id == R.id.recommendation_filter_pop_up_window){
@@ -603,6 +624,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         }
     }
+
 
 
 
@@ -753,6 +775,21 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
 
 
+    private void filterByCredits() {
+
+        Collections.sort(restaurants, new Comparator<Restaurant>() {
+            @Override
+            public int compare(Restaurant o1, Restaurant o2) {
+                return Integer.compare(o1.getCreditAmount(), o2.getCreditAmount());
+            }
+        });
+
+    }
+
+
+
+
+
     private double distance(double lat1, double lng1, double lat2, double lng2) {
 
         double earthRadius = 6371; // in kilometers
@@ -790,6 +827,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////WORKING ON SEARCH POP UP WINDOW
+
+
     private List<Restaurant> searchInRestaurants(String s) {
 
         List<Restaurant> restaurantList = new ArrayList<>();
@@ -872,6 +911,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////
 
     private RadioButton createRadioButton(RadioButton myLocationToDeliverRadioBtn, int size, int idNum, int drawableResource, String text) {
         RadioButton radioButton = new RadioButton(this);

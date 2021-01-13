@@ -45,12 +45,23 @@ public class User implements Serializable {
 
         for (int i = 0; i < this.getAddresses().size(); i++) {
 
-            if (this.getAddresses().get(i) != null) {
+            if (this.getAddresses().get(i).isChosen()) {
                 return "" + getAddresses().get(i).getCityName() + ", " + getAddresses().get(i).getStreetName() +
                         " " + getAddresses().get(i).getHouseNumber();
             }
         }
 
         return "אנא הכנס כתובת למשלוח";
+    }
+
+
+    public MyAddress getChosenAddress(){
+
+        for (int i = 0; i < this.addresses.size(); i++) {
+            if (addresses.get(i).isChosen()){
+                return addresses.get(i);
+            }
+        }
+        return null;
     }
 }

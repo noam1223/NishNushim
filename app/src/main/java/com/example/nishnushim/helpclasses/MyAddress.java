@@ -12,6 +12,9 @@ public class MyAddress implements Serializable {
     double longitude;
     double latitude;
 
+    //ADDED
+    boolean isChosen = false;
+
     public MyAddress() {
     }
 
@@ -62,6 +65,14 @@ public class MyAddress implements Serializable {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public boolean isChosen() {
+        return isChosen;
+    }
+
+    public void setChosen(boolean chosen) {
+        isChosen = chosen;
     }
 
     public String fullMyAddress(){

@@ -29,6 +29,8 @@ public class Restaurant implements Serializable {
     float recommendationAvg = -1;
     double distanceFromCurrentUser;
 
+    int creditAmount = 0;
+
     public Restaurant() {
 
     }
@@ -199,5 +201,13 @@ public class Restaurant implements Serializable {
 
     public void setDistanceFromCurrentUser(double distanceFromCurrentUser) {
         this.distanceFromCurrentUser = distanceFromCurrentUser;
+    }
+
+    public int getCreditAmount() {
+        return creditAmount;
+    }
+
+    public void setCreditAmount(int creditAmount) {
+        this.creditAmount = creditAmount;
     }
 }
