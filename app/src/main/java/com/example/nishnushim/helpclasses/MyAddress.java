@@ -9,6 +9,11 @@ public class MyAddress implements Serializable {
     String streetName;
     String houseNumber;
 
+    //ADDED
+    String floor;
+    String entry;
+    String classificationAddress;
+
     double longitude;
     double latitude;
 
@@ -79,5 +84,29 @@ public class MyAddress implements Serializable {
 
         return cityName + ", " + streetName + " " + houseNumber;
 
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
+    public String getEntry() {
+        return entry;
+    }
+
+    public void setEntry(String entry) {
+        this.entry = entry;
+    }
+
+    public String getClassificationAddress() {
+        return classificationAddress;
+    }
+
+    public void setClassificationAddress(String classificationAddress) {
+        this.classificationAddress = classificationAddress;
     }
 }

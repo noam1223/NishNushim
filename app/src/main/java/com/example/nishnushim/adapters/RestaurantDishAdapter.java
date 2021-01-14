@@ -1,7 +1,6 @@
 package com.example.nishnushim.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,21 +103,6 @@ public class RestaurantDishAdapter extends RecyclerView.Adapter<RestaurantDishAd
             }
 
             holder.numOfDishesAddedTextView.setText("מס׳ מנות : " + numOfTimeDish);
-
-
-            if (numOfTimeDish > 0){
-                holder.addDishLongClickedBtn.setVisibility(View.GONE);
-                holder.addDishImageBtn.setVisibility(View.VISIBLE);
-                holder.removeDishImageBtn.setVisibility(View.VISIBLE);
-            } else {
-
-                holder.addDishLongClickedBtn.setVisibility(View.VISIBLE);
-                holder.addDishImageBtn.setVisibility(View.GONE);
-                holder.removeDishImageBtn.setVisibility(View.GONE);
-
-            }
-
-
             
             holder.addDishImageBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -144,12 +128,15 @@ public class RestaurantDishAdapter extends RecyclerView.Adapter<RestaurantDishAd
 
 
 
-            holder.addDishLongClickedBtn.setOnClickListener(new View.OnClickListener() {
+            holder.openChangesWindowBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    cartListener.addDishToCart(classificationOfDish.getDishList().get(position));
-                    notifyDataSetChanged();
+                    if (classificationOfDish.getDishList().get(position).getChanges().size() > 0){
+
+                        cartListener.addChangesDishCart(classificationOfDish.getDishList().get(position));
+
+                    }
 
                 }
             });
@@ -196,7 +183,7 @@ public class RestaurantDishAdapter extends RecyclerView.Adapter<RestaurantDishAd
         LinearLayout restaurantDishLongClickedLinearLayout;
         LinearLayout parentLinearLayout;
 
-        Button addDishLongClickedBtn;
+        Button openChangesWindowBtn;
         ImageButton addDishImageBtn, removeDishImageBtn;
 
         public RestaurantDishViewHolder(@NonNull View itemView) {
@@ -219,7 +206,7 @@ public class RestaurantDishAdapter extends RecyclerView.Adapter<RestaurantDishAd
 
 
 
-            addDishLongClickedBtn = itemView.findViewById(R.id.add_dish_long_clicked_to_order_btn_dish_restaurant_menu_item);
+            openChangesWindowBtn = itemView.findViewById(R.id.changes_list_btn_dish_detail_restaurant_menu_item);
             addDishImageBtn = itemView.findViewById(R.id.add_dish_btn_dish_detail_restaurant_menu_item);
             removeDishImageBtn = itemView.findViewById(R.id.minus_dish_btn_dish_detail_restaurant_menu_item);
         }

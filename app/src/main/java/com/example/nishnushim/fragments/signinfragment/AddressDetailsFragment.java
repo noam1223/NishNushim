@@ -1,9 +1,13 @@
 package com.example.nishnushim.fragments.signinfragment;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -17,10 +21,17 @@ import androidx.core.location.LocationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.nishnushim.HomePageActivity;
@@ -47,7 +58,7 @@ public class AddressDetailsFragment extends Fragment {
 
     private static final int REQUEST = 1111;
 
-    EditText cityNameEditText, streetNameEditText, houseNumberEditText;
+    EditText cityNameEditText, streetNameEditText, houseNumberEditText, floorEditText, entryEditText, classificationAddressEditText;
     Button signInAddressBtn;
     private LocationManager mLocationManager;
 
@@ -56,8 +67,8 @@ public class AddressDetailsFragment extends Fragment {
     FirebaseAuth mAuth;
     FirebaseFirestore db;
 
-    User user;
 
+    //WORKING ON ADDRESS COORDINATES
     Location gps_loc;
     Location network_loc;
     Location final_loc;
@@ -78,6 +89,7 @@ public class AddressDetailsFragment extends Fragment {
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,6 +99,9 @@ public class AddressDetailsFragment extends Fragment {
         cityNameEditText = view.findViewById(R.id.city_address_edit_text_address_details_fragment);
         streetNameEditText = view.findViewById(R.id.street_address_edit_text_address_details_fragment);
         houseNumberEditText = view.findViewById(R.id.number_street_address_edit_text_address_details_fragment);
+        floorEditText = view.findViewById(R.id.num_floor_edit_text_address_details_fragment);
+        entryEditText = view.findViewById(R.id.entry_address_edit_text_address_details_fragment);
+        classificationAddressEditText = view.findViewById(R.id.classification_address_open_list_edit_text_address_details_fragment);
         signInAddressBtn = view.findViewById(R.id.save_first_address_btn_address_manually_activity);
 
 
@@ -121,6 +136,9 @@ public class AddressDetailsFragment extends Fragment {
                 String city = cityNameEditText.getText().toString();
                 String street = streetNameEditText.getText().toString();
                 String houseNumber = houseNumberEditText.getText().toString();
+                String floor = floorEditText.getText().toString();
+                String entry = entryEditText.getText().toString();
+                String classificationAddress = classificationAddressEditText.getText().toString();
 
                 User user = new User();
 
@@ -129,11 +147,7 @@ public class AddressDetailsFragment extends Fragment {
 
                     if (myAddress == null) {
                         MyAddress myAddress = findCoordinateByAddress(city, street, houseNumber);
-
-                        if (myAddress != null) {
-                            user.getAddresses().add(myAddress);
-                        }
-
+                        user.getAddresses().add(myAddress);
                     }else {
                         user.getAddresses().add(myAddress);
                     }
@@ -143,6 +157,35 @@ public class AddressDetailsFragment extends Fragment {
 
                         user.setPhoneNumber(getActivity().getIntent().getStringExtra("phone"));
                     }
+
+
+                    if (!floor.isEmpty()){
+
+                        user.getAddresses().get(0).setFloor(floor);
+
+                    }
+
+
+
+                    if (!entry.isEmpty()){
+
+                        user.getAddresses().get(0).setEntry(entry);
+
+                    }
+
+
+
+
+
+                    if (!classificationAddress.isEmpty()){
+
+                        user.getAddresses().get(0).setFloor(floor);
+
+                    }
+
+
+
+
 
 
                     db.collection(getString(R.string.USERS_DB)).document("LCl46tZA2wd53H8If1mWTb2VjGw2").set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -180,8 +223,99 @@ public class AddressDetailsFragment extends Fragment {
             }
         });
 
+
+
+
+        //WORKING ON CLASSIFICATION ADDRESS POP UP WINDOW
+        classificationAddressEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                View popUpView = getLayoutInflater().inflate(R.layout.address_classification_user_pop_up_window, null);
+                Dialog classificationDialog = new Dialog(getContext());
+                classificationDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                classificationDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                classificationDialog.setContentView(popUpView);
+
+
+
+                RadioGroup classificationAddressRadioGroup = popUpView.findViewById(R.id.address_classification_user_radio_group_pop_up_window);
+                ImageButton addClassificationImageBtn = popUpView.findViewById(R.id.add_address_classification_user_img_btn_pop_up_window);
+                EditText classificationEditText = popUpView.findViewById(R.id.add_address_classification_user_edit_text_pop_up_window);
+
+
+                classificationAddressRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                        if (classificationAddressRadioGroup.getCheckedRadioButtonId() != -1) {
+                            RadioButton radioButton = popUpView.findViewById(classificationAddressRadioGroup.getCheckedRadioButtonId());
+                            classificationAddressEditText.setText(radioButton.getText().toString());
+                            Toast.makeText(getContext(), radioButton.getText().toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+                        classificationDialog.dismiss();
+                    }
+                });
+
+
+
+                addClassificationImageBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (!classificationEditText.getText().toString().isEmpty()){
+                            classificationAddressEditText.setText(classificationEditText.getText().toString());
+                        }
+
+                        classificationDialog.dismiss();
+                    }
+                });
+
+
+
+                classificationDialog.show();
+                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+
+                lp.copyFrom(classificationDialog.getWindow().getAttributes());
+                lp.width = classificationAddressEditText.getWidth();
+                lp.height = classificationAddressEditText.getHeight();
+                lp.x= classificationAddressEditText.getScrollX();
+                lp.y=classificationAddressEditText.getScrollY();
+                classificationDialog.getWindow().setAttributes(lp);
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         return view;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @Override
@@ -204,6 +338,14 @@ public class AddressDetailsFragment extends Fragment {
             }
         }
     }
+
+
+
+
+
+
+
+
 
 
     private MyAddress getAddressByGps() {

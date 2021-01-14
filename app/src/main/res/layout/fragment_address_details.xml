@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="46dp"
         android:layout_marginRight="46dp"
-        android:hint="עיר"
+        android:hint="  עיר"
         android:fontFamily="@font/assistant_regular"
         android:textColorHint="@color/custom_blue"
         android:paddingBottom="24dp"/>
@@ -53,18 +53,19 @@
         android:orientation="horizontal"
         android:weightSum="2"
         android:gravity="center"
-        android:layoutDirection="rtl">
+        android:layoutDirection="rtl"
+        android:layout_marginTop="2dp">
 
 
         <EditText
             android:id="@+id/street_address_edit_text_address_details_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="רחוב"
+            android:hint="  רחוב"
             android:fontFamily="@font/assistant_regular"
             android:textColorHint="@color/custom_blue"
             android:paddingBottom="24dp"
-            android:layout_weight="1" />
+            android:layout_weight="0.75" />
 
 
 
@@ -73,11 +74,11 @@
             android:id="@+id/number_street_address_edit_text_address_details_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="מספר"
+            android:hint="  מספר"
             android:fontFamily="@font/assistant_regular"
             android:textColorHint="@color/custom_blue"
             android:paddingBottom="24dp"
-            android:layout_weight="0.5" />
+            android:layout_weight="0.75" />
 
 
 
@@ -92,18 +93,19 @@
         android:orientation="horizontal"
         android:weightSum="2"
         android:gravity="center"
-        android:layoutDirection="rtl">
+        android:layoutDirection="rtl"
+        android:layout_marginTop="2dp">
 
 
         <EditText
             android:id="@+id/num_floor_edit_text_address_details_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="קומה"
+            android:hint="  קומה"
             android:fontFamily="@font/assistant_regular"
             android:textColorHint="@color/custom_blue"
             android:paddingBottom="24dp"
-            android:layout_weight="1"
+            android:layout_weight="0.75"
             android:inputType="number"
             android:maxLength="3"/>
 
@@ -114,15 +116,16 @@
             android:id="@+id/entry_address_edit_text_address_details_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="כניסה"
+            android:hint="  כניסה"
             android:fontFamily="@font/assistant_regular"
             android:textColorHint="@color/custom_blue"
             android:paddingBottom="24dp"
-            android:layout_weight="0.5" />
+            android:layout_weight="0.75" />
 
 
 
     </LinearLayout>
+
 
 
     <LinearLayout
@@ -131,12 +134,35 @@
         android:orientation="horizontal"
         android:weightSum="2"
         android:gravity="center"
-        android:layoutDirection="rtl">
+        android:layoutDirection="rtl"
+        android:layout_marginTop="2dp">
+
+
+        <EditText
+            android:id="@+id/classification_address_open_list_edit_text_address_details_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="בחר סיווג"
+            android:fontFamily="@font/assistant_regular"
+            android:textColorHint="@color/custom_blue"
+            android:paddingBottom="24dp"
+            android:layout_weight="0.5"
+            android:inputType="none"
+            android:maxLength="3"
+            android:drawableLeft="@drawable/ic_icon_arrow_blue" />
 
 
 
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            android:clickable="false"/>
 
     </LinearLayout>
+
+
 
     <Button
         android:id="@+id/save_first_address_btn_address_manually_activity"

@@ -578,9 +578,14 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             radioButtonList.add(myLocationToDeliverRadioBtn);
 
 
+
             for (int i = 0; i < user.getAddresses().size(); i++) {
 
                 RadioButton radioButton = createRadioButton(myLocationToDeliverRadioBtn, i, 1, R.drawable.ic_icon_placeholder_small, user.getAddresses().get(i).fullMyAddress());
+
+                if (user.getAddresses().get(i).isChosen()){
+                    radioButton.setPressed(true);
+                }
 
                 radioButtonList.add(radioButton);
                 myAddressListRadioGroup.addView(radioButton);
@@ -930,12 +935,13 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         radioButton.setBackground(ContextCompat.getDrawable(this, R.drawable.radio_button_background_top_screen_customize));
         radioButton.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         radioButton.setPadding(myLocationToDeliverRadioBtn.getPaddingLeft(), myLocationToDeliverRadioBtn.getPaddingTop(), myLocationToDeliverRadioBtn.getPaddingRight(), myLocationToDeliverRadioBtn.getPaddingBottom());
-
+        radioButton.setTag(String.valueOf(size));
         radioButton.setText(text);
         radioButton.setTextColor(ContextCompat.getColor(this, R.color.custom_blue));
         radioButton.setTextSize(13);
         return radioButton;
     }
+
 
 
     @Override

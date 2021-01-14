@@ -15,7 +15,6 @@ import com.example.nishnushim.adapters.RestaurantDetailsAdapter;
 import com.example.nishnushim.helpclasses.Restaurant;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class SearchResultActivity extends AppCompatActivity {

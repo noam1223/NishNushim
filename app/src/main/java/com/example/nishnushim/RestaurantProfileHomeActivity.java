@@ -101,15 +101,15 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
                     //TODO: WORKING ON SCROLLLING BETWEEN FRAGMENT AND ACTIVITY
 
                     //WORKING ON COMMUNICATION BETWEEN PROFILE HOME SCROLLING TO THE FRAGMENTS SCROLLING (MENU AT THE MEANTIME)
-                    if (scrollPositionLast == moreDetailsRestaurantFrameLayout.getTop()){
-//                        if (scrollPositionLast == moreDetailsRestaurantFrameLayout.getTop() - 100){
-////                            if (restaurantDetailsFragment instanceof MenuRestaurantFragment){
-////                                ((MenuRestaurantFragment)restaurantDetailsFragment).onScrollDownListener();
-////                            }
-                            restaurantProfileHomeScrollView.setScrollY(scrollPositionLast);
-                            return;
-//                        }
-                    }
+//                    if (scrollPositionLast == moreDetailsRestaurantFrameLayout.getTop()){
+////                        if (scrollPositionLast == moreDetailsRestaurantFrameLayout.getTop() - 100){
+//////                            if (restaurantDetailsFragment instanceof MenuRestaurantFragment){
+//////                                ((MenuRestaurantFragment)restaurantDetailsFragment).onScrollDownListener();
+//////                            }
+//                            restaurantProfileHomeScrollView.setScrollY(scrollPositionLast);
+//                            return;
+////                        }
+//                    }
 //                    else{
 //
 //                        if (scrollPositionLast == moreDetailsRestaurantFrameLayout.getTop() + 12){
