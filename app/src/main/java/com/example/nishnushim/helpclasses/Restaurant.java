@@ -9,14 +9,14 @@ import java.util.List;
 public class Restaurant implements Serializable {
 
     String name;
+    String restaurantUserName;
+    String restaurantUserPassword;
     MyAddress myAddress;
     List<AreasForDelivery> areasForDeliveries;
     String phoneNumber;
     List<String> openHour, closeHour;
     String dateOfAdd;
 
-    //TODO: DELETE DELIVERY TIME BECAUSE I NEED TO TAKE FROM LIST OF AREA FOR DELIVERIES
-    String deliveryTime;
 
     Uri logoUri;
     Uri profileImageUri;
@@ -26,17 +26,16 @@ public class Restaurant implements Serializable {
     Menu menu;
 
     //ADDED
-    float recommendationAvg = -1;
+    float recommendationAvg = 0;
     double distanceFromCurrentUser;
 
     int creditAmount = 0;
 
     public Restaurant() {
-
     }
 
 
-    public Restaurant(String name, MyAddress myAddress, List<AreasForDelivery> areasForDeliveries, String phoneNumber, List<String> openHour, List<String> closeHour, String dateOfAdd, String deliveryTime, Uri logoUri, Uri profileImageUri, boolean kosher, boolean discount, List<Integer> classificationList, Menu menu) {
+    public Restaurant(String name, MyAddress myAddress, List<AreasForDelivery> areasForDeliveries, String phoneNumber, List<String> openHour, List<String> closeHour, String dateOfAdd, Uri logoUri, Uri profileImageUri, boolean kosher, boolean discount, List<Integer> classificationList, Menu menu, String restaurantUserName, String restaurantUserPassword) {
         this.name = name;
         this.myAddress = myAddress;
         this.areasForDeliveries = areasForDeliveries;
@@ -44,13 +43,14 @@ public class Restaurant implements Serializable {
         this.openHour = openHour;
         this.closeHour = closeHour;
         this.dateOfAdd = dateOfAdd;
-        this.deliveryTime = deliveryTime;
         this.logoUri = logoUri;
         this.profileImageUri = profileImageUri;
         this.kosher = kosher;
         this.discount = discount;
         this.classificationList = classificationList;
         this.menu = menu;
+        this.restaurantUserName = restaurantUserName;
+        this.restaurantUserPassword = restaurantUserPassword;
     }
 
 
@@ -110,13 +110,6 @@ public class Restaurant implements Serializable {
         this.dateOfAdd = dateOfAdd;
     }
 
-    public String getDeliveryTime() {
-        return deliveryTime;
-    }
-
-    public void setDeliveryTime(String deliveryTime) {
-        this.deliveryTime = deliveryTime;
-    }
 
     public Uri getLogoUri() {
         return logoUri;
@@ -209,5 +202,21 @@ public class Restaurant implements Serializable {
 
     public void setCreditAmount(int creditAmount) {
         this.creditAmount = creditAmount;
+    }
+
+    public String getRestaurantUserName() {
+        return restaurantUserName;
+    }
+
+    public void setRestaurantUserName(String restaurantUserName) {
+        this.restaurantUserName = restaurantUserName;
+    }
+
+    public String getRestaurantUserPassword() {
+        return restaurantUserPassword;
+    }
+
+    public void setRestaurantUserPassword(String restaurantUserPassword) {
+        this.restaurantUserPassword = restaurantUserPassword;
     }
 }

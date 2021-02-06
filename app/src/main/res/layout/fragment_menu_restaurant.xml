@@ -1,41 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layoutDirection="rtl"
-    android:orientation="vertical"
     tools:context=".nishnushFragments.fragments_restaurant_profile.MenuRestaurantFragment">
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout_sub_parent_restaurant_menu_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lizvor_credit_constrain_layout_menu_restaurant_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:background="@color/custom_blue"
+        android:layoutDirection="rtl"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/virtual_coin_image_view_menu_restaurant_fragment"
+            android:layout_width="36dp"
+            android:layout_height="34dp"
+            android:layout_marginRight="72dp"
+            android:background="@drawable/virtual_coin_user"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/zivru_la_kredit_aba_text_view_menu_restaurant_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:layout_marginRight="12dp"
+            android:fontFamily="@font/assistant_bold"
+            android:text="צברו 25% לקרדיט להזמנה הבאה"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:layout_constraintRight_toLeftOf="@+id/virtual_coin_image_view_menu_restaurant_fragment"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="26dp"
+            android:fontFamily="@font/assistant_light"
+            android:text="דמי המשלוח אינם כלולים"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            app:layout_constraintRight_toLeftOf="@+id/virtual_coin_image_view_menu_restaurant_fragment"
+            app:layout_constraintTop_toBottomOf="@+id/zivru_la_kredit_aba_text_view_menu_restaurant_fragment" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sub_titles_recycler_view_menu_restaurant_fragment"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="25dp"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="8dp"/>
 
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layoutDirection="rtl"
-        android:orientation="vertical">
-
-
-
-
-    <ScrollView
-        android:id="@+id/scroll_view_menu_restaurant_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fillViewport="true"
-        android:layoutDirection="rtl">
 
 
         <LinearLayout
@@ -45,69 +85,33 @@
             android:orientation="vertical">
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/lizvor_credit_constrain_layout_menu_restaurant_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="68dp"
-                android:background="@color/custom_blue"
-                android:layoutDirection="rtl"
-                app:layout_constraintTop_toBottomOf="@+id/sub_titles_recycler_view_menu_restaurant_fragment">
 
-
-                <ImageView
-                    android:id="@+id/virtual_coin_image_view_menu_restaurant_fragment"
-                    android:layout_width="36dp"
-                    android:layout_height="34dp"
-                    android:layout_marginRight="72dp"
-                    android:background="@drawable/virtual_coin_user"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <TextView
-                    android:id="@+id/zivru_la_kredit_aba_text_view_menu_restaurant_fragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="21dp"
-                    android:layout_marginRight="12dp"
-                    android:fontFamily="@font/assistant_bold"
-                    android:text="צברו 25% לקרדיט להזמנה הבאה"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    app:layout_constraintRight_toLeftOf="@+id/virtual_coin_image_view_menu_restaurant_fragment"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="26dp"
-                    android:fontFamily="@font/assistant_light"
-                    android:text="דמי המשלוח אינם כלולים"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"
-                    app:layout_constraintRight_toLeftOf="@+id/virtual_coin_image_view_menu_restaurant_fragment"
-                    app:layout_constraintTop_toBottomOf="@+id/zivru_la_kredit_aba_text_view_menu_restaurant_fragment" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/menu_recycler_view_restaurant_menu_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layoutDirection="rtl"
-                android:nestedScrollingEnabled="false"
-                android:orientation="vertical" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/menu_recycler_view_restaurant_menu_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        android:layout_marginTop="6dp" />
 
         </LinearLayout>
 
-    </ScrollView>
 
     </LinearLayout>
 
-</LinearLayout>
+
+    <include
+        android:id="@+id/cart_pop_up_menu_restaurant_fragment"
+        layout="@layout/cart_pop_up_bottom_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 

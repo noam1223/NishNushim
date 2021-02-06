@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f7f7f7"
+    android:layoutDirection="rtl"
+    tools:context=".CreditCardsActivity">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_user_credit_card_activity"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_scrollFlags="exitUntilCollapsed">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:layoutDirection="rtl"
+            android:visibility="visible">
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/custom_blue"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_scrollFlags="exitUntilCollapsed" />
+
+
+            <ImageButton
+                android:id="@+id/back_img_btn_credit_cards_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="18dp"
+                android:background="@drawable/ic_icon_arrow"
+                android:rotation="270" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="4dp"
+                android:layout_toLeftOf="@id/back_img_btn_credit_cards_activity"
+                android:fontFamily="@font/assistant_regular"
+                android:text="כרטיסי אשראי"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+
+        </RelativeLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <TextView
+        android:id="@+id/credit_title_text_view_credit_cards_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_bar_user_credit_card_activity"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="38dp"
+        android:fontFamily="@font/assistant_bold"
+        android:text="אשראי"
+        android:textColor="@color/custom_blue" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        android:layout_above="@id/add_credit_cart_btn_credit_cards_activity"
+        android:layout_below="@+id/credit_title_text_view_credit_cards_activity"
+        android:layout_marginBottom="24dp"
+        android:weightSum="2">
+
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="64dp"
+            android:visibility="visible"
+            android:layout_weight="1.8"/>
+
+
+        <LinearLayout
+            android:id="@+id/linear_layout_credit_card_save_area_credit_cards_activity"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal"
+            android:layout_weight="0.2">
+
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="14dp"
+                android:src="@drawable/icon_saved_credit_card" />
+
+
+            <TextView
+                android:layout_width="269dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="14dp"
+                android:fontFamily="@font/assistant_semibold"
+                android:text="שמירת כרטיסי האשראי מתבצעת בתקנים המחמירים ביותר תחת תקן"
+                android:textColor="#002144"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/add_credit_cart_btn_credit_cards_activity"
+        android:layout_width="168dp"
+        android:layout_height="33dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/btn_sign_in_clicked_background"
+        android:fontFamily="@font/assistant_bold"
+        android:gravity="center"
+        android:text="הוספת אמצעי תשלום"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+
+</RelativeLayout>

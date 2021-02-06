@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="18dp"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout_dish_detail_last_order_item"
+        android:layout_width="match_parent"
+        android:layout_height="78dp"
+        android:layout_marginLeft="18dp"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+
+        <ImageView
+            android:id="@+id/dish_image_view_menu_last_order_item"
+            android:layout_width="166dp"
+            android:layout_height="match_parent" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:layoutDirection="rtl"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/dish_name_text_view_last_order_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/assistant_bold"
+                android:text="שם המנה"
+                android:textColor="@color/custom_blue"
+                android:textSize="14sp" />
+
+
+            <TextView
+                android:id="@+id/dish_detail_text_view_last_order_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/assistant_regular"
+                android:text="פירוט המנה בלה בלה בלה בלה בלה בלה בלה בלה בלה בלה "
+                android:textColor="@color/custom_blue"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/dish_cosh_text_view_last_order_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/assistant_regular"
+                android:text="עלות המנה"
+                android:textColor="@color/custom_red"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="שינויים:"
+        android:textColor="@color/custom_red"
+        android:fontFamily="@font/assistant_semibold"
+        android:textSize="12sp"
+        android:layout_marginRight="14dp"/>
+
+
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="ללא מלפפון, ללא בוטנים."
+        android:layout_marginRight="14dp"
+        android:textColor="@color/custom_blue"
+        android:textSize="12sp"
+        android:fontFamily="@font/assistant_regular"/>
+
+
+
+
+
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="21dp"
+        android:layout_gravity="left"
+        android:layout_marginLeft="14dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_sign_in_clicked_background"
+        android:text="להזמנה חוזרת"
+        android:textColor="@drawable/btn_sign_in_clicked_text_view_opposite"
+        android:fontFamily="@font/assistant_semibold"
+        android:textSize="12sp"/>
+
+
+
+</LinearLayout>
+
+

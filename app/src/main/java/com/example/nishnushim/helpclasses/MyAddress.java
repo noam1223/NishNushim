@@ -80,11 +80,21 @@ public class MyAddress implements Serializable {
         isChosen = chosen;
     }
 
+
     public String fullMyAddress(){
 
-        return cityName + ", " + streetName + " " + houseNumber;
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(cityName).append(", ");
+        stringBuilder.append(streetName).append(" ");
+
+        if (houseNumber != null){
+            stringBuilder.append(houseNumber);
+        }
+
+        return stringBuilder.toString();
 
     }
+
 
     public String getFloor() {
         return floor;

@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,10 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".SearchResultActivity"></activity>
-        <activity android:name=".RestaurantProfileHomeActivity"></activity>
+        <activity android:name=".AddDishActivity"></activity>
+        <activity android:name=".CreditCardsActivity" />
+        <activity android:name=".CartActivity" />
+        <activity android:name=".SearchResultActivity" />
+        <activity android:name=".RestaurantProfileHomeActivity" />
         <activity android:name=".SignInActivity" />
-        <activity android:name=".AddressListActivity" />
+        <activity android:name=".UserAddressListActivity" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".FirstAddressActivity" />
         <activity android:name=".HomePageActivity" />

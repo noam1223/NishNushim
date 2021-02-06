@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="34dp"
+    android:orientation="horizontal"
+    android:layoutDirection="rtl"
+    android:gravity="center_vertical"
+    android:layout_marginTop="12dp">
+
+
+
+    <ImageView
+        android:id="@+id/pizza_change_image_view_pizza_change_item"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginRight="42dp"
+        android:src="@drawable/tomato_pizza_change"/>
+
+
+    <TextView
+        android:id="@+id/pizza_change_name_text_view_pizza_dish_change_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="תירס"
+        android:textSize="13sp"
+        android:fontFamily="@font/assistant_regular"
+        android:textColor="@color/custom_blue"
+        android:layout_marginRight="16dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/add_change_pizza_to_pizza_linear_layout_area_pizza_change_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="86dp"
+        android:gravity="center_vertical"
+        android:layoutDirection="rtl"
+        android:visibility="visible">
+
+
+    <ImageButton
+        android:id="@+id/add_change_pizza_to_pizza_image_btn_pizza_change_item"
+        android:layout_width="11dp"
+        android:layout_height="11dp"
+        android:src="@drawable/ic_icon_add_button"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/custom_blue"
+            android:text="הוספה"
+            android:textSize="13sp"
+            android:fontFamily="@font/assistant_regular"
+            android:layout_marginRight="8dp"/>
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/add_change_side_to_pizza_area_linear_layout_pizza_change_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="86dp"
+        android:gravity="center_horizontal"
+        android:layoutDirection="rtl"
+        android:visibility="gone">
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layoutDirection="rtl"
+            android:gravity="center_horizontal">
+
+
+
+            <ImageButton
+                android:id="@+id/add_to_right_half_pizza_img_btn_pizza_change_item"
+                android:layout_width="8.5dp"
+                android:layout_height="17dp"
+                android:background="@drawable/half_pizza_dish_add_change_clicked"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="חצי פיצה"
+                android:textColor="@color/custom_blue"
+                android:fontFamily="@font/assistant_regular"/>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layoutDirection="rtl"
+            android:gravity="center_horizontal"
+            android:layout_marginRight="16dp">
+
+
+
+            <ImageButton
+                android:id="@+id/add_to_left_half_pizza_img_btn_pizza_change_item"
+                android:layout_width="8.5dp"
+                android:layout_height="17dp"
+                android:background="@drawable/half_pizza_dish_add_change_clicked"
+                android:rotation="180" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="חצי פיצה"
+                android:textColor="@color/custom_blue"
+                android:fontFamily="@font/assistant_regular"/>
+
+
+
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layoutDirection="rtl"
+            android:gravity="center"
+            android:layout_marginRight="16dp">
+
+
+
+            <ImageButton
+                android:id="@+id/add_to_all_pizza_img_btn_pizza_change_item"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:background="@drawable/all_pizza_dish_add_change_clicked" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:text="כל הפיצה"
+                android:textColor="@color/custom_blue"
+                android:fontFamily="@font/assistant_regular"/>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

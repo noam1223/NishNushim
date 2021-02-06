@@ -182,7 +182,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="18dp"
-                    android:layout_marginTop="8dp" />
+                    android:layout_marginTop="8dp"
+                    android:dividerHeight="0dp" />
 
 
             </LinearLayout>
@@ -222,7 +223,8 @@
                 <com.example.nishnushim.helpUIClass.NonScrollListView
                     android:id="@+id/open_close_hours_list_view_restaurant_profile_details_fragment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:dividerHeight="0dp"/>
 
 
             </LinearLayout>

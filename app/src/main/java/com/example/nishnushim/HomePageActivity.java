@@ -1,6 +1,7 @@
 package com.example.nishnushim;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -44,7 +46,10 @@ import com.example.nishnushim.adapters.RestaurantDetailsAdapter;
 import com.example.nishnushim.adapters.RestaurantTypeAdapter;
 
 import com.example.nishnushim.adapters.SearchAdapter;
+import com.example.nishnushim.helpUIClass.CreateCustomBtn;
 import com.example.nishnushim.helpclasses.Restaurant;
+import com.example.nishnushim.helpclasses.UserSingleton;
+import com.example.nishnushim.helpclasses.helpInterfaces.OnSearchItemClicked;
 import com.example.nishnushim.helpclasses.helpInterfaces.RestaurantTypeListener;
 import com.example.nishnushim.helpclasses.RestaurantTypeClass;
 import com.example.nishnushim.helpclasses.User;
@@ -59,7 +64,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -67,7 +74,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HomePageActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, RestaurantTypeListener {
+public class HomePageActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, RestaurantTypeListener , OnSearchItemClicked {
+
+    private final static int REQUEST_PROFILE_RETURN = 1212;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -94,6 +103,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     FirebaseAuth auth;
 
     List<Button> filterBtnList = new ArrayList<>();
+    String chosenFilterString = "זמן משלוח";
     Dialog filterDialog, searchDialog, myAddressDialog;
     Button timeDeliveryFilterBtn, distanceFilterBtn, minAmountOfMoneyForDeliverFilterBtn, deliveryAmountFilterBtn, creditsFilterBtn, recommendationFilterBtn;
 
@@ -105,10 +115,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     //SUB MAIN RESTAURANT LIST
 
 
-
-
-
-
     List<String> searchResultsList = new ArrayList<>();
     List<Restaurant> restaurantsResults = new ArrayList<>();
     List<String> keysResults = new ArrayList<>();
@@ -117,7 +123,32 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     Map<String, List<String>> mapSearchResultString = new HashMap<>();
     Map<String, List<String>> mapRestaurantKeyString = new HashMap<>();
 
-    String[] classificationArray = {"פיצה", "המבורגר", "בשר", "סושי", "אסיאתי", "סלט", "קינוח", "איטלקי", "חומוס", "סנדוויץ", "מקסיקני", "ג׳חנון/בורקסים", "דגים", "כשר", "ים תיכוני", "ארוחות בוקר", "פירות ים", "מרק", "יפני", "נודלס"};
+    String[] classificationArray = {"נשנושים", "פיצריות", "המבורגרים", "תאילנדי", "בשרים", "דגים/פירות ים", "מרקים", "סנדוויצ׳ים", "קינוחים", "חומוס", "כשר", "אסייתי", "איטלקי", "מקסיקני", "בתי קפה", "טבעוני", "טבעוני", "מאפים", "גלידריות"};
+
+
+
+    private void updateHomePageUI() {
+        addressAppBarTextView.setText(user.getChosenAddress().fullMyAddress());
+    }
+
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == REQUEST_PROFILE_RETURN) {
+
+            if (data != null) {
+
+                if (data.getSerializableExtra("user") != null) {
+                    user = (User) data.getSerializableExtra("user");
+                    updateHomePageUI();
+                }
+            }
+        }
+    }
 
 
     @Override
@@ -157,29 +188,57 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         navigationHeaderImageView = headerView.findViewById(R.id.header_image_view_drawer_header_item);
 
         actionBarDrawerToggle.syncState();
-        initializeUserPicturesRecyclerView();
+        initializeTypeRestaurantFilterRecyclerView();
 
 
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
 
-        //TODO: DO NOT FORGET TO REMOVE THE STRING KEY
-        //"LCl46tZA2wd53H8If1mWTb2VjGw2"
-        db.collection(getString(R.string.USERS_DB)).document("LCl46tZA2wd53H8If1mWTb2VjGw2").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+        ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT////////////
+        ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT////////////
+        SharedPreferences mPrefs = getSharedPreferences("noam", MODE_PRIVATE);
 
-                if (task.isSuccessful()) {
+        Gson gson = new Gson();
+        String json = mPrefs.getString("user", "");
 
-                    user = task.getResult().toObject(User.class);
+        User obj = gson.fromJson(json, User.class);
 
-                    if (user != null) {
-                        navigationView.getMenu().clear();
-                        navigationView.inflateMenu(R.menu.menu_drawer_login);
 
-                        //TODO: SET ADDRESS BY MY ADDRESS CLASS //
-                        addressAppBarTextView.setText(user.getChosenAddressString());
+//        if (obj != null) {
+//            user = obj;
+//
+//            navigationView.getMenu().clear();
+//            navigationView.inflateMenu(R.menu.menu_drawer_login);
+//
+//            //TODO: SET ADDRESS BY MY ADDRESS CLASS //
+//            updateHomePageUI();
+//        } else {
+
+            //TODO: DO NOT FORGET TO REMOVE THE STRING KEY
+            //"LCl46tZA2wd53H8If1mWTb2VjGw2"
+            db.collection(getString(R.string.USERS_DB)).document("LCl46tZA2wd53H8If1mWTb2VjGw2").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+
+                    if (task.isSuccessful()) {
+
+                        user = task.getResult().toObject(User.class);
+
+                        if (user != null) {
+                            navigationView.getMenu().clear();
+                            navigationView.inflateMenu(R.menu.menu_drawer_login);
+                            UserSingleton.getInstance().setUser(user);
+
+                            //TODO: SET ADDRESS BY MY ADDRESS CLASS //
+                            updateHomePageUI();
+
+//                            SharedPreferences mPrefs = getSharedPreferences("noam", MODE_PRIVATE);
+//                            SharedPreferences.Editor prefsEditor = mPrefs.edit();
+//                            Gson gson = new Gson();
+//                            String json = gson.toJson(user);
+//                            prefsEditor.putString("user", json);
+//                            prefsEditor.commit();
 
 
                         db.collection(getResources().getString(R.string.RESTAURANTS_PATH)).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -195,13 +254,16 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
                                             Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
 
-                                            if (isRestaurantAdded(restaurant, documentSnapshot.getId())){
-                                                restaurant.setDistanceFromCurrentUser(distance(user.getAddresses().get(0).getLatitude(), user.getAddresses().get(0).getLongitude(),
-                                                                                                restaurant.getMyAddress().getLatitude(), restaurant.getMyAddress().getLongitude()));
-                                            }
+//                                            if (isRestaurantAdded(restaurant, documentSnapshot.getId())) {
+//                                                restaurant.setDistanceFromCurrentUser(distance(user.getChosenAddress().getLatitude(), user.getAddresses().get(0).getLongitude(),
+//                                                        restaurant.getMyAddress().getLatitude(), restaurant.getMyAddress().getLongitude()));
+//                                            }
 
+                                            restaurants.add(restaurant);
+                                            keys.add(documentSnapshot.getId());
 
                                         }
+
 
 
                                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment(restaurants, keys)).commit();
@@ -228,29 +290,33 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                         });
 
 
-                    } else
-                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushinAnonymousUserFragment()).commit();
+                        } else
+                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushinAnonymousUserFragment()).commit();
 
 
-                } else if (task.isCanceled()) {
-                    Toast.makeText(HomePageActivity.this, "ישנה בעיית חיבור", Toast.LENGTH_SHORT).show();
-                    finish();
+                    } else if (task.isCanceled()) {
+                        Toast.makeText(HomePageActivity.this, "ישנה בעיית חיבור", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }
-            }
 
-            ;
-
-
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(HomePageActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment()).commit();
-            }
-        });
+                ;
 
 
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(HomePageActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment()).commit();
+                }
+            });
+
+//        }
     }
+
+    ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT////////////
+    ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT////////////
+
 
 
     //ADDING RESTAURANT TO MAIN LIST RESTAURANTS
@@ -260,15 +326,15 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         //TODO: CHANGE THE ADDRESS LOGIC IN USER AND MYADDRESS
         if (restaurant != null) {
 
-            if (user.getAddresses().get(0).getCityName().equals(restaurant.getMyAddress().getCityName())) {
+            if (user.getChosenAddress().getCityName().equals(restaurant.getMyAddress().getCityName())) {
                 restaurants.add(restaurant);
                 keys.add(key);
                 return true;
-            }else {
+            } else {
 
                 for (int i = 0; i < restaurant.getAreasForDeliveries().size(); i++) {
 
-                    if (user.getAddresses().get(0).getCityName().equals(restaurant.getAreasForDeliveries().get(i).getAreaName())){
+                    if (user.getAddresses().get(0).getCityName().equals(restaurant.getAreasForDeliveries().get(i).getAreaName())) {
                         restaurant.getAreasForDeliveries().get(i).setArea(true);
                         restaurants.add(restaurant);
                         keys.add(key);
@@ -284,11 +350,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-
-
-
-
-    private void initializeUserPicturesRecyclerView() {
+    private void initializeTypeRestaurantFilterRecyclerView() {
 
         typeRestaurantRecyclerView = findViewById(R.id.filter_restaurant_type_recycler_view_address_activity);
         typeRestaurantRecyclerView.setHasFixedSize(false);
@@ -305,6 +367,21 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+
+
+
+    @Override
+    public void onSearchClicked(int position) {
+
+
+        Intent intent = new Intent(this, SearchResultActivity.class);
+        intent.putExtra(getString(R.string.restaurant_detail), (Serializable) restaurantsResults);
+        intent.putExtra("key", keysResults.get(position));
+        intent.putExtra("search", searchResultsList.get(position));
+        startActivity(intent);
+
+
+    }
 
 
 
@@ -350,7 +427,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
             restaurantsResults = new ArrayList<>();
             keysResults = new ArrayList<>();
-            SearchAdapter searchAdapter = new SearchAdapter(this, searchResultsList, restaurantsResults, keys);
+            SearchAdapter searchAdapter = new SearchAdapter(this, searchResultsList, restaurantsResults, keys, this);
             searchResultsListView.setAdapter(searchAdapter);
 
 
@@ -442,7 +519,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         } else if (id == R.id.filter_image_btn_tool_bar_item) {
 
-
             Toast.makeText(this, "FILTER", Toast.LENGTH_SHORT).show();
 
             View popUpView = getLayoutInflater().inflate(R.layout.filter_pop_up_window, null);
@@ -450,6 +526,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             filterDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             filterDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             filterDialog.setContentView(popUpView);
+
 
             if (filterDialog.getWindow() != null)
                 filterDialog.getWindow().getAttributes().windowAnimations = R.style.SlidingDialogAnimation;
@@ -462,6 +539,8 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             creditsFilterBtn = popUpView.findViewById(R.id.credits_filter_pop_up_window);
             recommendationFilterBtn = popUpView.findViewById(R.id.recommendation_filter_pop_up_window);
 
+            filterBtnList.clear();
+
             filterBtnList.add(timeDeliveryFilterBtn);
             filterBtnList.add(distanceFilterBtn);
             filterBtnList.add(minAmountOfMoneyForDeliverFilterBtn);
@@ -470,67 +549,96 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             filterBtnList.add(recommendationFilterBtn);
 
 
-            //TODO: WORK ON FILTER RESTAURANTS //TIME DELIVERY //DISTANCE FROM USER //MINIMUM TO ORDER //DELIVERY COST //CREDITS //RECOMMENDATIONS
+            //WORK ON FILTER RESTAURANTS //TIME DELIVERY //DISTANCE FROM USER //MINIMUM TO ORDER //DELIVERY COST //CREDITS //RECOMMENDATIONS
 
             for (int i = 0; i < filterBtnList.size(); i++) {
                 int finalI = i;
+
+                if (chosenFilterString.equals(filterBtnList.get(finalI).getText().toString())) {
+
+                    filterBtnList.get(finalI).setPressed(true);
+                    Drawable[] drawables = filterBtnList.get(finalI).getCompoundDrawables();
+                    Drawable wrapDrawable = DrawableCompat.wrap(drawables[1]);
+                    DrawableCompat.setTint(wrapDrawable, getResources().getColor(R.color.white));
+//                    filterBtnList.get(finalI).setCompoundDrawables(null, wrapDrawable, null, null);
+
+                }
+
+
                 filterBtnList.get(i).setOnTouchListener(new View.OnTouchListener() {
                     @SuppressLint("ClickableViewAccessibility")
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
 
+
                         if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
                             Drawable[] drawables = filterBtnList.get(finalI).getCompoundDrawables();
-                            wrapDrawable = DrawableCompat.wrap(drawables[1]).mutate();
-                            filterDrawable = wrapDrawable;
+                            Drawable wrapDrawable = DrawableCompat.wrap(drawables[1]);
                             DrawableCompat.setTint(wrapDrawable, getResources().getColor(R.color.white));
-                            filterBtnList.get(finalI).setCompoundDrawables(null, wrapDrawable, null, null);
-                            wrapDrawable = null;
+//                            filterBtnList.get(finalI).setCompoundDrawables(null, wrapDrawable, null, null);
+
+                            for (int j = 0; j < filterBtnList.size(); j++) {
+
+                                if (j != finalI) {
+
+                                    filterBtnList.get(j).setPressed(false);
+                                    Drawable[] drawabless = filterBtnList.get(j).getCompoundDrawables();
+                                    Drawable wrapDrawable1 = DrawableCompat.wrap(drawabless[1]);
+                                    DrawableCompat.setTint(wrapDrawable1, getResources().getColor(R.color.custom_blue));
+//                                    filterBtnList.get(finalI).setCompoundDrawables(null, wrapDrawable1, null, null);
+
+
+                                }
+
+                            }
+
 
                         } else if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                            filterBtnList.get(finalI).setCompoundDrawables(null, filterDrawable, null, null);
-                            filterDrawable = null;
+//                            filterBtnList.get(finalI).setCompoundDrawables(null, filterDrawable, null, null);
+//                            filterDrawable = null;
+//                            DrawableCompat.setTint(wrapDrawable, getResources().getColor(R.color.custom_blue));
+
                             filterAppBarTextView.setText(((Button) v).getText().toString());
 
                             //HERE THE FUNCTION WILL BE FOR FILTER THE RESTAURANTS
 
                             int id = filterBtnList.get(finalI).getId();
+                            chosenFilterString = filterBtnList.get(finalI).getText().toString();
 
 
                             //TIME DELIVERY
-                            if (id == R.id.time_delivery_filter_pop_up_window){
+                            if (id == R.id.time_delivery_filter_pop_up_window) {
 
                                 filterByTimeDelivery();
 
                                 //DISTANCE FROM USER
-                            }else if (id == R.id.distance_filter_pop_up_window){
+                            } else if (id == R.id.distance_filter_pop_up_window) {
 
                                 filterByDistance();
 
                                 //MINIMUM TO ORDER
-                            }else if (id == R.id.min_amount_for_delivery_filter_pop_up_window){
+                            } else if (id == R.id.min_amount_for_delivery_filter_pop_up_window) {
 
                                 filterByMinToDeliver();
 
                                 //DELIVERY COST
-                            }else if (id == R.id.delivery_amount_filter_pop_up_window){
+                            } else if (id == R.id.delivery_amount_filter_pop_up_window) {
 
                                 filterByDeliveryAmount();
 
                                 //CREDITS
-                            }else if (id == R.id.credits_filter_pop_up_window){
+                            } else if (id == R.id.credits_filter_pop_up_window) {
 
                                 filterByCredits();
 
                                 //RECOMMENDATIONS
-                            }else if (id == R.id.recommendation_filter_pop_up_window){
+                            } else if (id == R.id.recommendation_filter_pop_up_window) {
 
                                 filterByRecommendation();
 
                             }
-
 
 
                             filterDialog.dismiss();
@@ -557,6 +665,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         } else if (id == R.id.open_my_address_pop_up_image_btn_home_page_activity) {
 
+
             Toast.makeText(this, "MY ADDRESS", Toast.LENGTH_SHORT).show();
 
             View popUpView = getLayoutInflater().inflate(R.layout.address_list_from_top_screen_layout, null);
@@ -568,23 +677,27 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             if (myAddressDialog.getWindow() != null)
                 myAddressDialog.getWindow().getAttributes().windowAnimations = R.style.SlidingDialogAnimation;
 
+
+            Button saveBtn = popUpView.findViewById(R.id.save_btn_address_list_pop_up_window);
             List<RadioButton> radioButtonList = new ArrayList<>();
             final RadioGroup wayOfDeliveryRadioGroup, myAddressListRadioGroup;
             wayOfDeliveryRadioGroup = popUpView.findViewById(R.id.way_of_delivery_radio_group_address_list_pop_up_window);
             myAddressListRadioGroup = popUpView.findViewById(R.id.list_of_address_radio_group_address_list_pop_up_window);
 
-
             RadioButton myLocationToDeliverRadioBtn = popUpView.findViewById(R.id.my_location_address_to_deliver_radio_btn_address_list_pop_up_window);
             radioButtonList.add(myLocationToDeliverRadioBtn);
 
+            int positionAddressChosen = -1;
 
 
             for (int i = 0; i < user.getAddresses().size(); i++) {
 
-                RadioButton radioButton = createRadioButton(myLocationToDeliverRadioBtn, i, 1, R.drawable.ic_icon_placeholder_small, user.getAddresses().get(i).fullMyAddress());
+                RadioButton radioButton = CreateCustomBtn.createRadioAddressBtn(this,myLocationToDeliverRadioBtn, i, 1, R.drawable.ic_icon_placeholder_small, user.getAddresses().get(i).fullMyAddress());
 
-                if (user.getAddresses().get(i).isChosen()){
-                    radioButton.setPressed(true);
+                if (user.getAddresses().get(i).isChosen()) {
+                    radioButton.setChecked(true);
+                    //TOOD:CONFIGURE HOW TO CHANGE POSITION CHOSEN IN MY ADDRESS LIST
+                    positionAddressChosen = i;
                 }
 
                 radioButtonList.add(radioButton);
@@ -592,8 +705,10 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
             }
 
-            RadioButton radioButton = createRadioButton(myLocationToDeliverRadioBtn, user.getAddresses().size(), 3, R.drawable.ic_icon_add_button, "אני כרגע נמצא בכתובת אחרת");
+
+            RadioButton radioButton = CreateCustomBtn.createRadioAddressBtn(this ,myLocationToDeliverRadioBtn, user.getAddresses().size(), 3, R.drawable.ic_icon_add_button, "אני כרגע נמצא בכתובת אחרת");
             radioButtonList.add(radioButton);
+
             myAddressListRadioGroup.addView(radioButton);
 
 
@@ -603,9 +718,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
                     if (wayOfDeliveryRadioGroup.getCheckedRadioButtonId() != -1) {
                         RadioButton radioButton1 = popUpView.findViewById(wayOfDeliveryRadioGroup.getCheckedRadioButtonId());
-                        Toast.makeText(HomePageActivity.this, radioButton1.getText().toString(), Toast.LENGTH_SHORT).show();
                     }
-
                 }
             });
 
@@ -613,10 +726,40 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             myAddressListRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
+
                     if (myAddressListRadioGroup.getCheckedRadioButtonId() != -1) {
+
                         RadioButton radioButton1 = popUpView.findViewById(myAddressListRadioGroup.getCheckedRadioButtonId());
-                        Toast.makeText(HomePageActivity.this, radioButton1.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                        if (myAddressListRadioGroup.getChildAt(myAddressListRadioGroup.getChildCount() - 1).getId() == radioButton1.getId()) {
+                            Intent intent = new Intent(getApplicationContext(), FirstAddressActivity.class);
+                            intent.putExtra("user", user);
+                            intent.putExtra("is_first", false);
+                            startActivityForResult(intent, REQUEST_PROFILE_RETURN);
+                            myAddressDialog.dismiss();
+                        } else {
+
+                            for (int i = 0; i < user.getAddresses().size(); i++) {
+
+                                if (myAddressListRadioGroup.getChildAt(i + 1).getId() == myAddressListRadioGroup.getCheckedRadioButtonId()) {
+                                    user.getAddresses().get(i).setChosen(true);
+                                } else user.getAddresses().get(i).setChosen(false);
+
+                            }
+
+                            updateHomePageUI();
+
+                        }
                     }
+                }
+            });
+
+
+            saveBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    myAddressDialog.dismiss();
                 }
             });
 
@@ -629,8 +772,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
         }
     }
-
-
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -649,8 +790,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-
-
     private void filterByTimeDelivery() {
 
         Collections.sort(restaurants, new Comparator<Restaurant>() {
@@ -662,7 +801,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
                 for (int i = 0; i < o1.getAreasForDeliveries().size(); i++) {
 
-                    if (o1.getAreasForDeliveries().get(i).isArea()){
+                    if (o1.getAreasForDeliveries().get(i).isArea()) {
                         amount1 = o1.getAreasForDeliveries().get(i).getTimeOfDelivery();
                     }
 
@@ -670,23 +809,21 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
 
                 for (int i = 0; i < o2.getAreasForDeliveries().size(); i++) {
-                    if (o2.getAreasForDeliveries().get(i).isArea()){
+                    if (o2.getAreasForDeliveries().get(i).isArea()) {
                         amount2 = o2.getAreasForDeliveries().get(i).getTimeOfDelivery();
                     }
                 }
 
 
-                if (amount1 > amount2){
+                if (amount1 > amount2) {
                     return 1;
-                }else if (amount1 == amount2){
+                } else if (amount1 == amount2) {
                     return 0;
-                }else return -1;
+                } else return -1;
             }
         });
 
     }
-
-
 
 
     private void filterByDistance() {
@@ -701,8 +838,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-
-
     private void filterByMinToDeliver() {
 
         Collections.sort(restaurants, new Comparator<Restaurant>() {
@@ -714,7 +849,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
                 for (int i = 0; i < o1.getAreasForDeliveries().size(); i++) {
 
-                    if (o1.getAreasForDeliveries().get(i).isArea()){
+                    if (o1.getAreasForDeliveries().get(i).isArea()) {
                         amount1 = o1.getAreasForDeliveries().get(i).getMinToDeliver();
                     }
 
@@ -722,23 +857,21 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
 
                 for (int i = 0; i < o2.getAreasForDeliveries().size(); i++) {
-                    if (o2.getAreasForDeliveries().get(i).isArea()){
+                    if (o2.getAreasForDeliveries().get(i).isArea()) {
                         amount2 = o2.getAreasForDeliveries().get(i).getMinToDeliver();
                     }
                 }
 
 
-                if (amount1 > amount2){
+                if (amount1 > amount2) {
                     return 1;
-                }else if (amount1 == amount2){
+                } else if (amount1 == amount2) {
                     return 0;
-                }else return -1;
+                } else return -1;
             }
         });
 
     }
-
-
 
 
     private void filterByDeliveryAmount() {
@@ -752,7 +885,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
                 for (int i = 0; i < o1.getAreasForDeliveries().size(); i++) {
 
-                    if (o1.getAreasForDeliveries().get(i).isArea()){
+                    if (o1.getAreasForDeliveries().get(i).isArea()) {
                         amount1 = o1.getAreasForDeliveries().get(i).getDeliveryCost();
                     }
 
@@ -760,24 +893,21 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
 
                 for (int i = 0; i < o2.getAreasForDeliveries().size(); i++) {
-                    if (o2.getAreasForDeliveries().get(i).isArea()){
+                    if (o2.getAreasForDeliveries().get(i).isArea()) {
                         amount2 = o2.getAreasForDeliveries().get(i).getDeliveryCost();
                     }
                 }
 
 
-                if (amount1 > amount2){
+                if (amount1 > amount2) {
                     return 1;
-                }else if (amount1 == amount2){
+                } else if (amount1 == amount2) {
                     return 0;
-                }else return -1;
+                } else return -1;
             }
         });
 
     }
-
-
-
 
 
     private void filterByCredits() {
@@ -792,15 +922,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-
-
-
     private double distance(double lat1, double lng1, double lat2, double lng2) {
 
         double earthRadius = 6371; // in kilometers
 
-        double dLat = Math.toRadians(lat2-lat1);
-        double dLng = Math.toRadians(lng2-lng1);
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLng = Math.toRadians(lng2 - lng1);
 
         double sindLat = Math.sin(dLat / 2);
         double sindLng = Math.sin(dLng / 2);
@@ -808,26 +935,10 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
                 * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
 
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         return earthRadius * c; // output distance, in LOKOMETERS
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -879,26 +990,22 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-
-
     private void addRestaurantToRestaurantMap(Restaurant restaurant, String s) {
 
         List<Restaurant> restaurantList = new ArrayList<>();
 
-        if (mapRestaurantsSearch.containsKey(s)){
-            if (mapRestaurantsSearch.get(s).isEmpty()){
+        if (mapRestaurantsSearch.containsKey(s)) {
+            if (mapRestaurantsSearch.get(s).isEmpty()) {
                 restaurantList.add(restaurant);
                 mapRestaurantsSearch.get(s).addAll(restaurantList);
-            }mapRestaurantsSearch.get(s).add(restaurant);
+            }
+            mapRestaurantsSearch.get(s).add(restaurant);
         } else {
             restaurantList.add(restaurant);
             mapRestaurantsSearch.put(s, restaurantList);
         }
 
     }
-
-
-
 
 
     private void addTextToSearchMap(String searchText, String addText) {
@@ -917,30 +1024,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-
-
-
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////
 
-    private RadioButton createRadioButton(RadioButton myLocationToDeliverRadioBtn, int size, int idNum, int drawableResource, String text) {
-        RadioButton radioButton = new RadioButton(this);
-        radioButton.setId(size + idNum);
-        radioButton.setLayoutParams(myLocationToDeliverRadioBtn.getLayoutParams());
-        radioButton.setButtonDrawable(ContextCompat.getDrawable(this, R.drawable.radio_button_inset));
-        radioButton.setChecked(false);
-        radioButton.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(this, drawableResource), null);
-        radioButton.setCompoundDrawablePadding(24);
-        radioButton.setTypeface(ResourcesCompat.getFont(this, R.font.assistant_regular));
-        radioButton.setBackground(ContextCompat.getDrawable(this, R.drawable.radio_button_background_top_screen_customize));
-        radioButton.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        radioButton.setPadding(myLocationToDeliverRadioBtn.getPaddingLeft(), myLocationToDeliverRadioBtn.getPaddingTop(), myLocationToDeliverRadioBtn.getPaddingRight(), myLocationToDeliverRadioBtn.getPaddingBottom());
-        radioButton.setTag(String.valueOf(size));
-        radioButton.setText(text);
-        radioButton.setTextColor(ContextCompat.getColor(this, R.color.custom_blue));
-        radioButton.setTextSize(13);
-        return radioButton;
-    }
 
 
 
@@ -995,11 +1081,18 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         } else if (id == R.id.my_address_menu_drawer_login) {
 
             Toast.makeText(this, "הכתובות שלי", Toast.LENGTH_SHORT).show();
+            intent = new Intent(this, UserAddressListActivity.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
 
         } else if (id == R.id.credit_cards_menu_drawer_login) {
 
 
             Toast.makeText(this, "אמצעי תשלום", Toast.LENGTH_SHORT).show();
+
+        }else if (id == R.id.log_out_settings_drawer_menu_login){
+
+            //LOG OUT USER AND BACK TO THE WELCOME ACTIVITY WITH NO HISTORY
 
         }
 

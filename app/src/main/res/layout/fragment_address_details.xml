@@ -1,182 +1,313 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.signinfragment.AddressDetailsFragment"
+    android:layout_height="wrap_content"
     android:background="@drawable/sign_in_fragment_background_rounded"
-    android:orientation="vertical"
-    android:layoutDirection="rtl">
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="כתובת חדשה"
-        android:layout_marginTop="81dp"
-        android:textSize="16sp"
-        android:textColor="@color/custom_blue"
-        android:layout_gravity="center"
-        android:fontFamily="@font/assistant_bold"/>
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="יש להזין כתובת אחרת למשלוח"
-        android:layout_marginTop="46dp"
-        android:textSize="12sp"
-        android:textColor="@color/custom_blue"
-        android:layout_gravity="center"
-        android:fontFamily="@font/assistant_regular"/>
-
-
-
-    <EditText
-        android:id="@+id/city_address_edit_text_address_details_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="46dp"
-        android:layout_marginRight="46dp"
-        android:hint="  עיר"
-        android:fontFamily="@font/assistant_regular"
-        android:textColorHint="@color/custom_blue"
-        android:paddingBottom="24dp"/>
-
+    android:layoutDirection="rtl"
+    tools:context=".nishnushFragments.signinfragment.AddressDetailsFragment">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:gravity="center"
         android:layoutDirection="rtl"
-        android:layout_marginTop="2dp">
+        android:orientation="vertical">
 
 
-        <EditText
-            android:id="@+id/street_address_edit_text_address_details_fragment"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="  רחוב"
-            android:fontFamily="@font/assistant_regular"
-            android:textColorHint="@color/custom_blue"
-            android:paddingBottom="24dp"
-            android:layout_weight="0.75" />
+            android:layout_gravity="center"
+            android:layout_marginTop="81dp"
+            android:fontFamily="@font/assistant_bold"
+            android:text="כתובת חדשה"
+            android:textColor="@color/custom_blue"
+            android:textSize="16sp" />
 
 
-
-
-        <EditText
-            android:id="@+id/number_street_address_edit_text_address_details_fragment"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="  מספר"
+            android:layout_gravity="center"
+            android:layout_marginTop="46dp"
             android:fontFamily="@font/assistant_regular"
-            android:textColorHint="@color/custom_blue"
+            android:text="יש להזין כתובת אחרת למשלוח"
+            android:textColor="@color/custom_blue"
+            android:textSize="12sp" />
+
+
+        <AutoCompleteTextView
+            android:id="@+id/city_address_edit_text_address_details_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="46dp"
+            android:layout_marginRight="46dp"
+            android:fontFamily="@font/assistant_regular"
+            android:hint="  עיר"
             android:paddingBottom="24dp"
-            android:layout_weight="0.75" />
+            android:textColorHint="@color/custom_blue"/>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+
+            <EditText
+                android:id="@+id/street_address_edit_text_address_details_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:fontFamily="@font/assistant_regular"
+                android:hint="  רחוב"
+                android:paddingBottom="24dp"
+                android:textColorHint="@color/custom_blue" />
+
+
+            <EditText
+                android:id="@+id/number_street_address_edit_text_address_details_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:fontFamily="@font/assistant_regular"
+                android:hint="  מספר"
+                android:paddingBottom="24dp"
+                android:textColorHint="@color/custom_blue" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+
+            <EditText
+                android:id="@+id/num_floor_edit_text_address_details_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:fontFamily="@font/assistant_regular"
+                android:hint="  קומה"
+                android:inputType="number"
+                android:maxLength="3"
+                android:paddingBottom="24dp"
+                android:textColorHint="@color/custom_blue" />
+
+
+            <EditText
+                android:id="@+id/entry_address_edit_text_address_details_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:fontFamily="@font/assistant_regular"
+                android:hint="  כניסה"
+                android:paddingBottom="24dp"
+                android:textColorHint="@color/custom_blue" />
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/linear_layout_address_classification_area_edit_text_address_details_fragment"
+                android:layout_weight="0.75"
+                android:layoutDirection="rtl"
+                android:focusable="true">
+
+
+
+                <Button
+                    android:id="@+id/classification_address_open_list_edit_text_address_details_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:drawableLeft="@drawable/ic_icon_arrow_blue"
+                    android:fontFamily="@font/assistant_regular"
+                    android:hint="  בחר סיווג"
+                    android:background="@drawable/classification_address_background_btn"
+                    android:textSize="18sp"
+                    android:gravity="center_vertical"
+                    android:paddingRight="2dp"
+                    android:textColorHint="@color/custom_blue"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:duplicateParentState="true"/>
+
+
+
+                <LinearLayout
+                    android:id="@+id/linear_layout_address_choses_classification_area_address_details_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/custom_yellow"
+                    android:layoutDirection="rtl"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+                    <RadioGroup
+                        android:id="@+id/address_classification_user_radio_group_pop_up_window"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:layoutDirection="rtl"
+                        android:orientation="vertical">
+
+
+                        <RadioButton
+                            android:id="@+id/home_radio_btn_address_classification_user_pop_up_window"
+                            android:layout_width="match_parent"
+                            android:layout_height="27dp"
+                            android:background="@drawable/radio_button_background_top_screen_customize"
+                            android:button="@drawable/radio_button_inset_address"
+                            android:checked="true"
+                            android:fontFamily="@font/assistant_regular"
+                            android:layoutDirection="rtl"
+                            android:paddingLeft="18dp"
+                            android:paddingRight="18dp"
+                            android:text="בית"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="13sp" />
+
+
+                        <RadioButton
+                            android:id="@+id/office_home_radio_btn_address_classification_user_pop_up_window"
+                            android:layout_width="match_parent"
+                            android:layout_height="27dp"
+                            android:layout_marginTop="8dp"
+                            android:background="@drawable/radio_button_background_top_screen_customize"
+                            android:button="@drawable/radio_button_inset_address"
+                            android:checked="false"
+                            android:fontFamily="@font/assistant_regular"
+                            android:layoutDirection="rtl"
+                            android:paddingLeft="18dp"
+                            android:paddingRight="18dp"
+                            android:text="משרד"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="13sp" />
+
+
+                    </RadioGroup>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="27dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center_vertical"
+                        android:layoutDirection="rtl"
+                        android:orientation="horizontal">
+
+
+                        <ImageButton
+                            android:id="@+id/add_address_classification_user_img_btn_pop_up_window"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/ic_icon_add_button" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="11dp"
+                            android:fontFamily="@font/assistant_regular"
+                            android:text="אחר"
+                            android:textColor="@color/custom_blue"
+                            android:textSize="13sp" />
+
+
+                        <EditText
+                            android:id="@+id/add_address_classification_user_edit_text_pop_up_window"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textColor="@color/custom_blue"
+                            android:textColorHint="@color/custom_blue"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:gravity="center"
+                android:layoutDirection="rtl"
+                android:orientation="vertical">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:visibility="invisible" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/save_first_address_btn_address_manually_activity"
+            android:layout_width="168dp"
+            android:layout_height="33dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/btn_sign_in_clicked_background_opossite"
+            android:fontFamily="@font/assistant_bold"
+            android:text="שמירה"
+            android:textColor="@drawable/btn_sign_in_clicked_text_view"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:gravity="center"
-        android:layoutDirection="rtl"
-        android:layout_marginTop="2dp">
-
-
-        <EditText
-            android:id="@+id/num_floor_edit_text_address_details_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="  קומה"
-            android:fontFamily="@font/assistant_regular"
-            android:textColorHint="@color/custom_blue"
-            android:paddingBottom="24dp"
-            android:layout_weight="0.75"
-            android:inputType="number"
-            android:maxLength="3"/>
-
-
-
-
-        <EditText
-            android:id="@+id/entry_address_edit_text_address_details_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="  כניסה"
-            android:fontFamily="@font/assistant_regular"
-            android:textColorHint="@color/custom_blue"
-            android:paddingBottom="24dp"
-            android:layout_weight="0.75" />
-
-
-
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:gravity="center"
-        android:layoutDirection="rtl"
-        android:layout_marginTop="2dp">
-
-
-        <EditText
-            android:id="@+id/classification_address_open_list_edit_text_address_details_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="בחר סיווג"
-            android:fontFamily="@font/assistant_regular"
-            android:textColorHint="@color/custom_blue"
-            android:paddingBottom="24dp"
-            android:layout_weight="0.5"
-            android:inputType="none"
-            android:maxLength="3"
-            android:drawableLeft="@drawable/ic_icon_arrow_blue" />
-
-
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:visibility="invisible"
-            android:clickable="false"/>
-
-    </LinearLayout>
-
-
-
-    <Button
-        android:id="@+id/save_first_address_btn_address_manually_activity"
-        android:layout_width="168dp"
-        android:layout_height="33dp"
-        android:background="@drawable/btn_sign_in_clicked_background_opossite"
-        android:textColor="@drawable/btn_sign_in_clicked_text_view"
-        android:layout_gravity="center"
-        android:layout_marginTop="32dp"
-        android:text="שמירה"
-        android:fontFamily="@font/assistant_bold"
-        android:textSize="16sp"
-        android:layout_marginBottom="24dp"/>
-
-
-
-</LinearLayout>
+</ScrollView>

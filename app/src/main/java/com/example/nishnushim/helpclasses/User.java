@@ -41,6 +41,20 @@ public class User implements Serializable {
         this.addresses = addresses;
     }
 
+
+    public MyAddress getChosenAddress(){
+
+        for (int i = 0; i < this.addresses.size(); i++) {
+            if (addresses.get(i).isChosen()){
+                return addresses.get(i);
+            }
+        }
+
+        return this.addresses.get(0);
+    }
+
+
+
     public String getChosenAddressString() {
 
         for (int i = 0; i < this.getAddresses().size(); i++) {
@@ -52,16 +66,5 @@ public class User implements Serializable {
         }
 
         return "אנא הכנס כתובת למשלוח";
-    }
-
-
-    public MyAddress getChosenAddress(){
-
-        for (int i = 0; i < this.addresses.size(); i++) {
-            if (addresses.get(i).isChosen()){
-                return addresses.get(i);
-            }
-        }
-        return null;
     }
 }

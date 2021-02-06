@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layoutDirection="rtl"
+    android:background="@color/white">
+
+
+    <TextView
+        android:id="@+id/pizza_dish_name_text_view_detail_restaurant_menu_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="פיצה"
+        android:textSize="20sp"
+        android:fontFamily="@font/assistant_semibold"
+        android:textColor="@color/custom_blue"
+        android:layout_marginRight="8dp"/>
+
+
+
+
+    <TextView
+        android:id="@+id/pizza_dish_detail_text_view_detail_restaurant_menu_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="פירוט המנה בלה בלה בלה"
+        android:layout_marginRight="8dp"
+        android:textColor="@color/custom_blue"
+        android:textSize="18sp"
+        android:fontFamily="@font/assistant_regular"/>
+
+
+
+    <TextView
+        android:id="@+id/pizza_dish_price_text_view_detail_restaurant_menu_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="45.00 ₪"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="8dp"
+        android:textColor="@color/custom_red"
+        android:textSize="20sp"
+        android:fontFamily="@font/assistant_regular"/>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginRight="26dp"
+        android:layout_marginLeft="26dp"
+        android:background="#e0e0e0"
+        android:layout_marginTop="10dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/linear_layout_btn_pizza_change_detail_restaurant_menu_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layoutDirection="rtl"
+        android:weightSum="1">
+
+
+        <Button
+            android:id="@+id/pizza_first_btn_pizza_dish_detail_restaurant_menu_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="פיצה 1"
+            android:textSize="14sp"
+            android:textColor="#cc002144"
+            android:fontFamily="@font/assistant_semibold"
+            android:background="@drawable/pizza_dish_item_clicked"
+            android:layout_weight="1" />
+
+
+
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layoutDirection="rtl"
+        android:paddingTop="34dp"
+        android:background="#f7f7f7">
+
+
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:background="@color/white">
+
+
+            <RelativeLayout
+                android:id="@+id/relative_layout_pizza_image_area_detail_restaurant_menu_item"
+                android:layout_width="274dp"
+                android:layout_height="274dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp"
+                android:layoutDirection="rtl">
+
+            <ImageView
+                android:id="@+id/pizza_dish_image_view_pizza_dish_detail_restaurant_menu_item"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="@drawable/pizza_image"/>
+
+
+                <!-- DO NOT FORGET USE VIEW STUB -->
+                <ViewStub
+                    android:layout_width="137dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/pizza_change_stub_view"
+                    android:inflatedId="@+id/sub_tree_pizza_details_restaurant_menu_item"
+                    android:layout="@layout/pizza_changes_include_layout"
+                    android:layout_alignParentRight="true" />
+
+
+
+
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/pizza_add_changes_btn_detail_restaurant_menu_item"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/relative_layout_pizza_image_area_detail_restaurant_menu_item"
+                android:layout_marginTop="46dp"
+                android:layout_marginBottom="14dp"
+                android:layout_marginLeft="42dp"
+                android:layout_marginRight="42dp"
+                android:textSize="12sp"
+                android:text="בחירת תוספות"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textColor="#cc002144"
+                android:fontFamily="@font/assistant_regular"
+                android:background="@drawable/yellow_rounded_custom_btn"/>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

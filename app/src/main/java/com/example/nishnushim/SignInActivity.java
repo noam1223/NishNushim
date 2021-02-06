@@ -5,7 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 
-import com.example.nishnushim.fragments.signinfragment.PhoneNumberFragment;
+import com.example.nishnushim.nishnushFragments.signinfragment.PhoneNumberFragment;
 
 public class SignInActivity extends AppCompatActivity {
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/sign_in_fragment_background_rounded"
     android:orientation="vertical"
-    tools:context=".fragments.signinfragment.PhoneNumberFragment"
+    tools:context=".nishnushFragments.signinfragment.PhoneNumberFragment"
     android:layoutDirection="rtl">
 
 

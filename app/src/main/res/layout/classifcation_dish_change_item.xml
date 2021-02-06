@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+
+    <TextView
+        android:id="@+id/classification_change_name_text_view_classification_dish_change_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="כותרת השינויים"
+        android:layout_marginRight="18dp"
+        android:textSize="16sp"
+        android:textColor="@color/custom_blue"
+        android:fontFamily="@font/assistant_bold"/>
+
+
+    <com.example.nishnushim.helpUIClass.NonScrollListView
+        android:id="@+id/changes_details_list_view_classification_dish_change_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:background="@drawable/profile_cart_background"/>
+
+
+
+
+</LinearLayout>

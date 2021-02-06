@@ -15,7 +15,8 @@
         android:cursorVisible="true"
         android:layoutDirection="rtl"
         android:hint="חיפוש"
-        android:drawableRight="@drawable/ic_baseline_close"
+        android:drawableRight="@drawable/ic_icon_close"
+        android:drawablePadding="12dp"
         android:textColorHint="@color/custom_blue"
         android:fontFamily="@font/assistant_regular"
         android:textDirection="rtl"
@@ -85,6 +86,7 @@
 
 
     <TextView
+        android:id="@+id/sub_title_history_list_text_view_search_pop_up_window"
         android:layout_width="match_parent"
         android:layout_height="38dp"
         android:text="היסטוריית חיפושים"

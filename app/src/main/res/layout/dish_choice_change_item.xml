@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="18dp"
+    android:layoutDirection="rtl"
+    android:orientation="horizontal"
+    android:id="@+id/linear_layout_dish_choice_change_item">
+
+
+    <ImageView
+        android:id="@+id/dish_image_view_dish_choice_change_item"
+        android:layout_width="166dp"
+        android:layout_height="match_parent" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="8dp"
+        android:layoutDirection="rtl"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/dish_name_text_view_dish_choice_change_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/assistant_bold"
+            android:text="שם המנה"
+            android:textColor="@color/custom_blue"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/dish_detail_text_view_dish_choice_change_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/assistant_regular"
+            android:text="פירוט המנה בלה בלה בלה בלה בלה בלה בלה בלה בלה בלה "
+            android:textColor="@color/custom_blue"
+            android:textSize="12sp" />
+
+
+        <TextView
+            android:id="@+id/dish_cosh_text_view_dish_choice_change_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/assistant_regular"
+            android:text="עלות המנה"
+            android:textColor="@color/custom_red"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

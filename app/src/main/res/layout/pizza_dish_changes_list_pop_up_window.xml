@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layoutDirection="rtl"
+    android:background="@drawable/filter_background_layout">
+
+
+
+    <TextView
+        android:id="@+id/pizza_dish_name_text_view_dish_changes_list_pop_up_window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="בחירת תוספות לפיצה"
+        android:layout_gravity="center"
+        android:textSize="13sp"
+        android:textColor="@color/custom_blue"
+        android:layout_marginTop="22dp"
+        android:fontFamily="@font/assistant_bold"/>
+
+
+
+    <TextView
+        android:id="@+id/pizza_details_for_changes_text_view_dish_changes_list_pop_up_window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="פירוט עבור בחירת התוספות לפיצה ועלויות"
+        android:layout_gravity="center"
+        android:textSize="13sp"
+        android:textColor="@color/custom_blue"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/assistant_regular"/>
+
+
+
+    <ListView
+        android:id="@+id/pizza_changes_list_view_pizza_changes_list_pop_up_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"/>
+
+
+
+
+    <Button
+        android:id="@+id/pizza_save_dish_changes_btn_changes_list_pop_up_window"
+        android:layout_width="168dp"
+        android:layout_height="33dp"
+        android:layout_marginBottom="22dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/btn_sign_in_clicked_background"
+        android:fontFamily="@font/assistant_bold"
+        android:text="שמירה"
+        android:textColor="@drawable/btn_sign_in_clicked_text_view_opposite"
+        android:textSize="16sp"
+        android:layout_gravity="center"/>
+
+
+
+</LinearLayout>

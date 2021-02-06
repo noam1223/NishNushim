@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="28dp"
+    android:orientation="horizontal"
+    android:layoutDirection="rtl"
+    android:gravity="center_vertical"
+    android:background="@color/white">
+
+    
+    
+    <ImageButton
+        android:id="@+id/check_btn_dish_change_option_item"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:background="@drawable/radio_button_address_top_screen_customize"
+        android:layout_marginRight="34dp" />
+
+
+
+    <TextView
+        android:id="@+id/change_detail_text_view_dish_change_option_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="פירוט התוספת"
+        android:textSize="13sp"
+        android:layout_marginRight="48dp"
+        android:textColor="@color/custom_blue"
+        android:fontFamily="@font/assistant_regular"/>
+
+
+
+
+</LinearLayout>

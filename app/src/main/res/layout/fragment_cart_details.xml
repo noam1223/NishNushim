@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/background_color"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="38dp"
+        android:fontFamily="@font/assistant_bold"
+        android:text="סוג הזמנה"
+        android:textColor="@color/custom_blue"
+        android:textSize="13sp" />
+
+
+    <RadioGroup
+        android:id="@+id/way_of_delivery_radio_group_cart_details_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout_head_area_address_list_from_to_screen_layout">
+
+
+        <RadioButton
+            android:id="@+id/delivery_way_to_deliver_radio_btn_cart_details_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:button="@drawable/radio_button_inset"
+            android:checked="true"
+            android:drawableRight="@drawable/ic_icon_delivery_top_screen"
+            android:drawablePadding="24dp"
+            android:fontFamily="@font/assistant_regular"
+            android:layoutDirection="rtl"
+            android:paddingRight="18dp"
+            android:text="משלוח"
+            android:textColor="@color/custom_blue"
+            android:textSize="13sp" />
+
+
+        <RadioButton
+            android:id="@+id/self_take_way_to_deliver_radio_btn_cart_details_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:layout_marginTop="8dp"
+            android:button="@drawable/radio_button_inset"
+            android:checked="false"
+            android:drawableRight="@drawable/ic_self_take_icon"
+            android:drawablePadding="24dp"
+            android:fontFamily="@font/assistant_regular"
+            android:layoutDirection="rtl"
+            android:paddingRight="18dp"
+            android:text="איסוף עצמי"
+            android:textColor="@color/custom_blue"
+            android:textSize="13sp" />
+
+
+    </RadioGroup>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="26dp"
+        android:background="#e0e0e0" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layoutDirection="rtl">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="38dp"
+            android:fontFamily="@font/assistant_bold"
+            android:text="פירוט ההזמנה"
+            android:textColor="@color/custom_blue"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/min_to_deliver_order_details_cart_details_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="38dp"
+            android:fontFamily="@font/assistant_bold"
+            android:text="מינימום 80 ₪"
+            android:textColor="@color/custom_blue"
+            android:textSize="13sp" />
+
+
+    </RelativeLayout>
+
+
+    <com.example.nishnushim.helpUIClass.NonScrollListView
+        android:id="@+id/cart_dishes_list_view_cart_details_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="26dp"
+        android:background="#e0e0e0" />
+
+
+    <LinearLayout
+        android:id="@+id/add_supplies_linear_layout_area_details_cart_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layoutDirection="rtl"
+
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginLeft="18dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:layoutDirection="rtl">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="32dp"
+                android:fontFamily="@font/assistant_bold"
+                android:text="סכו״ם"
+                android:textColor="@color/custom_blue" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="32dp"
+                android:gravity="center_vertical"
+                android:layoutDirection="rtl"
+                android:orientation="horizontal">
+
+
+                <ImageButton
+                    android:id="@+id/increment_supplies_img_btn_cart_details_fragment"
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
+                    android:background="@drawable/ic_icon_add_button" />
+
+                <TextView
+                    android:id="@+id/number_of_supplies_text_view_cart_details_fragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginRight="22dp"
+                    android:text="1"
+                    android:textColor="@color/custom_red"
+                    android:textSize="12sp" />
+
+
+                <ImageButton
+                    android:id="@+id/decrement_supplies_img_btn_cart_details_fragment"
+                    android:layout_width="11dp"
+                    android:layout_height="11dp"
+                    android:background="@drawable/ic_icon_minus_button" />
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:layoutDirection="rtl">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="32dp"
+                android:fontFamily="@font/assistant_bold"
+                android:text="רטבים לבחירה"
+                android:textColor="@color/custom_blue" />
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/sauces_linear_layout_area_cart_details_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="18dp"
+            android:layoutDirection="rtl"
+            android:orientation="vertical">
+
+
+            <!--                    TODO: DO NOT FORGET TO ADD DYNEMACLLY SAUCE BY THE GET IN NUMBER-->
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:layoutDirection="rtl">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="32dp"
+                    android:fontFamily="@font/assistant_bold"
+                    android:text="רוטב 1"
+                    android:textColor="@color/custom_blue" />
+
+
+                <TextView
+                    android:id="@+id/cost_of_sauce_text_view_cart_details_fragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="28dp"
+                    android:layout_toRightOf="@+id/num_of_sauce_added_area_linear_layout_cart_details_fragment"
+                    android:fontFamily="@font/assistant_regular"
+                    android:text="ללא עלות"
+                    android:textColor="@color/custom_red"
+                    android:textSize="12sp" />
+
+
+                <LinearLayout
+                    android:id="@+id/num_of_sauce_added_area_linear_layout_cart_details_fragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="32dp"
+                    android:gravity="center_vertical"
+                    android:layoutDirection="rtl"
+                    android:orientation="horizontal">
+
+
+                    <ImageButton
+                        android:id="@+id/increment_sauce_img_btn_cart_details_fragment"
+                        android:layout_width="11dp"
+                        android:layout_height="11dp"
+                        android:background="@drawable/ic_icon_add_button" />
+
+                    <TextView
+                        android:id="@+id/number_of_sauces_text_view_cart_details_fragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="22dp"
+                        android:layout_marginRight="22dp"
+                        android:text="1"
+                        android:textColor="@color/custom_red"
+                        android:textSize="12sp" />
+
+
+                    <ImageButton
+                        android:id="@+id/decrement_sauce_img_btn_cart_details_fragment"
+                        android:layout_width="11dp"
+                        android:layout_height="11dp"
+                        android:background="@drawable/ic_icon_minus_button" />
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:layoutDirection="rtl">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="32dp"
+                android:fontFamily="@font/assistant_bold"
+                android:text="סה״כ תוספות"
+                android:textColor="@color/custom_blue" />
+
+
+            <TextView
+                android:id="@+id/cost_of_extras_text_view_cart_details_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="18dp"
+                android:fontFamily="@font/assistant_regular"
+                android:text="4 ₪"
+                android:textColor="@color/custom_red"
+                android:textSize="12sp" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:layoutDirection="rtl">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="32dp"
+                android:fontFamily="@font/assistant_bold"
+                android:text="זמן למשלוח"
+                android:textColor="@color/custom_blue" />
+
+
+            <TextView
+                android:id="@+id/time_to_delivery_text_view_cart_details_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="18dp"
+                android:fontFamily="@font/assistant_regular"
+                android:text="40 - 60 דקות"
+                android:textColor="@color/custom_red"
+                android:textSize="12sp" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:layoutDirection="rtl">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="32dp"
+                android:fontFamily="@font/assistant_bold"
+                android:text="מחיר מנות"
+                android:textColor="@color/custom_blue" />
+
+
+            <TextView
+                android:id="@+id/dishes_costs_text_view_cart_details_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="18dp"
+                android:fontFamily="@font/assistant_regular"
+                android:text="42.00 ₪"
+                android:textColor="@color/custom_red"
+                android:textSize="12sp" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:layoutDirection="rtl">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="32dp"
+                android:fontFamily="@font/assistant_bold"
+                android:text="דמי משלוח"
+                android:textColor="@color/custom_blue" />
+
+
+            <TextView
+                android:id="@+id/delivery_cost_cart_details_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="18dp"
+                android:fontFamily="@font/assistant_regular"
+                android:text="10.00 ₪"
+                android:textColor="@color/custom_red"
+                android:textSize="12sp" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/sum_of_dishes_in_cart_background"
+            android:gravity="center_vertical"
+            android:layoutDirection="rtl">
+
+
+            <TextView
+                android:id="@+id/num_of_dishes_text_view_cart_details_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="32dp"
+                android:fontFamily="@font/assistant_bold"
+                android:text="סה״כ מנות"
+                android:textColor="@color/custom_yellow" />
+
+
+            <TextView
+                android:id="@+id/sum_of_cart_cart_details_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="18dp"
+                android:fontFamily="@font/assistant_bold"
+                android:text="80 ₪"
+                android:textColor="@color/custom_yellow" />
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/min_msg_cart_area_relative_layout_cart_details_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/background_cart_not_minimum"
+        android:layoutDirection="rtl"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/min_to_order_text_view_cart_details_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/assistant_bold"
+            android:text="לא הגעת למינימום הזמנה"
+            android:textColor="@color/custom_blue" />
+
+
+        <TextView
+            android:id="@+id/sum_of_cart_min_msg_cart_details_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="18dp"
+            android:fontFamily="@font/assistant_bold"
+            android:text="80 ₪"
+            android:textColor="@color/custom_yellow" />
+
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/continue_order_btn_cart_details_fragment"
+        android:layout_width="114dp"
+        android:layout_height="26dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_sign_in_clicked_background"
+        android:fontFamily="@font/assistant_bold"
+        android:text="המשך הזמנה"
+        android:textColor="@drawable/btn_sign_in_clicked_text_view_opposite" />
+
+
+    <TextView
+        android:id="@+id/forget_something_text_view_cart_details_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/assistant_bold"
+        android:text="שכחתי משהו"
+        android:textColor="@color/custom_blue"
+        android:textSize="13sp"
+        android:layout_marginBottom="42dp"/>
+
+</LinearLayout>
+

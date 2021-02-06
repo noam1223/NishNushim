@@ -19,6 +19,8 @@
         android:textSize="12sp" />
 
 
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,6 +37,7 @@
             android:orientation="horizontal">
 
 
+
             <Button
                 android:id="@+id/time_delivery_filter_pop_up_window"
                 android:layout_width="72dp"
@@ -42,7 +45,7 @@
                 android:layout_marginLeft="32dp"
                 android:background="@drawable/filter_image_btn_selector"
                 android:drawableTop="@drawable/ic_filter_delivery_time"
-                android:drawableTint="@color/custom_blue"
+                app:drawableTint="@color/custom_blue"
                 android:fontFamily="@font/assistant_bold"
                 android:gravity="center"
                 android:paddingTop="12dp"
@@ -51,6 +54,7 @@
                 android:textAlignment="gravity"
                 android:textColor="@drawable/btn_sign_in_clicked_text_view"
                 android:textSize="12sp" />
+
 
 
             <Button
@@ -131,6 +135,7 @@
                 android:textAlignment="gravity"
                 android:textColor="@drawable/btn_sign_in_clicked_text_view"
                 android:textSize="12sp" />
+
 
 
             <Button

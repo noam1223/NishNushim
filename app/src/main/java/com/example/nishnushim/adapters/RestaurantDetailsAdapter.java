@@ -83,7 +83,7 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
 
         holder.deliveryAmountAmountTextView.setText(String.valueOf(restaurants.get(position).getAreasForDeliveries().get(0).getDeliveryCost()));
 
-        holder.timeFullDeliveryTextView.setText(restaurants.get(position).getDeliveryTime());
+//        holder.timeFullDeliveryTextView.setText(restaurants.get(position.getDeliveryTime());
         holder.minAmountToDeliveryTextView.setText(String.valueOf(restaurants.get(position).getAreasForDeliveries().get(0).getMinToDeliver()));
 
         //TODO: CALCULATE THE AVERAGE OF CREDITS

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layoutDirection="rtl"
+    android:layout_marginTop="18dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    android:layout_marginLeft="18dp"
+    android:background="@drawable/profile_cart_background">
+
+
+        <RadioButton
+            android:id="@+id/first_change_radio_button_one_choice_changes_item"
+            android:layout_width="match_parent"
+            android:layout_height="27dp"
+            android:background="@drawable/radio_button_background_top_screen_customize_opposite"
+            android:button="@drawable/radio_button_inset_changes"
+            android:checked="true"
+            android:drawablePadding="24dp"
+            android:fontFamily="@font/assistant_regular"
+            android:paddingRight="48dp"
+            android:text="מיקום נוכחי"
+            android:textColor="@color/custom_blue"
+            android:textSize="13sp"
+            android:gravity="center_vertical"/>
+
+
+
+</LinearLayout>

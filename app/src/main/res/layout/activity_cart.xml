@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".CartActivity"
+    android:layoutDirection="rtl"
+    android:orientation="vertical">
+
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_restaurant_cart_activity"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_scrollFlags="exitUntilCollapsed">
+
+
+        <RelativeLayout
+            android:id="@+id/relative_layout_tool_bar_area_restaurant_profile_home_activity"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layoutDirection="rtl"
+            android:visibility="visible">
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/searching_tool_bar_cart_activity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/custom_blue"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:layout_scrollFlags="exitUntilCollapsed" />
+
+
+            <EditText
+                android:id="@+id/edit_text_search_tool_bar_cart_activity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/search_image_view_tool_bar_cart_activity"
+                android:backgroundTint="@android:color/transparent"
+                android:drawableRight="@drawable/ic_icon_back_nishnush"
+                android:drawableTint="@color/white"
+                android:fontFamily="@font/assistant_regular"
+                android:gravity="center_vertical"
+                android:hint="שם המסעדה"
+                android:inputType="text"
+                android:layoutDirection="rtl"
+                android:maxLines="1"
+                android:paddingRight="26dp"
+                android:textColorHint="@color/white"
+                android:textDirection="rtl"
+                android:textSize="14sp" />
+
+
+            <ImageView
+                android:id="@+id/search_image_view_tool_bar_cart_activity"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="26dp"
+                android:layout_marginTop="26dp"
+                android:background="@drawable/ic_search"
+                android:backgroundTint="@color/white" />
+
+
+        </RelativeLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/change_cart_info_area_cart_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar_restaurant_cart_activity"
+        android:layout_marginTop="12dp">
+
+
+
+
+        <TextView
+            android:id="@+id/my_order_details_text_view_cart_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ההזמנה שלי"
+            android:textColor="@color/custom_blue"
+            android:fontFamily="@font/assistant_regular"
+            android:textSize="12sp"
+            android:layout_marginRight="84dp"
+            android:layout_alignParentRight="true"
+            android:paddingRight="12dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:background="@drawable/sub_title_menu_background_clicked" />
+
+
+
+
+        <TextView
+            android:id="@+id/my_delivery_details_text_view_cart_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="פרטים"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/custom_blue"
+            android:fontFamily="@font/assistant_regular"
+            android:textSize="12sp"
+            android:paddingRight="12dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:layout_marginLeft="84dp" />
+
+
+
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:id="@+id/cart_fragment_layout_scroll_view_cart_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/change_cart_info_area_cart_activity"
+        android:layout_marginTop="18dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layoutDirection="rtl">
+
+    <FrameLayout
+        android:id="@+id/cart_frame_layout_cart_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

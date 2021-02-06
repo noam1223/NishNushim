@@ -4,28 +4,55 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.nishnushim.adapters.SearchAdapter;
+import com.example.nishnushim.helpclasses.Classification;
+import com.example.nishnushim.helpclasses.Dish;
 import com.example.nishnushim.helpclasses.Restaurant;
+import com.example.nishnushim.helpclasses.helpInterfaces.OnProfileScrollChangeListener;
+import com.example.nishnushim.helpclasses.helpInterfaces.OnSearchItemClicked;
 import com.example.nishnushim.nishnushFragments.fragments_restaurant_profile.MenuRestaurantFragment;
 import com.example.nishnushim.nishnushFragments.fragments_restaurant_profile.RestaurantProfileDetailsFragment;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.gson.Gson;
 
-public class RestaurantProfileHomeActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class RestaurantProfileHomeActivity extends AppCompatActivity implements View.OnClickListener, OnProfileScrollChangeListener, OnSearchItemClicked {
+
 
     ScrollView restaurantProfileHomeScrollView;
     AppBarLayout appBarLayout;
@@ -42,6 +69,7 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
     TextView moveToMenuTextView, moveToLastOrdersTextView, moveToMoreDetailsTextView;
     ImageView moveToMenuImgBtn, moveToLastOrdersImgBtn, moveToMoreDetailsImgBtn;
 
+    ImageView searchImageView;
     EditText searchEditText;
 
     Restaurant restaurant;
@@ -49,9 +77,21 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
     Fragment restaurantDetailsFragment;
     Bundle bundle = new Bundle();
 
+
+    List<String> searchDishList;
+    Classification searchClassification = new Classification();
+
+
     Rect rect = new Rect();
     int scrollViewHeight;
     int scrollPositionLast = 0;
+
+
+    List<String> searchResultsList = new ArrayList<>();
+    List<Dish> dishList = new ArrayList<>();
+
+    private Map<String, List<String>> mapSearchResultString = new HashMap<>();
+    private Map<String, List<Dish>> dishListHashMap = new HashMap<>();
 
 
     @Override
@@ -61,6 +101,7 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +116,8 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
         appBarLayout = findViewById(R.id.app_bar_restaurant_profile_home_activity);
         toolbar = findViewById(R.id.searching_tool_bar_restaurant_profile_home_activity);
         searchEditText = findViewById(R.id.edit_text_search_tool_bar_restaurant_profile_home_activity);
+        searchImageView = findViewById(R.id.search_image_view_tool_bar_restaurant_profile_home_activity);
+
 
         Intent intent = getIntent();
 
@@ -83,7 +126,18 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
             restaurant = (Restaurant) intent.getSerializableExtra(getBaseContext().getString(R.string.restaurant_detail));
             restaurantKey = intent.getStringExtra("key");
 
-            restaurantDetailsFragment = new MenuRestaurantFragment();
+
+            ///SAVE FOR THE MOMENT////////////
+            SharedPreferences mPrefs = getSharedPreferences("noam", MODE_PRIVATE);
+            SharedPreferences.Editor prefsEditor = mPrefs.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(restaurant);
+            prefsEditor.putString("MyObject", json);
+            prefsEditor.putString("key", restaurantKey);
+            prefsEditor.commit();
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            restaurantDetailsFragment = new MenuRestaurantFragment(this);
             bundle.putSerializable(getString(R.string.restaurant_detail), restaurant);
             bundle.putString("key", restaurantKey);
             restaurantDetailsFragment.setArguments(bundle);
@@ -98,75 +152,59 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
                 public void onScrollChanged() {
 
 
-                    //TODO: WORKING ON SCROLLLING BETWEEN FRAGMENT AND ACTIVITY
-
-                    //WORKING ON COMMUNICATION BETWEEN PROFILE HOME SCROLLING TO THE FRAGMENTS SCROLLING (MENU AT THE MEANTIME)
-//                    if (scrollPositionLast == moreDetailsRestaurantFrameLayout.getTop()){
-////                        if (scrollPositionLast == moreDetailsRestaurantFrameLayout.getTop() - 100){
-//////                            if (restaurantDetailsFragment instanceof MenuRestaurantFragment){
-//////                                ((MenuRestaurantFragment)restaurantDetailsFragment).onScrollDownListener();
-//////                            }
-//                            restaurantProfileHomeScrollView.setScrollY(scrollPositionLast);
-//                            return;
-////                        }
-//                    }
-//                    else{
-//
-//                        if (scrollPositionLast == moreDetailsRestaurantFrameLayout.getTop() + 12){
-//
-//                            if (restaurantDetailsFragment instanceof MenuRestaurantFragment){
-//
-//                               if (((MenuRestaurantFragment)restaurantDetailsFragment).onScrollUpListener()){
-//                                   return;
-//                               }
-//
-//                            }
-//
-//                        }
-//
-//                    }
-
-
-                    if (restaurantProfileHomeScrollView.getScrollY() > restaurantProfileAreaConstrainLayout.getTop()  && restaurantProfileHomeScrollView.getScrollY() != 0) {
-
-                        float newAlpha = ((float) restaurantProfileHomeScrollView.getScrollY() / (float) restaurantProfileAreaConstrainLayout.getBottom());
-
-                        restaurantProfileAreaConstrainLayout.setAlpha(1 - newAlpha);
-                        toolbar.setAlpha(newAlpha);
-                        searchEditText.setAlpha(newAlpha);
-
-                    }
-
-
-                    if (restaurantProfileHomeScrollView.getScrollY() > restaurantProfileAreaConstrainLayout.getBottom()){
-
-                        restaurantProfileAreaConstrainLayout.setAlpha(0);
-                        toolbar.setAlpha(1);
-                        searchEditText.setAlpha(1);
-
-                    }
-
-
-                    if (restaurantProfileHomeScrollView.getScrollY() == restaurantProfileAreaConstrainLayout.getTop()){
-                        restaurantProfileAreaConstrainLayout.setAlpha(1);
-                        toolbar.setAlpha(0);
-                        searchEditText.setAlpha(0);
-                    }
-
-
-
+                    //TODO: WORKING ON SCROLLING BETWEEN FRAGMENT AND ACTIVITY
 
                     if (restaurantDetailsFragment instanceof MenuRestaurantFragment) {
 
+//                        Log.i("TOP", moreDetailsRestaurantFrameLayout.getTop() + "");
+//                        Log.i("SCROLL Y", restaurantProfileHomeScrollView.getScrollY() + "");
 
-                    } else if (restaurantDetailsFragment instanceof RestaurantProfileDetailsFragment) {
+                        if (moreDetailsRestaurantFrameLayout.getTop() > restaurantProfileHomeScrollView.getScrollY()) {
 
-                        ((RestaurantProfileDetailsFragment) restaurantDetailsFragment).onScrollListenerCheck(restaurantProfileHomeScrollView);
+                            restaurantProfileHomeScrollView.setOnTouchListener(null);
+                            ((MenuRestaurantFragment) restaurantDetailsFragment).enableMenuRecyclerViewScrolling(false);
+
+
+                            if (restaurantProfileHomeScrollView.getScrollY() > restaurantProfileAreaConstrainLayout.getTop() && restaurantProfileHomeScrollView.getScrollY() != 0) {
+
+                                float newAlpha = ((float) restaurantProfileHomeScrollView.getScrollY() / (float) restaurantProfileAreaConstrainLayout.getBottom());
+
+                                restaurantProfileAreaConstrainLayout.setAlpha(1 - newAlpha);
+                                toolbar.setAlpha(newAlpha);
+                                searchEditText.setAlpha(newAlpha);
+
+                            }
+
+
+                            if (restaurantProfileHomeScrollView.getScrollY() > restaurantProfileAreaConstrainLayout.getBottom()) {
+
+                                restaurantProfileAreaConstrainLayout.setAlpha(0);
+                                toolbar.setAlpha(1);
+                                searchEditText.setAlpha(1);
+
+                            }
+
+
+                            if (restaurantProfileHomeScrollView.getScrollY() == restaurantProfileAreaConstrainLayout.getTop()) {
+                                restaurantProfileAreaConstrainLayout.setAlpha(1);
+                                toolbar.setAlpha(0);
+                                searchEditText.setAlpha(0);
+                            }
+                        } else {
+
+                            restaurantProfileHomeScrollView.stopNestedScroll();
+                            restaurantProfileHomeScrollView.setOnTouchListener(new View.OnTouchListener() {
+                                @Override
+                                public boolean onTouch(View v, MotionEvent event) {
+                                    return true;
+                                }
+                            });
+                            ((MenuRestaurantFragment) restaurantDetailsFragment).enableMenuRecyclerViewScrolling(true);
+                        }
+
 
                     }
-
-
-                    scrollPositionLast = restaurantProfileHomeScrollView.getScrollY();
+//                    scrollPositionLast = restaurantProfileHomeScrollView.getScrollY();
 
                 }
             });
@@ -236,6 +274,184 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
 
 
     @Override
+    public void onSearchClicked(int position) {
+
+
+    }
+
+
+    public void searchClicked(View view) {
+
+
+        dishList = new ArrayList<>();
+        searchResultsList = new ArrayList<>();
+
+        searchEditText.setFocusable(false);
+
+        View popUpView = getLayoutInflater().inflate(R.layout.search_pop_up_window, null);
+        Dialog searchDialog = new Dialog(this);
+        searchDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        searchDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        searchDialog.setContentView(popUpView);
+
+        LinearLayout firstScreenLinearLayout = popUpView.findViewById(R.id.linear_layout_search_logo_area_search_pop_up_window_layout);
+        firstScreenLinearLayout.setVisibility(View.GONE);
+
+
+        EditText searchEditText = popUpView.findViewById(R.id.edit_text_search_restaurant_by_string_search_pop_up_window);
+        LinearLayout resultsListsLinearLayout = popUpView.findViewById(R.id.results_lists_linear_layout_area_serach_pop_up_window);
+        resultsListsLinearLayout.setVisibility(View.VISIBLE);
+
+        TextView subTitledListView = popUpView.findViewById(R.id.sub_title_history_list_text_view_search_pop_up_window);
+        subTitledListView.setText("מומלצים");
+
+        ListView searchResultsListView, recommendationResultsListView;
+
+        searchResultsListView = popUpView.findViewById(R.id.search_list_view_search_pop_up_window_layout);
+        recommendationResultsListView = popUpView.findViewById(R.id.history_of_search_list_view_search_pop_up_window_layout);
+
+        SearchAdapter searchAdapter = new SearchAdapter(this, searchResultsList, dishList, this);
+        searchResultsListView.setAdapter(searchAdapter);
+
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+                if (s.length() > 0) {
+
+
+                    if (mapSearchResultString.containsKey(s.toString()) && dishListHashMap.containsKey(s.toString())) {
+
+                        searchResultsList.clear();
+                        dishList.clear();
+
+                        searchResultsList.addAll(mapSearchResultString.get(s.toString()));
+                        dishList.addAll(dishListHashMap.get(s.toString()));
+
+                        searchAdapter.setDishList(dishList);
+                        searchAdapter.setSearchList(searchResultsList);
+                        searchAdapter.notifyDataSetChanged();
+
+
+                    } else {
+
+
+                        for (int i = 0; i < restaurant.getMenu().getClassifications().size(); i++) {
+
+
+                            for (int j = 0; j < restaurant.getMenu().getClassifications().get(i).getDishList().size(); j++) {
+
+                                if (restaurant.getMenu().getClassifications().get(i).getDishList().get(j).getName().contains(s.toString())
+                                        || restaurant.getMenu().getClassifications().get(i).getDishList().get(j).getDetails().contains(s.toString())) {
+                                    addTextToSearchMap(s.toString(), restaurant.getMenu().getClassifications().get(i).getDishList().get(j).getName());
+                                    addDishToDishMap(restaurant.getMenu().getClassifications().get(i).getDishList().get(j), s.toString());
+                                }
+                            }
+
+
+                        }
+
+
+                        if (mapSearchResultString.containsKey(s.toString())){
+
+                            searchResultsList.clear();
+                            dishList.clear();
+
+                            searchResultsList.addAll(mapSearchResultString.get(s.toString()));
+                            dishList.addAll(dishListHashMap.get(s.toString()));
+
+                        }else{
+                            searchResultsList.clear();
+                            searchDishList.clear();
+                        }
+
+
+                        searchAdapter.setDishList(dishList);
+                        searchAdapter.setSearchList(searchResultsList);
+                        searchAdapter.notifyDataSetChanged();
+
+                    }
+                }
+
+
+            }
+        });
+
+
+        searchEditText.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (searchEditText.getRight() - searchEditText.getPaddingRight() - searchEditText.getCompoundDrawables()[2].getBounds().width())) {
+                        searchDialog.dismiss();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+
+        searchDialog.create();
+        searchDialog.show();
+
+
+        Window window = searchDialog.getWindow();
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        window.setGravity(Gravity.TOP);
+
+    }
+
+
+    private void addTextToSearchMap(String searchText, String addText) {
+
+        List<String> strings = new ArrayList<>();
+
+        if (!mapSearchResultString.containsKey(searchText)) {
+            strings.add(addText);
+            mapSearchResultString.put(searchText, strings);
+        } else if (mapSearchResultString.get(searchText).isEmpty()) {
+
+            if (mapSearchResultString.get(searchText).contains(addText)) {
+                mapSearchResultString.get(searchText).add(addText);
+            }
+        }
+    }
+
+
+    private void addDishToDishMap(Dish dish, String s) {
+
+        List<Dish> dishList = new ArrayList<>();
+
+        if (dishListHashMap.containsKey(s)) {
+            if (dishListHashMap.get(s).isEmpty()) {
+                dishList.add(dish);
+                dishListHashMap.get(s).addAll(dishList);
+            }
+            dishListHashMap.get(s).add(dish);
+        } else {
+            dishList.add(dish);
+            dishListHashMap.put(s, dishList);
+        }
+
+    }
+
+
+    @Override
     public void onClick(View v) {
 
         int id = v.getId();
@@ -243,7 +459,7 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
         if (id == R.id.menu_image_view_restaurant_profile_home_activity) {
 
             if (!(restaurantDetailsFragment instanceof MenuRestaurantFragment)) {
-                restaurantDetailsFragment = new MenuRestaurantFragment();
+                restaurantDetailsFragment = new MenuRestaurantFragment(this);
                 bundle.putSerializable(getString(R.string.restaurant_detail), restaurant);
                 bundle.putString("key", restaurantKey);
                 restaurantDetailsFragment.setArguments(bundle);
@@ -317,6 +533,25 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
                 }
             }
         }
+    }
+
+
+    @Override
+    public boolean onScrollScreenUp() {
+
+        if (restaurantProfileHomeScrollView.getScrollY() >= moreDetailsRestaurantFrameLayout.getTop() + 68) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    @Override
+    public boolean onScrollScreenDown() {
+
+
+        return false;
     }
 
 

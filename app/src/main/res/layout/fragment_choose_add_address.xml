@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.signinfragment.ChooseAddAddressFragment"
+    tools:context=".nishnushFragments.signinfragment.ChooseAddAddressFragment"
     android:background="@drawable/sign_in_fragment_background_rounded"
     android:orientation="vertical"
     android:layoutDirection="rtl">
