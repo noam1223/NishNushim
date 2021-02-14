@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="294dp"
+    android:layout_height="248dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/background_delete_pop_up">
+
+
+
+    <ImageButton
+        android:id="@+id/close_window_image_btn_recommendation_pop_up_window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_icon_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"/>
+
+
+
+    <TextView
+        android:id="@+id/restaurant_name_text_name_recommendation_pop_up_window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="נא דרג את מסעדת"
+        android:textSize="13sp"
+        android:textColor="@color/custom_blue"
+        android:fontFamily="@font/assistant_semibold"
+        android:layout_marginTop="29dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+
+
+    <RatingBar
+        android:id="@+id/recommendation_rating_bar_recommendation_pop_up_window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="11dp"
+        android:layoutDirection="rtl"
+        android:max="5"
+        android:secondaryProgressTint="#00000000"
+        android:stepSize="1"
+        android:maxHeight="16dp"
+        android:isIndicator="true"
+        style="@style/MyRatingBar"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/restaurant_name_text_name_recommendation_pop_up_window"/>
+
+
+
+    <EditText
+        android:id="@+id/recommendation_note_edit_text_recommendation_pop_up_window"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp"
+        android:backgroundTint="#979797"
+        android:textSize="12sp"
+        android:textColor="#b3002144"
+        android:fontFamily="@font/assistant_regular"
+        android:hint="היה ממש טעים! במיוחד אהבתי את ה..."
+        android:textColorHint="#b3002144"
+        android:paddingBottom="12dp"
+        android:layout_marginTop="26dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recommendation_rating_bar_recommendation_pop_up_window"/>
+
+
+
+    <Button
+        android:id="@+id/save_recommendation_btn_recommendation_pop_up_window"
+        android:layout_width="168dp"
+        android:layout_height="33dp"
+        android:layout_marginBottom="14dp"
+        android:background="@drawable/btn_sign_in_clicked_background"
+        android:text="שמירה"
+        android:textColor="@drawable/btn_sign_in_clicked_text_view_opposite"
+        android:textSize="16sp"
+        android:fontFamily="@font/assistant_bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

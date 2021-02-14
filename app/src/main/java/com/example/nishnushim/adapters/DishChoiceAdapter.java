@@ -5,10 +5,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -32,27 +36,30 @@ public class DishChoiceAdapter extends BaseAdapter {
     Changes createChange;
     LayoutInflater layoutInflater;
     Changes.ChangesTypesEnum changesTypesEnum;
-    int dishPosition = -1;
+    int numToChoose, positionChecked = -1;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////DISH ADAPTER WILL WORK ON DISHES WITHOUT CHANGES, LIKE DRINKS, SIDE DIHSES (POTATOES, SALADS, HOME'S BREAD)
 
-    public DishChoiceAdapter(Context context, List<Object> dishChangeList, Changes.ChangesTypesEnum changesTypesEnum, Changes createChange) {
+    public DishChoiceAdapter(Context context, List<Object> dishChangeList, Changes.ChangesTypesEnum changesTypesEnum, Changes createChange, int numToChoose) {
         this.context = context;
         this.dishChangeList = dishChangeList;
         this.changesTypesEnum = changesTypesEnum;
         this.createChange = createChange;
+        this. numToChoose = numToChoose;
         this.layoutInflater = LayoutInflater.from(this.context);
 
 
+        if (this.numToChoose > 0){
 
-        if (this.changesTypesEnum == Changes.ChangesTypesEnum.CLASSIFICATION_CHOICE){
-            HashMap<String, Object> map = (HashMap<String, Object>) dishChangeList;
-            Classification classification = new Gson().fromJson(new Gson().toJson(map), Classification.class);
+            //TODO: ADD BTN IN ADD DISH ACTIVITY
 
-            this.dishChangeList = Collections.singletonList((Object) classification.getDishList());
         }
 
-
     }
+
+
 
 
     @Override
@@ -85,40 +92,99 @@ public class DishChoiceAdapter extends BaseAdapter {
         TextView dishDetailTextView = convertView.findViewById(R.id.dish_detail_text_view_dish_choice_change_item);
         TextView dishPriceTextView = convertView.findViewById(R.id.dish_cosh_text_view_dish_choice_change_item);
 
+        CheckBox dishCheckBox = convertView.findViewById(R.id.img_dish_check_box_dish_choice_change_item);
+        dishCheckBox.setChecked(false);
+
+        Dish dish;
+
+//        HashMap<String, Object> map = (HashMap<String, Object>) dishChangeList.get(position);
+//        Dish dish = new Gson().fromJson(new Gson().toJson(map), Dish.class);
 
 
-        HashMap<String, Object> map = (HashMap<String, Object>) dishChangeList.get(position);
-        Dish dish = new Gson().fromJson(new Gson().toJson(map), Dish.class);
+
+        try {
+            HashMap<String, Object> map = (HashMap<String, Object>) dishChangeList.get(position);
+            dish = new Gson().fromJson(new Gson().toJson(map), Dish.class);
+        }catch (Exception e){
+            dish = (Dish) dishChangeList.get(position);
+        }
+
 
 
         dishNameTextView.setText(dish.getName());
         dishDetailTextView.setText(dish.getDetails());
         dishPriceTextView.setText(dish.getPrice() + " ₪");
 
-        if (dishPosition == position){
-            dishLinearLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.dish_change_background));
-        }else dishLinearLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.profile_cart_background));
+
+        if (numToChoose > 0){
+//            for (int i = 0; i < createChange.getChangesByTypesList().size(); i++) {
+//
+//                if (createChange.getChangesByTypesList().get(i).equals(dish)){
+//                    dishCheckBox.setChecked(true);
+//                    dishLinearLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.dish_change_background));
+//                }
+//
+//            }
+
+            if (positionChecked == position){
+                dishCheckBox.setChecked(true);
+                dishLinearLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.dish_change_background));
+            }else {
+                dishCheckBox.setChecked(false);
+                dishLinearLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.profile_cart_background));
+            }
+
+        } else {
+            dishLinearLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.profile_cart_background));
+            dishCheckBox.setVisibility(View.GONE);
+        }
 
 
+
+
+        Dish finalDish = dish;
 
         dishLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (dishPosition == position){
-                    createChange.getChangesByTypesList().remove(dishChangeList.get(position));
-                    dishPosition = -1;
-                    notifyDataSetChanged();
-                    return;
+
+                if (numToChoose > 0){
+
+//                    if (numToChoose == createChange.getChangesByTypesList().size()){
+//
+//                        for (int i = 0; i < createChange.getChangesByTypesList().size(); i++) {
+//
+//                            if (createChange.getChangesByTypesList().get(i).equals(finalDish)){
+//                                dishCheckBox.setChecked(false);
+//                                createChange.getChangesByTypesList().remove(i);
+//                                dishLinearLayout.setBackground(ContextCompat.getDrawable(context, R.drawable.profile_cart_background));
+//                                return;
+//                            }
+//                        }
+//
+//                    }else Toast.makeText(context, "אין אפשרות לבחור יותר מ-" + numToChoose + " מנות ", Toast.LENGTH_SHORT).show();
+
+                    if (positionChecked == position){
+                        createChange.getChangesByTypesList().clear();
+                    }else if (createChange.getChangesByTypesList().size() == 0){
+                        createChange.getChangesByTypesList().add(finalDish);
+                        positionChecked = position;
+                    }else {
+                        createChange.getChangesByTypesList().set(0, finalDish);
+                        positionChecked = position;
+                    }
+
+                }else {
+
+                    createChange.getChangesByTypesList().add(finalDish);
+                    dishLinearLayout.startAnimation(AnimationUtils.loadAnimation(context, R.anim.add_dish_change_animation));
+
                 }
 
+                notifyDataSetChanged();
 
-                //TODO: ADD DISH CHOICE TO DISH ORDER
-                if (createChange.getChangesByTypesList().size() > 0) {
-                    createChange.getChangesByTypesList().set(0, dishChangeList.get(position));
-                }else createChange.getChangesByTypesList().add(dishChangeList.get(position));
-
-                dishPosition = position;
+                //TODO: ADD ANIMATION THAT DISH IS ADDED
 
             }
         });

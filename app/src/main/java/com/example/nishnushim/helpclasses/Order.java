@@ -10,7 +10,8 @@ import java.util.List;
 public class Order implements Serializable {
 
     int orderNumber;
-    Classification order;
+//    Classification order;
+    Menu order;
     String wayOfDelivery;
     String noteForDelivery;
     int sumOfOrder = 0;
@@ -21,18 +22,39 @@ public class Order implements Serializable {
     String time;
     String costumerName;
     String costumerPhone;
-    List<Boolean> cashOrCredit = new ArrayList<>(); // FALSE - CASH , TRUE - CREDIT
+    List<WayOfPayment> wayOfPayments = new ArrayList<>();
 
+
+    String restaurantKey;
 
 
     public Order() {
     }
 
-    public Classification getOrder() {
+
+    public Order(int orderNumber, Menu order, String wayOfDelivery, String noteForDelivery, int sumOfOrder, int numOfCulture, List<DishChanges> sauceChanges, MyAddress addressToDeliver, String date, String time, String costumerName, String costumerPhone, List<WayOfPayment> wayOfPayments, String restaurantKey) {
+        this.orderNumber = orderNumber;
+        this.order = order;
+        this.wayOfDelivery = wayOfDelivery;
+        this.noteForDelivery = noteForDelivery;
+        this.sumOfOrder = sumOfOrder;
+        this.numOfCulture = numOfCulture;
+        this.sauceChanges = sauceChanges;
+        this.addressToDeliver = addressToDeliver;
+        this.date = date;
+        this.time = time;
+        this.costumerName = costumerName;
+        this.costumerPhone = costumerPhone;
+        this.wayOfPayments = wayOfPayments;
+        this.restaurantKey = restaurantKey;
+    }
+
+
+    public Menu getOrder() {
         return order;
     }
 
-    public void setOrder(Classification order) {
+    public void setOrder(Menu order) {
         this.order = order;
     }
 
@@ -45,11 +67,6 @@ public class Order implements Serializable {
     }
 
     public int getSumOfOrder() {
-
-        if (sumOfOrder == 0){
-            calculateOrderPrice();
-        }
-
         return sumOfOrder;
     }
 
@@ -73,19 +90,6 @@ public class Order implements Serializable {
         this.sauceChanges = sauceChanges;
     }
 
-    public void calculateOrderPrice(){
-
-        sumOfOrder = 0;
-
-        for (int i = 0; i < order.getDishList().size(); i++) {
-            sumOfOrder += order.getDishList().get(i).getPrice();
-        }
-
-        for (int i = 0; i < sauceChanges.size(); i++) {
-            sumOfOrder += sauceChanges.get(i).getPrice();
-        }
-
-    }
 
     public MyAddress getAddressToDeliver() {
         return addressToDeliver;
@@ -144,13 +148,23 @@ public class Order implements Serializable {
         this.noteForDelivery = noteForDelivery;
     }
 
-    public List<Boolean> getCashOrCredit() {
-        return cashOrCredit;
+
+    public String getRestaurantKey() {
+        return restaurantKey;
     }
 
-    public void setCashOrCredit(List<Boolean> cashOrCredit) {
-        this.cashOrCredit = cashOrCredit;
+    public void setRestaurantKey(String restaurantKey) {
+        this.restaurantKey = restaurantKey;
     }
+
+    public List<WayOfPayment> getWayOfPayments() {
+        return wayOfPayments;
+    }
+
+    public void setWayOfPayments(List<WayOfPayment> wayOfPayments) {
+        this.wayOfPayments = wayOfPayments;
+    }
+
 
     @Override
     public String toString() {
@@ -167,7 +181,8 @@ public class Order implements Serializable {
                 ", time='" + time + '\'' +
                 ", costumerName='" + costumerName + '\'' +
                 ", costumerPhone='" + costumerPhone + '\'' +
-                ", cashOrCredit=" + cashOrCredit +
+                ", wayOfPayments=" + wayOfPayments +
+                ", restaurantKey='" + restaurantKey + '\'' +
                 '}';
     }
 }

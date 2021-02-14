@@ -34,7 +34,6 @@
         android:fontFamily="@font/assistant_regular"/>
 
 
-
     <ListView
         android:id="@+id/pizza_changes_list_view_pizza_changes_list_pop_up_window"
         android:layout_width="match_parent"

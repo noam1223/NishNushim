@@ -9,22 +9,16 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.nishnushim.CartActivity;
@@ -37,22 +31,29 @@ import com.example.nishnushim.helpUIClass.NonScrolledRecyclerChild;
 import com.example.nishnushim.helpUIClass.NonScrolledRecyclerView;
 import com.example.nishnushim.helpclasses.Dish;
 import com.example.nishnushim.helpclasses.DishChanges;
-import com.example.nishnushim.helpclasses.helpInterfaces.CartListener;
+import com.example.nishnushim.helpclasses.Menu;
 import com.example.nishnushim.helpclasses.helpInterfaces.MenuItemListener;
 import com.example.nishnushim.helpclasses.Classification;
 import com.example.nishnushim.helpclasses.Restaurant;
 import com.example.nishnushim.helpclasses.helpInterfaces.OnProfileScrollChangeListener;
+import com.example.nishnushim.helpclasses.menuChanges.Changes;
+import com.example.nishnushim.helpclasses.menuChanges.PizzaChange;
+import com.example.nishnushim.helpclasses.menuChanges.RegularChange;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 
-public class MenuRestaurantFragment extends Fragment implements MenuItemListener, CartListener {
+public class MenuRestaurantFragment extends Fragment implements MenuItemListener {
 
     View cartPopUpView;
     TextView sumCartPopUpTextView;
 
-    private static final String TAG = "RECYCLER TOUCH TAG";
+
     RecyclerView subTitlesRecyclerView, menuRestaurantRecyclerView;
     RecyclerView.Adapter subTitleAdapter, menuRestaurantAdapter;
     NonScrolledRecyclerView layoutManager;
@@ -60,14 +61,53 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
     Restaurant restaurant;
     String keyRestaurant;
 
+    private static final int RETURN_DISH_CHANGE = 10001;
+
+
     //CART WILL BE MENU BECAUSE : BREAKFASTS, SPECIAL, DRINKS, DESSERTS
-    Classification cartClassification;
+    Menu cartClassification;
 
     OnProfileScrollChangeListener onProfileScrollChangeListener;
 
 
     public MenuRestaurantFragment(OnProfileScrollChangeListener onProfileScrollChangeListener) {
         this.onProfileScrollChangeListener = onProfileScrollChangeListener;
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (resultCode == RESULT_OK) {
+
+            if (requestCode == 1) {
+
+                if (data != null && data.getSerializableExtra("dish_list") != null) {
+
+                    @SuppressWarnings("unchecked")
+                    Classification createdDihList = (Classification) data.getSerializableExtra("dish_list");
+
+                    if (createdDihList.getDishList().size() > 0) {
+
+                        if (cartClassification.getClassifications().size() == 0) {
+
+                            cartClassification.getClassifications().add(createdDihList);
+
+                        } else {
+
+                            for (int i = 0; i < cartClassification.getClassifications().size(); i++) {
+
+                                if (cartClassification.getClassifications().get(i).getClassificationName().equals(createdDihList.getClassificationName())) {
+                                    cartClassification.getClassifications().get(i).getDishList().addAll(createdDihList.getDishList());
+                                }
+
+                            }
+                        }
+                        updatePopUpCart();
+                    }
+                }
+            }
+        }
     }
 
 
@@ -92,6 +132,7 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
         });
 
 
+        //TODO: working of pop up cart cost of order
         sumCartPopUpTextView = cartPopUpView.findViewById(R.id.sum_of_cart_text_view_cart_pop_up_window);
 
         subTitlesRecyclerView = view.findViewById(R.id.sub_titles_recycler_view_menu_restaurant_fragment);
@@ -105,10 +146,9 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
 
 
         if (cartJsonString != null) {
-            cartClassification = gson.fromJson(cartJsonString, Classification.class);
+            cartClassification = gson.fromJson(cartJsonString, Menu.class);
         } else {
-            cartClassification = new Classification();
-            cartClassification.setClassificationName("קופה");
+            cartClassification = new Menu();
         }
 
 
@@ -124,11 +164,11 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
         }
 
 
-        updateCartSum();
+        updatePopUpCart();
 
         if (menuRestaurantAdapter != null) {
 
-            while (menuRestaurantAdapter.getItemCount() < restaurant.getMenu().getClassifications().size()){
+            while (menuRestaurantAdapter.getItemCount() < restaurant.getMenu().getClassifications().size()) {
                 menuRestaurantRecyclerView.smoothScrollToPosition(menuRestaurantAdapter.getItemCount() - 1);
             }
             menuRestaurantRecyclerView.smoothScrollToPosition(0);
@@ -136,8 +176,6 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
 
         return view;
     }
-
-
 
 
     private void initializeSubTitlesRecyclerView() {
@@ -151,52 +189,14 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
     }
 
 
-
-
     private void initializeMenuRestaurantRecyclerView() {
 
-//        menuRestaurantRecyclerView.setHasFixedSize(false);
-//        menuRestaurantRecyclerView.setNestedScrollingEnabled(false);
         layoutManager = (NonScrolledRecyclerView) new NonScrolledRecyclerView(getContext(), RecyclerView.VERTICAL, false);
         layoutManager.canScrollVertically();
-//        layoutManager.enableVersticleScroll(false);
         menuRestaurantRecyclerView.setLayoutManager(layoutManager);
-        menuRestaurantAdapter = new RestaurantMenuAdapter(getContext(), restaurant.getMenu(), cartClassification, this, onProfileScrollChangeListener, restaurant.getName());
+        menuRestaurantAdapter = new RestaurantMenuAdapter(getContext(), restaurant.getMenu(), cartClassification, onProfileScrollChangeListener, restaurant.getName());
         menuRestaurantRecyclerView.setAdapter(menuRestaurantAdapter);
 
-//        menuRestaurantRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//
-//                if (dy > 0) {
-//                    //scroll up
-//                    //when user want to scroll down the menu the screen needs to scroll up
-//
-//                    Log.i("SCROLL UP", "dy: " + dy);
-//                    Log.i("SCROLLED", onProfileScrollChangeListener.onScrollScreenUp() + "");
-//
-//                    ///NEED TO ENABLE RECYCLER VIEW FROM RESTAURANT PROFILE ACTIVITY
-//
-////                    if (onProfileScrollChangeListener.onScrollScreenUp()) {
-////                        layoutManager.enableVersticleScroll(true);
-////                    }else layoutManager.enableVersticleScroll(false);
-////
-////
-////                    layoutManager.canScrollVertically();
-//
-//
-//                } else {
-//                    //scroll down
-//
-//
-//                    Log.i("SCROLL DOWN", "dy: " + dy);
-//
-//                }
-//
-//
-//                super.onScrolled(recyclerView, dx, dy);
-//            }
-//        });
 
     }
 
@@ -217,190 +217,159 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
     }
 
 
-    @Override
-    public void addDishToCart(Dish dish) {
 
-//        dish.setChanges(new ArrayList<>());
-        cartClassification.getDishList().add(dish);
+    public void updatePopUpCart() {
 
-    }
+        int sum = updateSum();
 
-
-    @Override
-    public void removeDishFromCart(Dish dish) {
-
-        for (int i = 0; i < cartClassification.getDishList().size(); i++) {
-
-            if (cartClassification.getDishList().get(i).getName().equals(dish.getName())) {
-
-                cartClassification.getDishList().remove(i);
-                return;
-
-            }
-
-        }
-
-    }
-
-
-    @Override
-    public void updateDishLongClicked(int ADAPTER_TAG, int dishPosition) {
-
-//        ((RestaurantMenuAdapter) menuRestaurantAdapter).updateMenuLongPressed(ADAPTER_TAG, dishPosition);
-
-    }
-
-
-    @Override
-    public void addChangesDishCart(Dish dish) {
-//
-//        Log.i("DISH", dish.getChanges().size() + "");
-//
-//        for (int i = 0; i < cartClassification.getDishList().size(); i++) {
-//
-//            if (cartClassification.getDishList().get(i).getName().equals(dish.getName())) {
-//
-//
-//                if (dish.getChanges().size() > 0) {
-//
-//
-//                    View popUpView = getLayoutInflater().inflate(R.layout.query_dish_changes_pop_up_window, null);
-//                    Dialog queryDishDialog = new Dialog(getContext());
-//                    queryDishDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                    queryDishDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                    queryDishDialog.setContentView(popUpView);
-//
-//                    if (queryDishDialog.getWindow() != null)
-//                        queryDishDialog.getWindow().getAttributes().windowAnimations = R.style.SlidingDialogAnimation;
-//
-//
-//                    RadioButton yesRadioBtn = popUpView.findViewById(R.id.yes_to_dish_changes_query_dish_changes_pop_up_window);
-//                    RadioButton noRadioBtn = popUpView.findViewById(R.id.no_to_dish_changes_query_dish_changes_pop_up_window);
-//
-//
-//                    int finalI = i;
-//
-//
-//                    yesRadioBtn.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//
-//                            //TODO: OPEN CHANGES POP UP
-//                            View popUpView = getLayoutInflater().inflate(R.layout.dish_changes_list_pop_up_window, null);
-//                            Dialog changesListDialog = new Dialog(getContext());
-//                            changesListDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                            changesListDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                            changesListDialog.setContentView(popUpView);
-//
-//                            if (changesListDialog.getWindow() != null)
-//                                changesListDialog.getWindow().getAttributes().windowAnimations = R.style.SlidingDialogAnimation;
-//
-//
-//                            LinearLayout changesLinearLayoutArea = popUpView.findViewById(R.id.linear_layout_checkboxes_area_dish_changes_list_pop_up_window);
-//                            CheckBox firstChangeCheckBox = popUpView.findViewById(R.id.radio_btn_change_example_dish_changes_list_pop_up_window);
-//
-//                            firstChangeCheckBox.setTag(dish.getChanges().get(0));
-//                            firstChangeCheckBox.setText(dish.getChanges().get(0).getChange());
-//
-//
-//                            //TODO: WORKING WITH CHECK BOX ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                            ////////////////////////////////////////////////////////////// NOT FINISHED //////////////////////////////////////////////////////////////
-//                            for (int j = 1; j < dish.getChanges().size(); j++) {
-//                                CheckBox checkBox = CreateCustomBtn.createCheckBox(getContext(), firstChangeCheckBox, j, 1, dish.getChanges().get(j).getChange(), dish.getChanges().get(j));
-//
-//                                int finalJ = j;
-//                                checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                                    @Override
-//                                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//
-//                                        if (isChecked) {
-//                                            cartClassification.getDishList().get(finalI).getChangesOrder().add(dish.getChanges().get(finalJ));
-//                                        } else
-//                                            cartClassification.getDishList().get(finalI).getChangesOrder().remove(dish.getChanges().get(finalJ));
-//
-//                                    }
-//                                });
-//
-//                                changesLinearLayoutArea.addView(checkBox);
-//                            }
-//
-//
-//                            queryDishDialog.dismiss();
-//
-//
-//                            changesListDialog.show();
-//
-//                            Window window = changesListDialog.getWindow();
-//                            window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                            window.setGravity(Gravity.TOP);
-//
-//                        }
-//                    });
-//
-//
-//                    noRadioBtn.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//
-//                            queryDishDialog.dismiss();
-//
-//                        }
-//                    });
-//
-//
-//                    queryDishDialog.show();
-//
-//                    Window window = queryDishDialog.getWindow();
-//                    window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, 180);
-//                    window.setGravity(Gravity.TOP);
-//
-//                }
-//
-//            }
-//
-//        }
-//
-//
-//        menuRestaurantAdapter.notifyDataSetChanged();
-//
-    }
-
-
-    @Override
-    public void updateCartSum() {
-
-        if (cartClassification.getDishList().size() == 0) {
-            cartPopUpView.setVisibility(View.INVISIBLE);
+        if (sum == 0) {
+            cartPopUpView.setVisibility(View.GONE);
         } else {
 
-            int sum = 0;
+            cartPopUpView.setVisibility(View.VISIBLE);
+            sumCartPopUpTextView.setText(sum + " ₪ ");
+        }
+    }
 
-            for (int i = 0; i < cartClassification.getDishList().size(); i++) {
-                sum += cartClassification.getDishList().get(i).getPrice();
+
+    public int updateSum() {
+
+        int sum = 0;
+
+        for (int k = 0; k < cartClassification.getClassifications().size(); k++) {
+
+            Classification classification = cartClassification.getClassifications().get(k);
+
+            for (int i = 0; i < classification.getDishList().size(); i++) {
+
+                sum += classification.getDishList().get(i).getPrice();
+
+                for (int j = 0; j < classification.getDishList().get(i).getChanges().size(); j++) {
+
+                    if (classification.getDishList().get(i).getChanges().get(j).getChangesByTypesList().size() > 0) {
+
+                        Changes changes = classification.getDishList().get(i).getChanges().get(j);
+                        Changes.ChangesTypesEnum changesTypesEnum = changes.getChangesTypesEnum();
+
+                        if (classification.getDishList().get(i).getChanges().get(j).getChangesByTypesList().size() > 0) {
+                            if (changes.getFreeSelection() == changes.getChangesByTypesList().size()) {
+
+                                //NO NEED TO ADD CHANGE COST
+                                continue;
+                            }
+
+                            sum += getCostSum(sum, j, changes, changesTypesEnum);
+                        }
+                    }
+                }
+
             }
 
-            cartPopUpView.setVisibility(View.VISIBLE);
-            sumCartPopUpTextView.setText(sum + "₪");
         }
 
+        return sum;
     }
 
 
-    @Override
-    public void onDestroy() {
+    private int getCostSum(int sum, int j, Changes changes, Changes.ChangesTypesEnum changesTypesEnum) {
 
-        if (!cartClassification.getDishList().isEmpty()) {
-            SharedPreferences sp = getContext().getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sp.edit();
 
-            Gson gson = new Gson();
-            String cartJson = gson.toJson(cartClassification);
-            editor.putString("cart", cartJson);
-            editor.apply();
+        //TODO: CHECK AUTENTIC INFORMATION
+
+        if (changesTypesEnum == Changes.ChangesTypesEnum.DISH_CHOICE || changesTypesEnum == Changes.ChangesTypesEnum.CLASSIFICATION_CHOICE) {
+
+            //WORK ON UPDATE SUM OF DISH CHANGE CHOICE
+            Dish dish;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                dish = new Gson().fromJson(new Gson().toJson(map), Dish.class);
+            } catch (Exception e) {
+                dish = (Dish) changes.getChangesByTypesList().get(j);
+            }
+
+
+            if (dish.getChanges().size() > 0) {
+                for (int k = 0; k < dish.getChanges().size(); k++) {
+
+                    if (dish.getChanges().get(k).getChangesByTypesList().size() > 0) {
+
+                        if (changes.getFreeSelection() == changes.getChangesByTypesList().size()) {
+
+                            //NO NEED TO ADD CHANGE COST
+                            continue;
+                        }
+
+                        //GET COST OF ALL CHANGES
+                        sum += getCostSum(sum, j, dish.getChanges().get(k), dish.getChanges().get(k).getChangesTypesEnum());
+                    }
+                }
+
+            }
+
+
+        } else if (changesTypesEnum == Changes.ChangesTypesEnum.ONE_CHOICE) {
+
+            RegularChange regularChange;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+            } catch (Exception e) {
+                regularChange = (RegularChange) changes.getChangesByTypesList().get(j);
+            }
+
+            sum += regularChange.getPrice();
+
+
+        } else if (changesTypesEnum == Changes.ChangesTypesEnum.MULTIPLE) {
+
+
+            RegularChange regularChange;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+            } catch (Exception e) {
+                regularChange = (RegularChange) changes.getChangesByTypesList().get(j);
+            }
+
+
+            sum += regularChange.getPrice();
+
+
+        } else if (changesTypesEnum == Changes.ChangesTypesEnum.VOLUME) {
+
+
+            RegularChange regularChange;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+            } catch (Exception e) {
+                regularChange = (RegularChange) changes.getChangesByTypesList().get(j);
+            }
+
+            sum += regularChange.getPrice();
+
+
+        } else if (changesTypesEnum == Changes.ChangesTypesEnum.PIZZA) {
+
+            PizzaChange pizzaChange;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                pizzaChange = new Gson().fromJson(new Gson().toJson(map), PizzaChange.class);
+            } catch (Exception e) {
+                pizzaChange = (PizzaChange) changes.getChangesByTypesList().get(j);
+            }
+
+            if (pizzaChange.isBothSides() || pizzaChange.isLeftSide() || pizzaChange.isRightSide()) {
+                sum += pizzaChange.getCost();
+            }
+
         }
-
-        super.onDestroy();
+        return sum;
     }
-
 
 }

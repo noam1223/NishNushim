@@ -6,9 +6,12 @@ import java.util.List;
 
 public class User implements Serializable {
 
+    private String id;
     String name;
     String phoneNumber;
     List<MyAddress> addresses = new ArrayList<>();
+    List<Order> orderList;
+
 
     public User() {
     }
@@ -39,6 +42,22 @@ public class User implements Serializable {
 
     public void setAddresses(List<MyAddress> addresses) {
         this.addresses = addresses;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<Order> getOrderList() {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 
 

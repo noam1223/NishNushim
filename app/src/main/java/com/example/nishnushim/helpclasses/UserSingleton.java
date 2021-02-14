@@ -2,17 +2,9 @@ package com.example.nishnushim.helpclasses;
 
 public class UserSingleton {
 
-    private static UserSingleton instance = new UserSingleton();
-
-    private UserSingleton() {
-    }
+    private static final UserSingleton instance = new UserSingleton();
 
     public static UserSingleton getInstance(){
-
-        if (instance == null){
-            instance = new UserSingleton();
-        }
-
         return instance;
     }
 

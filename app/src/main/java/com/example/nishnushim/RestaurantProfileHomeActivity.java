@@ -1,5 +1,6 @@
 package com.example.nishnushim;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -38,6 +39,7 @@ import android.widget.Toast;
 import com.example.nishnushim.adapters.SearchAdapter;
 import com.example.nishnushim.helpclasses.Classification;
 import com.example.nishnushim.helpclasses.Dish;
+import com.example.nishnushim.helpclasses.MenuSingleton;
 import com.example.nishnushim.helpclasses.Restaurant;
 import com.example.nishnushim.helpclasses.helpInterfaces.OnProfileScrollChangeListener;
 import com.example.nishnushim.helpclasses.helpInterfaces.OnSearchItemClicked;
@@ -86,7 +88,6 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
     int scrollViewHeight;
     int scrollPositionLast = 0;
 
-
     List<String> searchResultsList = new ArrayList<>();
     List<Dish> dishList = new ArrayList<>();
 
@@ -103,6 +104,14 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        restaurantDetailsFragment.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +134,10 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
 
             restaurant = (Restaurant) intent.getSerializableExtra(getBaseContext().getString(R.string.restaurant_detail));
             restaurantKey = intent.getStringExtra("key");
+
+
+            //MENU SINGLETON SET
+            MenuSingleton.getInstance().setMenu(restaurant.getMenu());
 
 
             ///SAVE FOR THE MOMENT////////////

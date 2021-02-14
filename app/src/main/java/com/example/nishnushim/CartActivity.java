@@ -1,5 +1,6 @@
 package com.example.nishnushim;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -14,11 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.nishnushim.helpclasses.Classification;
+import com.example.nishnushim.helpclasses.Dish;
+import com.example.nishnushim.helpclasses.Menu;
 import com.example.nishnushim.helpclasses.Restaurant;
 import com.example.nishnushim.helpclasses.Order;
 import com.example.nishnushim.helpclasses.helpInterfaces.OrderListener;
 import com.example.nishnushim.nishnushFragments.cartFragments.CartDeliveryDetailsFragment;
 import com.example.nishnushim.nishnushFragments.cartFragments.CartDetailsFragment;
+
+import java.util.List;
 
 public class CartActivity extends AppCompatActivity implements OrderListener {
 
@@ -35,6 +40,18 @@ public class CartActivity extends AppCompatActivity implements OrderListener {
     String key;
 
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+       orderDetailFragmentLayout.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +63,7 @@ public class CartActivity extends AppCompatActivity implements OrderListener {
         if (intent != null){
 
             if (intent.getSerializableExtra("cart") != null){
-                order.setOrder((Classification) intent.getSerializableExtra("cart"));
+                order.setOrder((Menu) intent.getSerializableExtra("cart"));
             }
 
             if (intent.getSerializableExtra(getString(R.string.restaurant_detail)) != null){

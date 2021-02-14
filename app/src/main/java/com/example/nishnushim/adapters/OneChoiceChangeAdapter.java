@@ -57,12 +57,17 @@ public class OneChoiceChangeAdapter extends BaseAdapter {
 
         convertView = layoutInflater.inflate(R.layout.one_choice_change_item, null);
 
-        Log.i("CHANGE_ADAPTER", "ONE_CHOICE_ADAPTER");
-
         RadioButton radioButton = convertView.findViewById(R.id.first_change_radio_button_one_choice_changes_item);
         radioButton.setChecked(false);
-        HashMap<String, Object> map = (HashMap<String, Object>) regularChangeList.get(position);
-        RegularChange regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+        RegularChange regularChange;
+
+        try {
+            HashMap<String, Object> map = (HashMap<String, Object>) regularChangeList.get(position);
+            regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+        }catch (Exception e){
+            regularChange = (RegularChange) regularChangeList.get(position);
+        }
+
 
         if (createChange.getChangesByTypesList().size() > 0){
 
@@ -75,15 +80,22 @@ public class OneChoiceChangeAdapter extends BaseAdapter {
 
         }
 
+
         radioButton.setText(regularChange.getChange() + " - " + regularChange.getPrice() + " ₪ ");
+        RegularChange finalRegularChange = regularChange;
+
         radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 //TODO: ADD REGULAR CHANGE TO DISH
                 if (isChecked){
-                    createChange.getChangesByTypesList().add(regularChange);
-                }else createChange.getChangesByTypesList().remove(regularChange);
+                    createChange.getChangesByTypesList().add(finalRegularChange);
+                }else createChange.getChangesByTypesList().remove(finalRegularChange);
+
+
+                notifyDataSetChanged();
+
             }
         });
 

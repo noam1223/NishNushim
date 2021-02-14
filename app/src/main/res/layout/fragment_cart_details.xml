@@ -335,7 +335,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_marginLeft="18dp"
                 android:fontFamily="@font/assistant_regular"
-                android:text="4 ₪"
+                android:text="0 ₪"
                 android:textColor="@color/custom_red"
                 android:textSize="12sp" />
 

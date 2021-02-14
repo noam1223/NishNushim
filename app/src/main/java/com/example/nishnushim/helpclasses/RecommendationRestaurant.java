@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class RecommendationRestaurant implements Serializable {
 
-    String name;
+    //CHANGE FROM NAME TO USER
+    private User user;
     String date;
     String creditLetter;
     int creditStar;
@@ -14,20 +15,19 @@ public class RecommendationRestaurant implements Serializable {
     }
 
 
-    public RecommendationRestaurant(String name, String date, String creditLetter, int creditStar) {
-        this.name = name;
+    public RecommendationRestaurant(User user, String date, String creditLetter, int creditStar) {
+        this.user = user;
         this.date = date;
         this.creditLetter = creditLetter;
         this.creditStar = creditStar;
     }
 
-
-    public String getName() {
-        return name;
+    public User getUser() {
+        return user;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getDate() {

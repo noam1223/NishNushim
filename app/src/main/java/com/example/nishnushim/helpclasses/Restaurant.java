@@ -31,8 +31,11 @@ public class Restaurant implements Serializable {
 
     int creditAmount = 0;
 
+
+
     public Restaurant() {
     }
+
 
 
     public Restaurant(String name, MyAddress myAddress, List<AreasForDelivery> areasForDeliveries, String phoneNumber, List<String> openHour, List<String> closeHour, String dateOfAdd, Uri logoUri, Uri profileImageUri, boolean kosher, boolean discount, List<Integer> classificationList, Menu menu, String restaurantUserName, String restaurantUserPassword) {

@@ -1,5 +1,7 @@
 package com.example.nishnushim.nishnushFragments.cartFragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +16,27 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.nishnushim.R;
 import com.example.nishnushim.adapters.CartOrderAdapter;
+import com.example.nishnushim.adapters.CartOrderParent;
 import com.example.nishnushim.helpclasses.AreasForDelivery;
+import com.example.nishnushim.helpclasses.Classification;
+import com.example.nishnushim.helpclasses.Dish;
 import com.example.nishnushim.helpclasses.Restaurant;
 import com.example.nishnushim.helpclasses.User;
 import com.example.nishnushim.helpclasses.UserSingleton;
 import com.example.nishnushim.helpclasses.Order;
 import com.example.nishnushim.helpclasses.helpInterfaces.OrderListener;
+import com.example.nishnushim.helpclasses.menuChanges.Changes;
+import com.example.nishnushim.helpclasses.menuChanges.PizzaChange;
+import com.example.nishnushim.helpclasses.menuChanges.RegularChange;
 import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -58,6 +70,38 @@ public class CartDetailsFragment extends Fragment implements View.OnClickListene
         this.orderListener = orderListener;
     }
 
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+
+            if (requestCode == 3) {
+
+                if (data != null && data.getSerializableExtra("dish_list") != null) {
+
+                    int position = data.getIntExtra("position", 0);
+
+                    @SuppressWarnings("unchecked")
+                    Classification createdDihList = (Classification) data.getSerializableExtra("dish_list");
+
+                    for (int i = 0; i < order.getOrder().getClassifications().size(); i++) {
+
+                        if (order.getOrder().getClassifications().get(i).getClassificationName().equals(createdDihList.getClassificationName())){
+                            order.getOrder().getClassifications().get(i).getDishList().set(position, createdDihList.getDishList().get(0));
+                        }
+
+                    }
+
+                    //UPDATE CART SUM
+                    showMinAreaMsg();
+
+                }
+            }
+        }
+    }
 
     //IN THIS FRAGMENT WE WORKING ON THE FOLLOWING DETAILS: WAY OF DELIVERY, MIN OF DELIVERY, CULTURE AND ETC, SAUCES,
 
@@ -134,6 +178,8 @@ public class CartDetailsFragment extends Fragment implements View.OnClickListene
         continueOrderBtn = view.findViewById(R.id.continue_order_btn_cart_details_fragment);
 
 
+
+
         ////////////WORKING ON WAY TO DELIVER - TAKE AWAY, DELIVERY///////////////
         ///////////////////////////////////////////////////////////////////////////
         wayToDeliverRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -142,7 +188,25 @@ public class CartDetailsFragment extends Fragment implements View.OnClickListene
 
                 if (wayToDeliverRadioGroup.getCheckedRadioButtonId() != -1) {
 
-                    order.setWayOfDelivery(((RadioButton) wayToDeliverRadioGroup.findViewById(wayToDeliverRadioGroup.getCheckedRadioButtonId())).getText().toString());
+                    String wayOfDeliver = ((RadioButton) wayToDeliverRadioGroup.findViewById(wayToDeliverRadioGroup.getCheckedRadioButtonId())).getText().toString();
+
+                    if (wayOfDeliver.equals("משלוח")){
+
+                        //UPDATE MIN TO DELIVERY
+
+                        minToDeliverTextView.setVisibility(View.VISIBLE);
+                        showMinAreaMsg();
+
+                    }else {
+
+                        //UPDATE MIN TO DELIVERY NO TO SHOW
+
+
+                        minToDeliverTextView.setVisibility(View.INVISIBLE);
+                        minOrderNotReachedRelativeLayout.setVisibility(View.GONE);
+                    }
+
+                    order.setWayOfDelivery(wayOfDeliver);
 
                 }
 
@@ -153,31 +217,27 @@ public class CartDetailsFragment extends Fragment implements View.OnClickListene
         ///////////////////////////////////////////////////////////////////////////
 
 
-        minToDeliverTextView.setText("₪ " + areasForDelivery.getMinToDeliver());
-        cartDishDetailsListView.setAdapter(new CartOrderAdapter(getContext(), order.getOrder()));
-        cutleryNumTextView.setText(String.valueOf(order.getNumOfCulture()));
+
+
+
+        showMinAreaMsg();
+
+
+        minToDeliverTextView.setText("מינימום " + areasForDelivery.getMinToDeliver() + " ₪ ");
+        minToOrderMinMsgTextView.setText("לא הגעת למינימום הזמנה" + areasForDelivery.getMinToDeliver() + "₪");
+        deliveryCostTextView.setText(String.valueOf(areasForDelivery.getDeliveryCost()));
 
 
         //TODO: SET TIME TO TIME AND NOT ONLY ONE INT (15 - 70 MINUTES)
-        timeToDeliveryTextView.setText(String.valueOf(areasForDelivery.getTimeOfDelivery()));
         ////////////////////////////////////////////
+        timeToDeliveryTextView.setText(String.valueOf(areasForDelivery.getTimeOfDelivery()));
 
 
-        //TODO: ASK ORLY WHAT THE MEANING OF THIS
-        numOfDishesOrderedTextView.setText("סה״כ מנות (" + order.getOrder().getDishList().size() + ")");
+        //DISHES / EXTRA CHANGES ZONE
+        cutleryNumTextView.setText(String.valueOf(order.getNumOfCulture()));
 
-        deliveryCostTextView.setText(String.valueOf(areasForDelivery.getDeliveryCost()));
-
-        if (order.getSumOfOrder() >= areasForDelivery.getMinToDeliver())
-            minOrderNotReachedRelativeLayout.setVisibility(View.GONE);
-        else
-            minOrderNotReachedRelativeLayout.setVisibility(View.VISIBLE);
-
-
-        totalOrderCostTextView.setText(order.getSumOfOrder() + "₪");
-        minToOrderMinMsgTextView.setText("לא הגעת למינימום הזמנה" + areasForDelivery.getMinToDeliver() + "₪");
-        totalOrderCostTextView.setText(String.valueOf(order.getSumOfOrder()));
-        totalOrderCostMinMsgTextView.setText(String.valueOf(order.getSumOfOrder()));
+        //NEED TO SET ALL EXTRA CHANGES (SAUCES) COSTS
+//        dishesCostsTextView
 
         addCutlerySumImgBtn.setOnClickListener(this);
         decreaseCutlerySumImgBtn.setOnClickListener(this);
@@ -187,6 +247,186 @@ public class CartDetailsFragment extends Fragment implements View.OnClickListene
 
         return view;
     }
+
+
+
+
+    public int updateSum() {
+
+        int sum = 0;
+
+        for (int i = 0; i < order.getOrder().getClassifications().size(); i++) {
+
+            Classification classification = order.getOrder().getClassifications().get(i);
+
+            for (int j = 0; j < classification.getDishList().size(); j++) {
+
+
+                sum += classification.getDishList().get(j).getPrice();
+
+                for (int k = 0; k < classification.getDishList().get(j).getChanges().size(); k++) {
+
+                    if (classification.getDishList().get(j).getChanges().get(k).getChangesByTypesList().size() > 0) {
+
+                        Changes changes = classification.getDishList().get(j).getChanges().get(k);
+                        Changes.ChangesTypesEnum changesTypesEnum = changes.getChangesTypesEnum();
+
+                        if (classification.getDishList().get(j).getChanges().get(k).getChangesByTypesList().size() > 0) {
+                            if (changes.getFreeSelection() == changes.getChangesByTypesList().size()) {
+
+                                //NO NEED TO ADD CHANGE COST
+                                continue;
+                            }
+
+                            sum += getCostSum(sum, k, changes, changesTypesEnum);
+                        }
+                    }
+                }
+            }
+        }
+
+
+//        cote.setText(sum + " ₪ ");
+        return sum;
+    }
+
+
+
+    private int getCostSum(int sum, int j, Changes changes, Changes.ChangesTypesEnum changesTypesEnum) {
+
+
+        //TODO: CHECK AUTENTIC INFORMATION
+
+        if (changesTypesEnum == Changes.ChangesTypesEnum.DISH_CHOICE || changesTypesEnum == Changes.ChangesTypesEnum.CLASSIFICATION_CHOICE) {
+
+            //WORK ON UPDATE SUM OF DISH CHANGE CHOICE
+            Dish dish;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                dish = new Gson().fromJson(new Gson().toJson(map), Dish.class);
+            } catch (Exception e) {
+                dish = (Dish) changes.getChangesByTypesList().get(j);
+            }
+
+
+            if (dish.getChanges().size() > 0) {
+                for (int k = 0; k < dish.getChanges().size(); k++) {
+
+                    if (dish.getChanges().get(k).getChangesByTypesList().size() > 0) {
+
+                        if (changes.getFreeSelection() == changes.getChangesByTypesList().size()) {
+
+                            //NO NEED TO ADD CHANGE COST
+                            continue;
+                        }
+
+                        //GET COST OF ALL CHANGES
+                        sum += getCostSum(sum, j, dish.getChanges().get(k), dish.getChanges().get(k).getChangesTypesEnum());
+                    }
+                }
+
+            }
+
+
+        } else if (changesTypesEnum == Changes.ChangesTypesEnum.ONE_CHOICE) {
+
+            RegularChange regularChange;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+            } catch (Exception e) {
+                regularChange = (RegularChange) changes.getChangesByTypesList().get(j);
+            }
+
+            sum += regularChange.getPrice();
+
+
+        } else if (changesTypesEnum == Changes.ChangesTypesEnum.MULTIPLE) {
+
+
+            RegularChange regularChange;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+            } catch (Exception e) {
+                regularChange = (RegularChange) changes.getChangesByTypesList().get(j);
+            }
+
+
+            sum += regularChange.getPrice();
+
+
+        } else if (changesTypesEnum == Changes.ChangesTypesEnum.VOLUME) {
+
+
+            RegularChange regularChange;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+            } catch (Exception e) {
+                regularChange = (RegularChange) changes.getChangesByTypesList().get(j);
+            }
+
+            sum += regularChange.getPrice();
+
+
+        } else if (changesTypesEnum == Changes.ChangesTypesEnum.PIZZA) {
+
+            PizzaChange pizzaChange;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                pizzaChange = new Gson().fromJson(new Gson().toJson(map), PizzaChange.class);
+            } catch (Exception e) {
+                pizzaChange = (PizzaChange) changes.getChangesByTypesList().get(j);
+            }
+
+            if (pizzaChange.isBothSides() || pizzaChange.isLeftSide() || pizzaChange.isRightSide()) {
+                sum += pizzaChange.getCost();
+            }
+
+        }
+        return sum;
+    }
+
+
+
+
+
+    private void showMinAreaMsg() {
+
+        order.setSumOfOrder(updateSum());
+
+        if (order.getSumOfOrder() >= areasForDelivery.getMinToDeliver())
+            minOrderNotReachedRelativeLayout.setVisibility(View.GONE);
+        else
+            minOrderNotReachedRelativeLayout.setVisibility(View.VISIBLE);
+
+        int numOfDishes = 0;
+
+        for (int i = 0; i < order.getOrder().getClassifications().size(); i++) {
+
+            numOfDishes = order.getOrder().getClassifications().get(i).getDishList().size();
+
+        }
+
+
+        numOfDishesOrderedTextView.setText("סה״כ מנות (" + numOfDishes + ")");
+        totalOrderCostTextView.setText((order.getSumOfOrder() + areasForDelivery.getDeliveryCost()) + " ₪ ");
+        totalOrderCostMinMsgTextView.setText((order.getSumOfOrder() + areasForDelivery.getDeliveryCost()) + " ₪ ");
+
+
+        cartDishDetailsListView.setAdapter(new CartOrderParent(getContext(), order.getOrder()));
+
+    }
+
+
+
+
 
 
     @Override

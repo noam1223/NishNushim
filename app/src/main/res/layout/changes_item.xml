@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layoutDirection="rtl"
-    android:layout_marginTop="8dp">
+    android:layout_marginTop="8dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
 
 
 
@@ -21,13 +23,27 @@
 
 
 
-
     <com.example.nishnushim.helpUIClass.NonScrollListView
         android:id="@+id/changes_item_list_view_changes_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/profile_cart_background"
         android:visibility="visible"/>
+
+
+
+
+    <Button
+        android:id="@+id/add_change_classification_btn_changes_item"
+        android:layout_width="100dp"
+        android:layout_height="18dp"
+        android:layout_gravity="left"
+        android:background="@drawable/btn_sign_in_clicked_background"
+        android:textColor="@drawable/btn_sign_in_clicked_text_view_opposite"
+        android:textSize="14sp"
+        android:fontFamily="@font/assistant_regular"
+        android:gravity="center_horizontal"
+        android:text="שינויים"/>
 
 
 

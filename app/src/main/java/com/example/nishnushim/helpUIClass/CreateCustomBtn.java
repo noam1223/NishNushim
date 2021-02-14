@@ -105,7 +105,6 @@ public class CreateCustomBtn {
 
     public static Button createDishBtn(Context context, Button copyBtn, int size, int idNum, String text, Dish dish) {
         Button button = new Button(context);
-        button.setId(size + idNum);
         button.setTag(dish);
         button.setLayoutParams(copyBtn.getLayoutParams());
         button.setBackground(ContextCompat.getDrawable(context, R.drawable.pizza_dish_item_clicked));
@@ -116,6 +115,25 @@ public class CreateCustomBtn {
         button.setTextColor(copyBtn.getTextColors());
         button.setTextSize(14);
         return button;
+    }
+
+
+    public static RadioButton createAddressRadioChanges(Context context, RadioButton addressRadioBtn, String text) {
+
+        RadioButton radioButton = new RadioButton(context);
+        radioButton.setId(View.generateViewId());
+        radioButton.setLayoutParams(addressRadioBtn.getLayoutParams());
+        radioButton.setButtonDrawable(ContextCompat.getDrawable(context, R.drawable.radio_button_inset));
+        radioButton.setChecked(false);
+        radioButton.setCompoundDrawablePadding(addressRadioBtn.getCompoundDrawablePadding());
+        radioButton.setTypeface(ResourcesCompat.getFont(context, R.font.assistant_regular));
+        radioButton.setBackground(ContextCompat.getDrawable(context, R.drawable.radio_button_background_top_screen_customize));
+        radioButton.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        radioButton.setPadding(addressRadioBtn.getPaddingLeft(), addressRadioBtn.getPaddingTop(), addressRadioBtn.getPaddingRight(), addressRadioBtn.getPaddingBottom());
+        radioButton.setText(text);
+        radioButton.setTextColor(ContextCompat.getColor(context, R.color.custom_blue));
+        radioButton.setTextSize(13);
+        return radioButton;
     }
 
 }

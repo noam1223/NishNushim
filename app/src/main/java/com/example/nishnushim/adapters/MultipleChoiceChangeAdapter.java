@@ -59,16 +59,39 @@ public class MultipleChoiceChangeAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         convertView = layoutInflater.inflate(R.layout.multiple_choice_change_item, null);
+        RegularChange regularChange;
 
-        Log.i("CHANGE_ADAPTER", "MULTIPLE_CHOICE_ADAPTER");
 
-        HashMap<String, Object> map = (HashMap<String, Object>) regularChangeList.get(position);
-        RegularChange regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+        try {
+            HashMap<String, Object> map = (HashMap<String, Object>) regularChangeList.get(position);
+            regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+        }catch (Exception e){
+            regularChange = (RegularChange) regularChangeList.get(position);
+        }
+
 
 
         CheckBox checkBox = convertView.findViewById(R.id.first_change_check_box_multiple_choice_changes_item);
         checkBox.setText(regularChange.getChange() + " - " + regularChange.getPrice() + " ₪");
 
+
+
+        if (createChange.getChangesByTypesList().size() > 0){
+
+            for (int i = 0; i < createChange.getChangesByTypesList().size(); i++) {
+
+                if (regularChange.getChange().equals(((RegularChange) createChange.getChangesByTypesList().get(i)).getChange())){
+                    checkBox.setChecked(true);
+
+                    //WHY DID I ADD IT TO THE CREATE CHANGE?
+//                    createChange.getChangesByTypesList().add(regularChange);
+                }
+            }
+
+        }
+
+
+        RegularChange finalRegularChange = regularChange;
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -76,12 +99,14 @@ public class MultipleChoiceChangeAdapter extends BaseAdapter {
 
                 if (isChecked){
                     //TODO: ADD TO DISH CHANGES ORDER
-                    createChange.getChangesByTypesList().add(regularChange);
+                    createChange.getChangesByTypesList().add(finalRegularChange);
                 }else {
                     //TODO: REMOVE TO DISH CHANGES ORDER
-                    createChange.getChangesByTypesList().remove(regularChange);
+                    checkBox.setChecked(false);
+                    createChange.getChangesByTypesList().remove(finalRegularChange);
                 }
 
+                Log.i("CHANGE_ADAPTER", "MULTIPLE_CHOICE_ADAPTER ---- NUMBER OF CREATE CHANGE " + createChange.getChangesByTypesList().size());
 
             }
         });

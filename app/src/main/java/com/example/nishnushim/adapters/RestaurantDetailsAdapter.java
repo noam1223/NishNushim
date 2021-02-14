@@ -1,26 +1,42 @@
 package com.example.nishnushim.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nishnushim.R;
 import com.example.nishnushim.RestaurantProfileHomeActivity;
 import com.example.nishnushim.helpUIClass.RestaurantTypeHelper;
+import com.example.nishnushim.helpclasses.RecommendationRestaurant;
 import com.example.nishnushim.helpclasses.Restaurant;
+import com.example.nishnushim.helpclasses.UserSingleton;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDetailsAdapter.RestaurantDetailsViewHolder> {
 
@@ -92,6 +108,91 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
 
         holder.whenOpenHourTextView.setText(restaurants.get(0).getOpenHour().get(0));
 
+        for (int i = 0; i < restaurants.get(position).getRecommendationRestaurants().size(); i++) {
+
+            if (restaurants.get(position).getRecommendationRestaurants().get(i).getUser().getId().equals(UserSingleton.getInstance().getUser().getId())){
+                holder.favoriteImgBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_icon_heart_like_full));
+                holder.favoriteImgBtn.setClickable(false);
+                break;
+            }
+        }
+
+
+        if (holder.favoriteImgBtn.isClickable()) {
+            holder.favoriteImgBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    //TODO: OPEN RECOMMENDATION POP UP //ADD TO THE WISH LIST
+
+                    View popUpView = LayoutInflater.from(context).inflate(R.layout.recommendation_pop_up_window, null);
+                    Dialog recommendationPopUp = new Dialog(context);
+                    recommendationPopUp.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    recommendationPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    recommendationPopUp.setContentView(popUpView);
+
+
+
+                    ImageButton closeWindowImgBtn = popUpView.findViewById(R.id.close_window_image_btn_recommendation_pop_up_window);
+                    TextView restaurantNameTextView = popUpView.findViewById(R.id.restaurant_name_text_name_recommendation_pop_up_window);
+                    RatingBar recommendationRatingBar = popUpView.findViewById(R.id.recommendation_rating_bar_recommendation_pop_up_window);
+                    EditText noteRecommendEditText = popUpView.findViewById(R.id.recommendation_note_edit_text_recommendation_pop_up_window);
+                    Button saveBtn = popUpView.findViewById(R.id.save_recommendation_btn_recommendation_pop_up_window);
+
+
+                    restaurantNameTextView.setText(restaurants.get(position).getName());
+
+
+                    closeWindowImgBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            recommendationPopUp.dismiss();
+                        }
+                    });
+
+
+
+                    saveBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            int starNum = recommendationRatingBar.getNumStars();
+
+
+                            if (starNum == 0){
+                                Toast.makeText(context, "בבקשה בחר דירוג", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+
+                            RecommendationRestaurant recommendationRestaurant = new RecommendationRestaurant();
+                            recommendationRestaurant.setUser(UserSingleton.getInstance().getUser());
+                            recommendationRestaurant.setCreditStar(starNum);
+                            recommendationRestaurant.setDate(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
+
+                            if (!noteRecommendEditText.getText().toString().isEmpty()){
+                                recommendationRestaurant.setCreditLetter(noteRecommendEditText.getText().toString());
+                            }
+
+                            restaurants.get(position).getRecommendationRestaurants().add(recommendationRestaurant);
+
+                            //TODO: SAVE IN DATABASE
+                            FirebaseFirestore.getInstance().collection(context.getString(R.string.RESTAURANTS_PATH)).document(keys.get(position)).collection("recommendationRestaurants").add(recommendationRestaurant);
+
+                            recommendationPopUp.dismiss();
+
+                        }
+                    });
+
+
+
+
+                    recommendationPopUp.create();
+                    recommendationPopUp.show();
+
+                }
+            });
+        }
 
     }
 
@@ -114,6 +215,7 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
                 timeFullDeliveryTextView, minAmountToDeliveryTextView, avgCreditTextView, whenOpenHourTextView;
         CardView detailsRestaurantCardView;
         LinearLayout whenCloseBackgroundLinearLayout;
+        ImageButton favoriteImgBtn;
 
 
         public RestaurantDetailsViewHolder(@NonNull View itemView) {
@@ -132,6 +234,7 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
             avgCreditTextView = itemView.findViewById(R.id.avg_restaurant_feedback_text_view_restaurant_detail_item);
             detailsRestaurantCardView = itemView.findViewById(R.id.card_view_restaurant_details_item);
             whenCloseBackgroundLinearLayout = itemView.findViewById(R.id.linear_layout_close_restaurant_background_restaurant_details_item);
+            favoriteImgBtn = itemView.findViewById(R.id.restaurant_favorite_image_btn_restaurant_detail_item);
 
 
         }

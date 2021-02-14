@@ -27,6 +27,7 @@ public class VolumeChoiceChangeAdapter extends BaseAdapter {
     int volumeAdded = 0;
 
 
+
     public VolumeChoiceChangeAdapter(Context context, List<Object> volumeChangeList, Changes createChange) {
         this.context = context;
         this.volumeChangeList = volumeChangeList;
@@ -68,9 +69,14 @@ public class VolumeChoiceChangeAdapter extends BaseAdapter {
         ImageButton plusImgBtn = convertView.findViewById(R.id.increment_supplies_img_btn_volume_change_item);
         ImageButton minusImgBtn = convertView.findViewById(R.id.decrement_supplies_img_btn_volume_change_item);
 
-        HashMap<String, Object> map = (HashMap<String, Object>) volumeChangeList.get(position);
-        RegularChange regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+        RegularChange regularChange;
 
+        try {
+            HashMap<String, Object> map = (HashMap<String, Object>) volumeChangeList.get(position);
+            regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+        }catch (Exception e){
+            regularChange = (RegularChange) volumeChangeList.get(position);
+        }
 
 
         String[] split = regularChange.getChange().split("-");
@@ -91,16 +97,18 @@ public class VolumeChoiceChangeAdapter extends BaseAdapter {
         createChange.getChangesByTypesList().add(regularChange);
 
 
+        RegularChange finalRegularChange = regularChange;
 
         plusImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                HashMap<String, Object> map = (HashMap<String, Object>) createChange.getChangesByTypesList().get(position);
-                RegularChange regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
-                regularChange.setNumOfAdded(regularChange.getNumOfAdded() + 1);
-                volumeAddedNumTextView.setText(String.valueOf(regularChange.getNumOfAdded()));
-                createChange.getChangesByTypesList().set(position, regularChange);
+//                HashMap<String, Object> map = (HashMap<String, Object>) createChange.getChangesByTypesList().get(position);
+//                RegularChange regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+
+                finalRegularChange.setNumOfAdded(finalRegularChange.getNumOfAdded() + 1);
+                volumeAddedNumTextView.setText(String.valueOf(finalRegularChange.getNumOfAdded()));
+                createChange.getChangesByTypesList().set(position, finalRegularChange);
                 //TODO: UPDATE CART SUM
 
             }
@@ -108,21 +116,20 @@ public class VolumeChoiceChangeAdapter extends BaseAdapter {
 
 
 
-
         minusImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                HashMap<String, Object> map = (HashMap<String, Object>) createChange.getChangesByTypesList().get(position);
-                RegularChange regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+//                HashMap<String, Object> map = (HashMap<String, Object>) createChange.getChangesByTypesList().get(position);
+//                RegularChange regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
 
-                if (regularChange.getNumOfAdded() == 0){
+                if (finalRegularChange.getNumOfAdded() == 0){
                     return;
                 }
 
-                regularChange.setNumOfAdded(regularChange.getNumOfAdded() - 1);
-                volumeAddedNumTextView.setText(String.valueOf(regularChange.getNumOfAdded()));
-                createChange.getChangesByTypesList().set(position, regularChange);
+                finalRegularChange.setNumOfAdded(finalRegularChange.getNumOfAdded() - 1);
+                volumeAddedNumTextView.setText(String.valueOf(finalRegularChange.getNumOfAdded()));
+                createChange.getChangesByTypesList().set(position, finalRegularChange);
 
 
             }

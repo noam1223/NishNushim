@@ -1,21 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layoutDirection="rtl"
     android:orientation="vertical"
-    android:layoutDirection="rtl">
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
 
 
 
-    <TextView
-        android:id="@+id/title_way_of_delivery_text_view_cart_delivery_details_fragment"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="38dp"
-        android:fontFamily="@font/assistant_bold"
-        android:text="בחירת אמצעי תשלום"
-        android:textColor="@color/custom_blue" />
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+
+        <TextView
+            android:id="@+id/title_way_of_delivery_text_view_cart_delivery_details_fragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="38dp"
+            android:fontFamily="@font/assistant_bold"
+            android:text="בחירת אמצעי תשלום"
+            android:textColor="@color/custom_blue"
+            android:layout_weight="1"/>
+
+
+
+        <LinearLayout
+            android:id="@+id/edit_cost_linear_layout_area_way_of_delivery_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layoutDirection="rtl"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:layout_marginLeft="38dp"
+            >
+
+
+            <ImageButton
+                android:id="@+id/edit_cost_img_btn_way_of_delivery_layout"
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:src="@drawable/ic_icon_edit"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="6dp"/>
+
+
+            <TextView
+                android:id="@+id/edit_cost_text_view_way_of_delivery_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/assistant_bold"
+                android:text="0 ₪ "
+                android:textColor="@color/custom_blue"
+                android:layout_marginHorizontal="6dp"/>
+
+
+
+            <ImageButton
+                android:id="@+id/remove_cost_img_btn_way_of_delivery_layout"
+                android:layout_width="11dp"
+                android:layout_height="11dp"
+                android:src="@drawable/ic_icon_minus_button"
+                android:layout_gravity="center_vertical"
+                android:layout_marginHorizontal="6dp"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
 
 
     <RadioGroup
@@ -61,14 +122,13 @@
             android:fontFamily="@font/assistant_regular"
             android:gravity="center"
             android:layoutDirection="rtl"
-            android:text="מזומן"
             android:tag="1"
+            android:text="מזומן"
             android:textColor="@color/custom_blue"
             android:textSize="13sp" />
 
 
     </RadioGroup>
-
 
 
 </LinearLayout>

@@ -13,6 +13,7 @@ public class Changes implements Serializable {
         VOLUME,
         CLASSIFICATION_CHOICE,
         DISH_CHOICE,
+        PIZZA,
         CHOICE_ALL
     }
 
@@ -21,7 +22,6 @@ public class Changes implements Serializable {
     public int freeSelection = 0;
     ChangesTypesEnum changesTypesEnum;
 
-//    GenericTypeIndicator<List<ChangesByTypes>> changesByTypesList = new GenericTypeIndicator<List<ChangesByTypes>>(){};
     List<Object> changesByTypesList = new ArrayList<>();
 
 

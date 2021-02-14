@@ -9,13 +9,20 @@ public class CreditCard implements Serializable {
     String cvv;
     String personIdNumber;
 
+    public CreditCard() {
+        this.number = "5555 5555 5555 5555";
+        this.date = "12/21";
+        this.cvv = "555";
+        this.personIdNumber = "555555555";
+    }
+
+
     public CreditCard(String number, String date, String cvv, String personIdNumber) {
         this.number = number;
         this.date = date;
         this.cvv = cvv;
         this.personIdNumber = personIdNumber;
     }
-
 
     public String getNumber() {
         return number;

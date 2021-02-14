@@ -17,7 +17,6 @@ import com.example.nishnushim.R;
 import com.example.nishnushim.helpUIClass.NonScrolledRecyclerChild;
 import com.example.nishnushim.helpclasses.Classification;
 import com.example.nishnushim.helpclasses.Menu;
-import com.example.nishnushim.helpclasses.helpInterfaces.CartListener;
 import com.example.nishnushim.helpclasses.helpInterfaces.OnProfileScrollChangeListener;
 
 import java.util.ArrayList;
@@ -28,19 +27,17 @@ public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAd
     Context context;
     Menu menu;
     List<RestaurantDishAdapter> restaurantDishAdapters = new ArrayList<>();
-    Classification cartClassification;
+    Menu cartClassification;
     int highLightRawPosition = 0;
-    CartListener cartListener;
     OnProfileScrollChangeListener onProfileScrollChangeListener;
     String restaurantName;
 
 
 
-    public RestaurantMenuAdapter(Context context, Menu menu, Classification cartClassification, CartListener cartListener, OnProfileScrollChangeListener onProfileScrollChangeListener, String restaurantName) {
+    public RestaurantMenuAdapter(Context context, Menu menu, Menu cartClassification, OnProfileScrollChangeListener onProfileScrollChangeListener, String restaurantName) {
         this.context = context;
         this.menu = menu;
         this.cartClassification = cartClassification;
-        this.cartListener = cartListener;
         this.onProfileScrollChangeListener = onProfileScrollChangeListener;
         this.restaurantName = restaurantName;
 
@@ -93,7 +90,7 @@ public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAd
         holder.dishRecyclerView.setNestedScrollingEnabled(false);
         NonScrolledRecyclerChild layoutManager = new NonScrolledRecyclerChild(context, RecyclerView.VERTICAL, false);
         holder.dishRecyclerView.setLayoutManager(layoutManager);
-        RestaurantDishAdapter dishMenuAdapter = new RestaurantDishAdapter(context, menu.getClassifications().get(position), cartClassification, cartListener, position, restaurantName);
+        RestaurantDishAdapter dishMenuAdapter = new RestaurantDishAdapter(context, menu.getClassifications().get(position), cartClassification, restaurantName);
         restaurantDishAdapters.set(position ,dishMenuAdapter);
         holder.dishRecyclerView.setAdapter(dishMenuAdapter);
 
