@@ -7,9 +7,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.example.nishnushim.R;
 import com.example.nishnushim.helpclasses.AreasForDelivery;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class OpenCloseRestaurantHoursAdapter extends BaseAdapter {
@@ -18,6 +21,7 @@ public class OpenCloseRestaurantHoursAdapter extends BaseAdapter {
     List<String> openHours, closeHours;
     String[] daysString = {"ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"};
     LayoutInflater layoutInflater;
+    int positionDay = 0;
 
     public OpenCloseRestaurantHoursAdapter(Context context, List<String> openHours, List<String> closeHours) {
         this.context = context;
@@ -25,8 +29,38 @@ public class OpenCloseRestaurantHoursAdapter extends BaseAdapter {
         this.closeHours = closeHours;
 
         this.layoutInflater = LayoutInflater.from(this.context);
-    }
 
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        switch (day) {
+            case Calendar.SUNDAY:
+                positionDay = 0;
+                break;
+            case Calendar.MONDAY:
+                positionDay = 1;
+                break;
+            case Calendar.TUESDAY:
+                positionDay = 2;
+                break;
+
+            case Calendar.WEDNESDAY:
+                positionDay = 3;
+                break;
+
+            case Calendar.THURSDAY:
+                positionDay = 4;
+                break;
+
+
+            case Calendar.FRIDAY:
+                positionDay = 5;
+                break;
+
+            case Calendar.SATURDAY:
+                positionDay = 6;
+                break;
+        }
+    }
 
 
     @Override
@@ -56,10 +90,15 @@ public class OpenCloseRestaurantHoursAdapter extends BaseAdapter {
         dayTextView.setText(daysString[position]);
         openCloseHourTextView.setText(openHours.get(position) + "-" + closeHours.get(position));
 
+        if (position == positionDay){
+
+            dayTextView.setTextColor(ContextCompat.getColor(context,R.color.custom_red));
+            openCloseHourTextView.setTextColor(ContextCompat.getColor(context,R.color.custom_red));
+        }
+
         return convertView;
 
     }
-
 
 
 }

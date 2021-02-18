@@ -360,6 +360,8 @@ public class CartDeliveryDetailsFragment extends Fragment {
                 }
 
                 order.setRestaurantKey(key);
+                order.setAddressToDeliver(user.getChosenAddress());
+                order.setOrderStatus(Order.OrderStatus.SEND);
 
                 //TODO: ADD ORDER TO USER
 //                UserSingleton.getInstance().getUser().getOrderList().add(order);

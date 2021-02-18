@@ -28,14 +28,13 @@ public class NishnushimHomeFragment extends Fragment {
     List<String> keys;
 
 
-    public NishnushimHomeFragment() {
-        this.restaurants = new ArrayList<>();
-        this.keys = new ArrayList<>();
-    }
-
     public NishnushimHomeFragment(List<Restaurant> restaurants, List<String> keys) {
         this.restaurants = restaurants;
         this.keys = keys;
+    }
+
+    public RecyclerView.Adapter getRestaurantDetailAdapter() {
+        return restaurantDetailAdapter;
     }
 
     @Override

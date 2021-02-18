@@ -20,7 +20,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.nishnushim.R;
-import com.example.nishnushim.adapters.CartOrderAdapter;
 import com.example.nishnushim.adapters.CartOrderParent;
 import com.example.nishnushim.helpclasses.AreasForDelivery;
 import com.example.nishnushim.helpclasses.Classification;

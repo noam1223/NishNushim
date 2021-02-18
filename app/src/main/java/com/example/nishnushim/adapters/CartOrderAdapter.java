@@ -100,26 +100,25 @@ public class CartOrderAdapter extends BaseAdapter {
                         }
 
 
-                        stringBuilder.append(dish.getName()).append(" - ");
 
-                        if (dish.getChanges().size() > 0) {
+                        if (cartClassification.getDishList().get(position).getChanges().get(i).getFreeSelection() > cartClassification.getDishList().get(position).getChanges().get(i).getChangesByTypesList().size()){
+                            costDishWithChanges += dish.getPrice();
+                        }else if (dish.getChanges().size() > 0) {
                             for (int k = 0; k < dish.getChanges().size(); k++) {
 
                                 if (dish.getChanges().get(k).getChangesByTypesList().size() > 0) {
 
-                                    if (cartClassification.getDishList().get(position).getChanges().get(i).getFreeSelection() == cartClassification.getDishList().get(position).getChanges().get(i).getChangesByTypesList().size()) {
+                                    if (dish.getChanges().get(k).getFreeSelection() < dish.getChanges().get(k).getChangesByTypesList().size()) {
 
-                                        //NO NEED TO ADD CHANGE COST
-                                        continue;
+                                        costDishWithChanges += getCostSum(costDishWithChanges, j, dish.getChanges().get(k), dish.getChanges().get(k).getChangesTypesEnum());
+
                                     }
-
-                                    //GET COST OF ALL CHANGES
-//                                    sum += getCostSum(sum, j, dish.getChanges().get(k), dish.getChanges().get(k).getChangesTypesEnum());
-                                    costDishWithChanges += dish.getPrice();
                                 }
                             }
-
                         }
+
+
+                        stringBuilder.append(dish.getName()).append(" - ");
 
 
                     } else if (changesTypesEnum == Changes.ChangesTypesEnum.ONE_CHOICE) {
@@ -167,11 +166,12 @@ public class CartOrderAdapter extends BaseAdapter {
                             regularChange = (RegularChange) cartClassification.getDishList().get(position).getChanges().get(i).getChangesByTypesList().get(j);
                         }
 
+                        if (regularChange.getNumOfAdded() > 0) {
+                            costDishWithChanges = (regularChange.getPrice() * regularChange.getNumOfAdded()) + costDishWithChanges;
+                        }
+
                         stringBuilder.append(regularChange.getChange());
-
-
                         stringBuilder.append("הוספת ").append(regularChange.getNumOfAdded());
-                        costDishWithChanges += (regularChange.getPrice() * regularChange.getNumOfAdded());
 
 
                     } else if (changesTypesEnum == Changes.ChangesTypesEnum.PIZZA) {
@@ -186,11 +186,13 @@ public class CartOrderAdapter extends BaseAdapter {
                         }
 
 
-                        stringBuilder.append(pizzaChange.getName()).append(" ");
 
                         if (pizzaChange.isBothSides()) {
 
                             stringBuilder.append("כל הפיצה");
+
+                            costDishWithChanges += pizzaChange.getCost();
+                            stringBuilder.append(pizzaChange.getName()).append(" ");
 
                         } else {
 
@@ -198,12 +200,11 @@ public class CartOrderAdapter extends BaseAdapter {
                                 stringBuilder.append("חצי שמאל");
                             else
                                 stringBuilder.append("חצי ימין");
+
+                            costDishWithChanges += pizzaChange.getCost();
+                            stringBuilder.append(pizzaChange.getName()).append(" ");
                         }
-
-
-                        costDishWithChanges += pizzaChange.getCost();
                     }
-
                 }
 
                 stringBuilder.append(",").append(" ");
@@ -216,26 +217,19 @@ public class CartOrderAdapter extends BaseAdapter {
             stringBuilder.append(".");
 
 
-//            for (int i = 0; i < cartClassification.getDishList().get(position).getChanges().size(); i++) {
-//                stringBuilder.append(cartClassification.getDishList().get(position).getChanges().get(i).getChangeName());
-//                stringBuilder.append(",").append(" ");
-//            }
-//            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-//            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
-//            stringBuilder.append(".");
-//
-//            dishChangesDetailsTextView.setText(stringBuilder.toString());
-//
-//            subTitleChangeTextView.setVisibility(View.VISIBLE);
-//            dishChangesDetailsTextView.setVisibility(View.VISIBLE);
+        }
 
 
-        } else {
 
+        if (!stringBuilder.toString().isEmpty()){
             subTitleChangeTextView.setVisibility(View.GONE);
             dishChangesDetailsTextView.setVisibility(View.GONE);
-
+        }else {
+            subTitleChangeTextView.setVisibility(View.VISIBLE);
+            dishChangesDetailsTextView.setVisibility(View.VISIBLE);
+            dishChangesDetailsTextView.setText(stringBuilder);
         }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -246,22 +240,22 @@ public class CartOrderAdapter extends BaseAdapter {
         dishCostTextView.setText(String.valueOf(costDishWithChanges));
 
 
+
         editDishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //TODO: EDIT SOMETHING ON THE DISH
                 sendDataToIntent(position);
 
             }
         });
 
 
+
         addChangesToDishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                //TODO: ADD SOMETHING TO DISH
                 Dish dish = (Dish) cartClassification.getDishList().get(position).clone();
                 cartClassification.getDishList().add(dish);
                 notifyDataSetChanged();
@@ -275,10 +269,8 @@ public class CartOrderAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                //TODO: DELETE THE POSITION DISH
                 cartClassification.getDishList().remove(position);
                 notifyDataSetChanged();
-
 
             }
         });
@@ -303,37 +295,127 @@ public class CartOrderAdapter extends BaseAdapter {
 
 
         for (int i = 0; i < menu.getClassifications().size(); i++) {
-
             //find classification
             Classification classificationCheck = menu.getClassifications().get(i);
 
-            for (int j = 0; j < classificationCheck.getDishList().size(); j++) {
+            if (classificationCheck.getClassificationName().equals(cartClassification.getClassificationName())) {
 
-//                    if (position < changesList.size()){
-//                        if (classificationCheck.getDishList().get(j).getName().equals(dish.getName())){
-//                            intent.putExtra("dish", dish);
-//                            break;
-//                        }
-//                    }else {
-//                        if (classificationCheck.getDishList().get(j).getName().equals(dish.getName())){
-//                            intent.putExtra("dish", dish);
-//                            break;
-//                        }
-//                    }
+                for (int j = 0; j < classificationCheck.getDishList().size(); j++) {
 
-
-                if (classificationCheck.getDishList().get(j).getName().equals(dish.getName())) {
-                    Log.i("CLASSIFICATION", classificationCheck.getClassificationName());
-                    intent.putExtra("dish", classificationCheck.getDishList().get(j));
-                    intent.putExtra("classification", classificationCheck);
-                    intent.putExtra("position", position);
-                    break;
+                    if (classificationCheck.getDishList().get(j).getName().equals(dish.getName())) {
+                        intent.putExtra("dish", classificationCheck.getDishList().get(j));
+                        intent.putExtra("classification", classificationCheck);
+                        break;
+                    }
                 }
             }
         }
 
+        intent.putExtra("position", position);
         intent.putExtra("dish_edit", dish);
         ((CartActivity) context).startActivityForResult(intent, 3);
     }
+
+    private int getCostSum(int sum, int j, Changes changes, Changes.ChangesTypesEnum changesTypesEnum) {
+
+
+        if (changesTypesEnum == Changes.ChangesTypesEnum.DISH_CHOICE || changesTypesEnum == Changes.ChangesTypesEnum.CLASSIFICATION_CHOICE) {
+
+            //WORK ON UPDATE SUM OF DISH CHANGE CHOICE
+            Dish dish;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                dish = new Gson().fromJson(new Gson().toJson(map), Dish.class);
+            } catch (Exception e) {
+                dish = (Dish) changes.getChangesByTypesList().get(j);
+            }
+
+
+            if (changes.getFreeSelection() < changes.getChangesByTypesList().size()){
+                sum += dish.getPrice();
+            }
+
+
+            if (dish.getChanges().size() > 0) {
+                for (int k = 0; k < dish.getChanges().size(); k++) {
+
+                    if (dish.getChanges().get(k).getChangesByTypesList().size() > 0) {
+
+                        if (dish.getChanges().get(k).getFreeSelection() < dish.getChanges().get(k).getChangesByTypesList().size()) {
+
+                            sum += getCostSum(sum, j, dish.getChanges().get(k), dish.getChanges().get(k).getChangesTypesEnum());
+                        }
+
+                    }
+                }
+
+            }
+
+
+        } else if (changesTypesEnum == Changes.ChangesTypesEnum.ONE_CHOICE) {
+
+            RegularChange regularChange;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+            } catch (Exception e) {
+                regularChange = (RegularChange) changes.getChangesByTypesList().get(j);
+            }
+
+            sum += regularChange.getPrice();
+
+
+        } else if (changesTypesEnum == Changes.ChangesTypesEnum.MULTIPLE) {
+
+
+            RegularChange regularChange;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+            } catch (Exception e) {
+                regularChange = (RegularChange) changes.getChangesByTypesList().get(j);
+            }
+
+
+            sum += regularChange.getPrice();
+
+
+        } else if (changesTypesEnum == Changes.ChangesTypesEnum.VOLUME) {
+
+
+            RegularChange regularChange;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
+            } catch (Exception e) {
+                regularChange = (RegularChange) changes.getChangesByTypesList().get(j);
+            }
+
+            sum += regularChange.getPrice();
+
+
+        } else if (changesTypesEnum == Changes.ChangesTypesEnum.PIZZA) {
+
+            PizzaChange pizzaChange;
+
+            try {
+                HashMap<String, Object> map = (HashMap<String, Object>) changes.getChangesByTypesList().get(j);
+                pizzaChange = new Gson().fromJson(new Gson().toJson(map), PizzaChange.class);
+            } catch (Exception e) {
+                pizzaChange = (PizzaChange) changes.getChangesByTypesList().get(j);
+            }
+
+            if (pizzaChange.isBothSides() || pizzaChange.isLeftSide() || pizzaChange.isRightSide()) {
+                sum += pizzaChange.getCost();
+            }
+
+        }
+        return sum;
+    }
+
 
 }

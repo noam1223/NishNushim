@@ -58,6 +58,7 @@ public class CartActivity extends AppCompatActivity implements OrderListener {
         setContentView(R.layout.activity_cart);
 
         order = new Order();
+        order.setOrderStatus(Order.OrderStatus.NONE);
         Intent intent = getIntent();
 
         if (intent != null){

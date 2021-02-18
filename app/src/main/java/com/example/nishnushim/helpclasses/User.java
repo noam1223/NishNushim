@@ -11,6 +11,7 @@ public class User implements Serializable {
     String phoneNumber;
     List<MyAddress> addresses = new ArrayList<>();
     List<Order> orderList;
+    List<String> restaurantWishList = new ArrayList<>();
 
 
     public User() {
@@ -60,6 +61,13 @@ public class User implements Serializable {
         this.orderList = orderList;
     }
 
+    public List<String> getRestaurantWishList() {
+        return restaurantWishList;
+    }
+
+    public void setRestaurantWishList(List<String> restaurantWishList) {
+        this.restaurantWishList = restaurantWishList;
+    }
 
     public MyAddress getChosenAddress(){
 

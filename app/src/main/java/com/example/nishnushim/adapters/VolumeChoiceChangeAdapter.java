@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.nishnushim.AddDishActivity;
 import com.example.nishnushim.R;
 import com.example.nishnushim.helpclasses.menuChanges.Changes;
 import com.example.nishnushim.helpclasses.menuChanges.RegularChange;
@@ -90,11 +91,25 @@ public class VolumeChoiceChangeAdapter extends BaseAdapter {
             costToAddTextView.setText("ללא עלות");
         }
 
+        int existPosition = -1;
+
+        for (int i = 0; i < createChange.getChangesByTypesList().size(); i++) {
 
 
 
-        volumeAddedNumTextView.setText(String.valueOf(volumeAdded));
-        createChange.getChangesByTypesList().add(regularChange);
+            if (((RegularChange)createChange.getChangesByTypesList().get(i)).getChange().equals(regularChange.getChange())){
+                existPosition = i;
+                break;
+            }
+        }
+
+
+        if (existPosition > -1){
+            volumeAddedNumTextView.setText(((RegularChange)createChange.getChangesByTypesList().get(existPosition)).getChange());
+        }else volumeAddedNumTextView.setText("0");
+
+
+//        createChange.getChangesByTypesList().add(regularChange);
 
 
         RegularChange finalRegularChange = regularChange;
@@ -106,13 +121,40 @@ public class VolumeChoiceChangeAdapter extends BaseAdapter {
 //                HashMap<String, Object> map = (HashMap<String, Object>) createChange.getChangesByTypesList().get(position);
 //                RegularChange regularChange = new Gson().fromJson(new Gson().toJson(map), RegularChange.class);
 
-                finalRegularChange.setNumOfAdded(finalRegularChange.getNumOfAdded() + 1);
-                volumeAddedNumTextView.setText(String.valueOf(finalRegularChange.getNumOfAdded()));
-                createChange.getChangesByTypesList().set(position, finalRegularChange);
+
+                int existPosition = -1;
+
+                for (int i = 0; i < createChange.getChangesByTypesList().size(); i++) {
+
+
+
+                    if (((RegularChange)createChange.getChangesByTypesList().get(i)).getChange().equals(finalRegularChange.getChange())){
+                        existPosition = i;
+                        break;
+                    }
+                }
+
+
+                if (existPosition > -1){
+                    RegularChange regularChange1 = (RegularChange)createChange.getChangesByTypesList().get(existPosition);
+                    regularChange1.setNumOfAdded(regularChange1.getNumOfAdded() + 1);
+//                        volumeAddedNumTextView.setText(String.valueOf(finalRegularChange.getNumOfAdded()));
+                    createChange.getChangesByTypesList().set(position, finalRegularChange);
+                }else{
+                    finalRegularChange.setNumOfAdded(1);
+                    createChange.getChangesByTypesList().add(finalRegularChange);
+                }
+
+                notifyDataSetChanged();
+                if (context instanceof AddDishActivity){
+                    ((AddDishActivity) context).updateSum();
+                }
+
                 //TODO: UPDATE CART SUM
 
             }
         });
+
 
 
 
@@ -127,10 +169,35 @@ public class VolumeChoiceChangeAdapter extends BaseAdapter {
                     return;
                 }
 
-                finalRegularChange.setNumOfAdded(finalRegularChange.getNumOfAdded() - 1);
-                volumeAddedNumTextView.setText(String.valueOf(finalRegularChange.getNumOfAdded()));
-                createChange.getChangesByTypesList().set(position, finalRegularChange);
 
+                int existPosition = -1;
+
+                for (int i = 0; i < createChange.getChangesByTypesList().size(); i++) {
+
+                    if (((RegularChange)createChange.getChangesByTypesList().get(i)).getChange().equals(finalRegularChange.getChange())){
+                        existPosition = i;
+                        break;
+                    }
+
+                }
+
+
+
+                if (existPosition > -1){
+                    RegularChange regularChange1 = (RegularChange)createChange.getChangesByTypesList().get(existPosition);
+
+                    regularChange1.setNumOfAdded(regularChange1.getNumOfAdded() - 1);
+
+                    if (regularChange1.getNumOfAdded() == 0){
+                        createChange.getChangesByTypesList().remove(existPosition);
+                    }else createChange.getChangesByTypesList().set(position, regularChange1);
+
+//                        volumeAddedNumTextView.setText(String.valueOf(finalRegularChange.getNumOfAdded()));
+                }
+
+                if (context instanceof AddDishActivity){
+                    ((AddDishActivity) context).updateSum();
+                }
 
             }
         });

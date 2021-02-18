@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -41,6 +42,7 @@ import com.example.nishnushim.helpclasses.Classification;
 import com.example.nishnushim.helpclasses.Dish;
 import com.example.nishnushim.helpclasses.MenuSingleton;
 import com.example.nishnushim.helpclasses.Restaurant;
+import com.example.nishnushim.helpclasses.UserSingleton;
 import com.example.nishnushim.helpclasses.helpInterfaces.OnProfileScrollChangeListener;
 import com.example.nishnushim.helpclasses.helpInterfaces.OnSearchItemClicked;
 import com.example.nishnushim.nishnushFragments.fragments_restaurant_profile.MenuRestaurantFragment;
@@ -237,6 +239,21 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
 
 
             addToFavoriteRestaurantListImgBtn = findViewById(R.id.restaurant_favorite_image_btn_restaurant_profile_home_activity);
+            addToFavoriteRestaurantListImgBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (UserSingleton.getInstance().getUser().getRestaurantWishList().contains(restaurantKey)){
+                        addToFavoriteRestaurantListImgBtn.setImageDrawable(ContextCompat.getDrawable(RestaurantProfileHomeActivity.this, R.drawable.ic_icon_heart_like_empty));
+                    }else {
+                        UserSingleton.getInstance().getUser().getRestaurantWishList().add(restaurantKey);
+                        addToFavoriteRestaurantListImgBtn.setImageDrawable(ContextCompat.getDrawable(RestaurantProfileHomeActivity.this, R.drawable.ic_icon_heart_like_full));
+                    }
+
+
+
+                }
+            });
 
 
             moveToMenuTextView = findViewById(R.id.sub_title_menu_text_view_restaurant_profile_home_activity);
@@ -287,8 +304,7 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
 
 
     @Override
-    public void onSearchClicked(int position) {
-
+    public void onSearchClicked(List<Restaurant> copiedRestaurants, List<String> copiedKeys, String searchWord) {
 
     }
 
@@ -323,8 +339,8 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
         searchResultsListView = popUpView.findViewById(R.id.search_list_view_search_pop_up_window_layout);
         recommendationResultsListView = popUpView.findViewById(R.id.history_of_search_list_view_search_pop_up_window_layout);
 
-        SearchAdapter searchAdapter = new SearchAdapter(this, searchResultsList, dishList, this);
-        searchResultsListView.setAdapter(searchAdapter);
+//        SearchAdapter searchAdapter = new SearchAdapter(this, searchResultsList, dishList, this);
+//        searchResultsListView.setAdapter(searchAdapter);
 
 
         searchEditText.addTextChangedListener(new TextWatcher() {
@@ -344,58 +360,6 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
 
                 if (s.length() > 0) {
 
-
-                    if (mapSearchResultString.containsKey(s.toString()) && dishListHashMap.containsKey(s.toString())) {
-
-                        searchResultsList.clear();
-                        dishList.clear();
-
-                        searchResultsList.addAll(mapSearchResultString.get(s.toString()));
-                        dishList.addAll(dishListHashMap.get(s.toString()));
-
-                        searchAdapter.setDishList(dishList);
-                        searchAdapter.setSearchList(searchResultsList);
-                        searchAdapter.notifyDataSetChanged();
-
-
-                    } else {
-
-
-                        for (int i = 0; i < restaurant.getMenu().getClassifications().size(); i++) {
-
-
-                            for (int j = 0; j < restaurant.getMenu().getClassifications().get(i).getDishList().size(); j++) {
-
-                                if (restaurant.getMenu().getClassifications().get(i).getDishList().get(j).getName().contains(s.toString())
-                                        || restaurant.getMenu().getClassifications().get(i).getDishList().get(j).getDetails().contains(s.toString())) {
-                                    addTextToSearchMap(s.toString(), restaurant.getMenu().getClassifications().get(i).getDishList().get(j).getName());
-                                    addDishToDishMap(restaurant.getMenu().getClassifications().get(i).getDishList().get(j), s.toString());
-                                }
-                            }
-
-
-                        }
-
-
-                        if (mapSearchResultString.containsKey(s.toString())){
-
-                            searchResultsList.clear();
-                            dishList.clear();
-
-                            searchResultsList.addAll(mapSearchResultString.get(s.toString()));
-                            dishList.addAll(dishListHashMap.get(s.toString()));
-
-                        }else{
-                            searchResultsList.clear();
-                            searchDishList.clear();
-                        }
-
-
-                        searchAdapter.setDishList(dishList);
-                        searchAdapter.setSearchList(searchResultsList);
-                        searchAdapter.notifyDataSetChanged();
-
-                    }
                 }
 
 
@@ -430,38 +394,6 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
     }
 
 
-    private void addTextToSearchMap(String searchText, String addText) {
-
-        List<String> strings = new ArrayList<>();
-
-        if (!mapSearchResultString.containsKey(searchText)) {
-            strings.add(addText);
-            mapSearchResultString.put(searchText, strings);
-        } else if (mapSearchResultString.get(searchText).isEmpty()) {
-
-            if (mapSearchResultString.get(searchText).contains(addText)) {
-                mapSearchResultString.get(searchText).add(addText);
-            }
-        }
-    }
-
-
-    private void addDishToDishMap(Dish dish, String s) {
-
-        List<Dish> dishList = new ArrayList<>();
-
-        if (dishListHashMap.containsKey(s)) {
-            if (dishListHashMap.get(s).isEmpty()) {
-                dishList.add(dish);
-                dishListHashMap.get(s).addAll(dishList);
-            }
-            dishListHashMap.get(s).add(dish);
-        } else {
-            dishList.add(dish);
-            dishListHashMap.put(s, dishList);
-        }
-
-    }
 
 
     @Override
@@ -472,6 +404,7 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
         if (id == R.id.menu_image_view_restaurant_profile_home_activity) {
 
             if (!(restaurantDetailsFragment instanceof MenuRestaurantFragment)) {
+                appBarLayout.setVisibility(View.VISIBLE);
                 restaurantDetailsFragment = new MenuRestaurantFragment(this);
                 bundle.putSerializable(getString(R.string.restaurant_detail), restaurant);
                 bundle.putString("key", restaurantKey);
@@ -494,7 +427,7 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
             //TODO: CREATE LAST ORDERS FRAGMENT
 //            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_restaurant_profile_home_activity, new MenuRestaurantFragment()).commit();
 
-
+            appBarLayout.setVisibility(View.INVISIBLE);
             moveToMenuImgBtn.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_oval_empty));
             moveToMenuTextView.setVisibility(View.INVISIBLE);
 
@@ -510,6 +443,7 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
 
             //TODO: CREATE MORE DETAILS FRAGMENT
             if (!(restaurantDetailsFragment instanceof RestaurantProfileDetailsFragment)) {
+                appBarLayout.setVisibility(View.INVISIBLE);
                 restaurantDetailsFragment = new RestaurantProfileDetailsFragment();
                 bundle.putSerializable(getString(R.string.restaurant_detail), restaurant);
                 bundle.putString("key", restaurantKey);
@@ -566,6 +500,7 @@ public class RestaurantProfileHomeActivity extends AppCompatActivity implements 
 
         return false;
     }
+
 
 
 }

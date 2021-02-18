@@ -148,23 +148,33 @@
                     android:orientation="horizontal">
 
 
+                    <LinearLayout
+                        android:id="@+id/call_restaurant_linear_layout_area_restaurant_profile_details_fragment"
+                        android:layout_width="68dp"
+                        android:layout_height="20dp"
+                        android:orientation="horizontal"
+                        android:layoutDirection="rtl"
+                        android:gravity="center"
+                        android:background="@drawable/yellow_rounded_custom_btn">
+
+
                     <TextView
-                        android:id="@+id/phone_text_view_restaurant_profile_details_fragment"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/arimo_regular"
-                        android:text="0503535"
-                        android:textColor="@color/custom_blue"
+                        android:fontFamily="@font/assistant_regular"
+                        android:text="חייג"
+                        android:textColor="#cc002144"
                         android:textSize="12sp" />
 
 
                     <ImageButton
-                        android:id="@+id/call_to_restaurant_img_btn_restaurant_profile_details_fragment"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@drawable/ic_call_icon" />
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginRight="4dp"
+                        android:background="@drawable/ic_call_icon"
+                        android:layout_gravity="center"/>
 
+                    </LinearLayout>
 
                     <ImageButton
                         android:id="@+id/wase_restaurant_img_btn_restaurant_profile_detauls_fragment"
@@ -183,7 +193,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="18dp"
                     android:layout_marginTop="8dp"
-                    android:dividerHeight="0dp" />
+                    android:dividerHeight="0dp"
+                    android:divider="@null"/>
 
 
             </LinearLayout>
@@ -207,7 +218,9 @@
                 android:orientation="vertical"
                 android:background="@drawable/more_details_areas_background"
                 android:tag="2"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp">
 
 
                 <TextView
@@ -224,7 +237,8 @@
                     android:id="@+id/open_close_hours_list_view_restaurant_profile_details_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:dividerHeight="0dp"/>
+                    android:dividerHeight="0px"
+                    android:divider="@null"/>
 
 
             </LinearLayout>
@@ -249,7 +263,9 @@
                 android:orientation="vertical"
                 android:background="@drawable/more_details_areas_background"
                 android:tag="3"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp">
 
 
                 <TextView
@@ -297,7 +313,9 @@
                 <com.example.nishnushim.helpUIClass.NonScrollListView
                     android:id="@+id/recommendation_list_view_restaurant_profile_details_fragment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:dividerHeight="0px"
+                    android:divider="@null"/>
 
 
             </LinearLayout>

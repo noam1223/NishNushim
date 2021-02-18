@@ -67,7 +67,7 @@ public class AddDishActivity extends AppCompatActivity {
     Classification classificationOfDish;
     Dish dish, createDish;
     Classification dishList;
-//    List<Dish> dishList = new ArrayList<>();
+    //    List<Dish> dishList = new ArrayList<>();
     List<Button> dishBtn = new ArrayList<>();
     int dishBtnClickedPosition = 0;
     public String restaurantNameString = "נשנושים";
@@ -110,7 +110,6 @@ public class AddDishActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,7 +149,6 @@ public class AddDishActivity extends AppCompatActivity {
         }
 
 
-
         cartPopUpView = findViewById(R.id.cart_pop_up_add_dish_activity);
         sumCartPopUpTextView = cartPopUpView.findViewById(R.id.sum_of_cart_text_view_cart_pop_up_window);
         backImageBtn = findViewById(R.id.back_img_btn_add_dish_activity);
@@ -165,6 +163,8 @@ public class AddDishActivity extends AppCompatActivity {
 
         dishBtnAreaLinearLayout = findViewById(R.id.linear_layout_btn_add_dish_activity);
         moveToDishBtn = findViewById(R.id.first_dish_btn_add_dish_activity);
+        moveToDishBtn.setSelected(true);
+        moveToDishBtn.setPressed(true);
         moveToDishBtn.setTag(createDish);
 
 
@@ -202,12 +202,11 @@ public class AddDishActivity extends AppCompatActivity {
 //        saveDishBtn = findViewById(R.id.save_dish_btn_add_dish_activity);
 
 
-
         if (createDish == null) {
             createDish = (Dish) dish.clone();
             createDish.setChanges(new ArrayList<>());
 
-        }else{
+        } else {
 
             plusDishImgBtn.setVisibility(View.INVISIBLE);
             minusDishImgBtn.setVisibility(View.INVISIBLE);
@@ -222,6 +221,7 @@ public class AddDishActivity extends AppCompatActivity {
         restaurantNameTextView.setText(restaurantNameString);
         updateUI(0);
         updateSum();
+
 
         plusDishImgBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,27 +243,21 @@ public class AddDishActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        AddDishActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+                        positionChanged = 0;
 
-                                positionChanged = 0;
+                        for (int i = 0; i < dishBtn.size(); i++) {
 
-                                for (int i = 0; i < dishBtn.size(); i++) {
+                            if (dishBtn.get(i).getText().toString().equals(((Button) v).getText().toString())) {
+                                dishBtn.get(i).setBackground(ContextCompat.getDrawable(AddDishActivity.this, R.drawable.btn_bottom_line_selected));
+                                positionChanged = i;
 
-                                    if (dishBtn.get(i).getText().toString().equals(((Button) v).getText().toString())) {
-                                        dishBtn.get(i).setBackground(ContextCompat.getDrawable(AddDishActivity.this, R.drawable.btn_bottom_line_selected));
-                                        positionChanged = i;
+                            } else
+                                dishBtn.get(i).setBackground(ContextCompat.getDrawable(AddDishActivity.this, R.color.white));
 
-                                    } else
-                                        dishBtn.get(i).setBackground(ContextCompat.getDrawable(AddDishActivity.this, R.color.white));
+                        }
 
-                                }
+                        updateUI(positionChanged);
 
-                                updateUI(positionChanged);
-
-                            }
-                        });
                     }
                 });
 
@@ -272,6 +266,7 @@ public class AddDishActivity extends AppCompatActivity {
 
                 dishBtnAreaLinearLayout.setWeightSum(dishBtnAreaLinearLayout.getWeightSum() + 1);
                 dishBtnAreaLinearLayout.addView(button);
+                updateSum();
 
             }
         });
@@ -297,6 +292,7 @@ public class AddDishActivity extends AppCompatActivity {
 
 //                    updateUI(0);
                     moveToDishBtn.performClick();
+                    updateSum();
 
                 }
             }
@@ -339,7 +335,6 @@ public class AddDishActivity extends AppCompatActivity {
 
         changesDishListView.setAdapter(new ChangesAdapter(AddDishActivity.this, dish.getChanges(), classificationOfDish.getChangesList(), dishList.getDishList().get(position)));
         setListViewHeightBasedOnChildren(changesDishListView);
-//                changesDishListView.getAdapter().notifyAll();
 
         updateSum();
 
@@ -355,6 +350,7 @@ public class AddDishActivity extends AppCompatActivity {
         if (pizzaChange.isBothSides()) {
 
             pizzaChangeInclude = getLayoutInflater().inflate(R.layout.pizza_changes_both_sides_include_layout, null);
+            pizzaChangeInclude.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             ConstraintLayout rightSidesConstrainLayout = pizzaChangeInclude.findViewById(R.id.constrain_layout_right_side_pizza_changes_both_sides_include_layout);
             ConstraintLayout leftSidesConstrainLayout = pizzaChangeInclude.findViewById(R.id.constrain_layout_left_side_pizza_changes_both_sides_include_layout);
 
@@ -489,6 +485,8 @@ public class AddDishActivity extends AppCompatActivity {
 
                         //SAVE THE CHANGES FOR THIS PIZZA
                         pizzaChangesDialog.dismiss();
+
+                        updateSum();
                     }
                 });
 
@@ -547,19 +545,18 @@ public class AddDishActivity extends AppCompatActivity {
                     Changes.ChangesTypesEnum changesTypesEnum = changes.getChangesTypesEnum();
 
                     if (dishList.getDishList().get(i).getChanges().get(j).getChangesByTypesList().size() > 0) {
-                        if (changes.getFreeSelection() == changes.getChangesByTypesList().size()) {
 
-                            //NO NEED TO ADD CHANGE COST
-                            continue;
+                        if (changes.getFreeSelection() > changes.getChangesByTypesList().size()) {
+
+                            sum += getCostSum(sum, j, changes, changesTypesEnum);
+
                         }
 
-                        sum += getCostSum(sum, j, changes, changesTypesEnum);
                     }
                 }
             }
 
         }
-
 
         sumCartPopUpTextView.setText(sum + " ₪ ");
     }
@@ -583,22 +580,20 @@ public class AddDishActivity extends AppCompatActivity {
             }
 
 
-            if (dish.getChanges().size() > 0) {
+            if (changes.getFreeSelection() < changes.getChangesByTypesList().size()) {
+                sum += dish.getPrice();
+
+            } else if (dish.getChanges().size() > 0) {
                 for (int k = 0; k < dish.getChanges().size(); k++) {
 
                     if (dish.getChanges().get(k).getChangesByTypesList().size() > 0) {
 
-                        if (changes.getFreeSelection() == changes.getChangesByTypesList().size()) {
+                        if (dish.getChanges().get(k).getFreeSelection() < dish.getChanges().get(k).getChangesByTypesList().size()) {
 
-                            //NO NEED TO ADD CHANGE COST
-                            continue;
+                            sum += getCostSum(sum, j, dish.getChanges().get(k), dish.getChanges().get(k).getChangesTypesEnum());
                         }
-
-                        //GET COST OF ALL CHANGES
-                        sum += getCostSum(sum, j, dish.getChanges().get(k), dish.getChanges().get(k).getChangesTypesEnum());
                     }
                 }
-
             }
 
 
@@ -644,8 +639,9 @@ public class AddDishActivity extends AppCompatActivity {
                 regularChange = (RegularChange) changes.getChangesByTypesList().get(j);
             }
 
-            sum += regularChange.getPrice();
-
+            if (regularChange.getNumOfAdded() > 0) {
+                sum += (regularChange.getPrice() * regularChange.getNumOfAdded());
+            }
 
         } else if (changesTypesEnum == Changes.ChangesTypesEnum.PIZZA) {
 

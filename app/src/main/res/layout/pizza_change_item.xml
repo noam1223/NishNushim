@@ -6,7 +6,17 @@
     android:orientation="horizontal"
     android:layoutDirection="rtl"
     android:gravity="center_vertical"
-    android:layout_marginTop="12dp">
+    android:layout_marginTop="12dp"
+    android:weightSum="2">
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layoutDirection="rtl"
+        android:visibility="visible"
+        android:layout_weight="1">
 
 
 
@@ -28,15 +38,16 @@
         android:textColor="@color/custom_blue"
         android:layout_marginRight="16dp"/>
 
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/add_change_pizza_to_pizza_linear_layout_area_pizza_change_item"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="86dp"
         android:gravity="center_vertical"
         android:layoutDirection="rtl"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:layout_weight="1">
 
 
     <ImageButton
@@ -61,12 +72,13 @@
 
     <LinearLayout
         android:id="@+id/add_change_side_to_pizza_area_linear_layout_pizza_change_item"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="86dp"
         android:gravity="center_horizontal"
         android:layoutDirection="rtl"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:layout_weight="1">
 
 
 
@@ -165,13 +177,6 @@
 
 
         </LinearLayout>
-
-
-
-
-
-
-
 
 
 

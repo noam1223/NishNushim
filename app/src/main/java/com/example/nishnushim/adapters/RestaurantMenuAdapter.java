@@ -65,9 +65,9 @@ public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAd
     public void onBindViewHolder(@NonNull RestaurantMenuViewHolder holder, int position) {
 
 
-        if (position == highLightRawPosition) {
+        if (position == highLightRawPosition)
             holder.subTitleMenuNameTextView.setBackground(ContextCompat.getDrawable(context, R.drawable.sub_title_text_view_menu_restaurant_fragment));
-        } else
+        else
             holder.subTitleMenuNameTextView.setBackgroundColor(ContextCompat.getColor(context, R.color.background_color));
 
         holder.subTitleMenuNameTextView.setText(menu.getClassifications().get(position).getClassificationName());
@@ -96,21 +96,6 @@ public class RestaurantMenuAdapter extends RecyclerView.Adapter<RestaurantMenuAd
 
 
     }
-
-
-
-
-//    public void updateMenuLongPressed(int ADAPTER_TAG, int dishPosition){
-//
-//
-//        for (int i = 0; i < restaurantDishAdapters.size(); i++) {
-//
-//            if (restaurantDishAdapters.get(i).getADAPTER_POSITION() == ADAPTER_TAG){
-//                restaurantDishAdapters.get(i).updateLongPressedDish(dishPosition);
-//            }else restaurantDishAdapters.get(i).updateLongPressedDish(-1);
-//        }
-//    }
-
 
 
 

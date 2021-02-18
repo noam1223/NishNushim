@@ -9,6 +9,16 @@ import java.util.List;
 
 public class Order implements Serializable {
 
+    public enum OrderStatus{
+        NONE,
+        SEND,
+        ACCEPTED,
+        PAID,
+        IN_PROGRESS
+    }
+
+    OrderStatus orderStatus;
+
     int orderNumber;
 //    Classification order;
     Menu order;
@@ -165,11 +175,20 @@ public class Order implements Serializable {
         this.wayOfPayments = wayOfPayments;
     }
 
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
 
     @Override
     public String toString() {
         return "Order{" +
-                "orderNumber=" + orderNumber +
+                "orderStatus=" + orderStatus +
+                ", orderNumber=" + orderNumber +
                 ", order=" + order +
                 ", wayOfDelivery='" + wayOfDelivery + '\'' +
                 ", noteForDelivery='" + noteForDelivery + '\'' +

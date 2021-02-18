@@ -111,6 +111,7 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
     }
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -118,7 +119,6 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
         View view = inflater.inflate(R.layout.fragment_menu_restaurant, container, false);
 
         cartPopUpView = view.findViewById(R.id.cart_pop_up_menu_restaurant_fragment);
-
 
         cartPopUpView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,8 +152,8 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
         }
 
 
-        if (getArguments() != null) {
 
+        if (getArguments() != null) {
 
             restaurant = (Restaurant) getArguments().getSerializable(getString(R.string.restaurant_detail));
             keyRestaurant = getArguments().getString("key");
@@ -201,6 +201,7 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
     }
 
 
+
     public void enableMenuRecyclerViewScrolling(boolean enabled) {
 
 
@@ -209,12 +210,14 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
     }
 
 
+
     @Override
     public void changeMenuItemPosition(int position) {
 
         menuRestaurantRecyclerView.smoothScrollToPosition(position);
 
     }
+
 
 
 
@@ -230,6 +233,9 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
             sumCartPopUpTextView.setText(sum + " ₪ ");
         }
     }
+
+
+
 
 
     public int updateSum() {
@@ -252,29 +258,29 @@ public class MenuRestaurantFragment extends Fragment implements MenuItemListener
                         Changes.ChangesTypesEnum changesTypesEnum = changes.getChangesTypesEnum();
 
                         if (classification.getDishList().get(i).getChanges().get(j).getChangesByTypesList().size() > 0) {
-                            if (changes.getFreeSelection() == changes.getChangesByTypesList().size()) {
 
-                                //NO NEED TO ADD CHANGE COST
-                                continue;
+                            for (int l = 0; l < classification.getDishList().get(i).getChanges().get(j).getChangesByTypesList().size(); l++) {
+
+                                if (changes.getFreeSelection() < changes.getChangesByTypesList().size()) {
+
+                                    sum += getCostSum(sum, l, changes, changesTypesEnum);
+
+                                }
                             }
-
-                            sum += getCostSum(sum, j, changes, changesTypesEnum);
                         }
                     }
                 }
-
             }
-
         }
 
         return sum;
     }
 
 
+
+
     private int getCostSum(int sum, int j, Changes changes, Changes.ChangesTypesEnum changesTypesEnum) {
 
-
-        //TODO: CHECK AUTENTIC INFORMATION
 
         if (changesTypesEnum == Changes.ChangesTypesEnum.DISH_CHOICE || changesTypesEnum == Changes.ChangesTypesEnum.CLASSIFICATION_CHOICE) {
 

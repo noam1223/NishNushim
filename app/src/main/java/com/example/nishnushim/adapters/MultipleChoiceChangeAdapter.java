@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RadioButton;
 
+import com.example.nishnushim.AddDishActivity;
 import com.example.nishnushim.R;
 import com.example.nishnushim.helpclasses.menuChanges.Changes;
 import com.example.nishnushim.helpclasses.menuChanges.RegularChange;
@@ -98,15 +99,16 @@ public class MultipleChoiceChangeAdapter extends BaseAdapter {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked){
-                    //TODO: ADD TO DISH CHANGES ORDER
                     createChange.getChangesByTypesList().add(finalRegularChange);
                 }else {
-                    //TODO: REMOVE TO DISH CHANGES ORDER
                     checkBox.setChecked(false);
                     createChange.getChangesByTypesList().remove(finalRegularChange);
                 }
 
-                Log.i("CHANGE_ADAPTER", "MULTIPLE_CHOICE_ADAPTER ---- NUMBER OF CREATE CHANGE " + createChange.getChangesByTypesList().size());
+
+                if (context instanceof AddDishActivity){
+                    ((AddDishActivity) context).updateSum();
+                }
 
             }
         });

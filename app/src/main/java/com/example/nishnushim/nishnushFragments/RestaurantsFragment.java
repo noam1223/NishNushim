@@ -43,6 +43,15 @@ public class RestaurantsFragment extends Fragment {
     FirebaseFirestore db;
 
 
+    public RecyclerView.Adapter getRestaurantDetailAdapter() {
+        return restaurantDetailAdapter;
+    }
+
+    public RestaurantsFragment(List<Restaurant> restaurants, List<String> keys) {
+        this.restaurants = restaurants;
+        this.keys = keys;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

@@ -30,7 +30,9 @@ import com.example.nishnushim.helpUIClass.RestaurantTypeHelper;
 import com.example.nishnushim.helpclasses.RecommendationRestaurant;
 import com.example.nishnushim.helpclasses.Restaurant;
 import com.example.nishnushim.helpclasses.UserSingleton;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firestore.v1.WriteResult;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -64,7 +66,7 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
     public void onBindViewHolder(@NonNull RestaurantDetailsViewHolder holder, int position) {
 
         holder.setIsRecyclable(false);
-        
+
         holder.detailsRestaurantCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,8 +75,8 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
                 intent.putExtra(context.getString(R.string.restaurant_detail), restaurants.get(position));
                 intent.putExtra("key", keys.get(position));
                 context.startActivity(intent);
-                
-                
+
+
             }
         });
 
@@ -108,97 +110,98 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
 
         holder.whenOpenHourTextView.setText(restaurants.get(0).getOpenHour().get(0));
 
-        for (int i = 0; i < restaurants.get(position).getRecommendationRestaurants().size(); i++) {
 
-            if (restaurants.get(position).getRecommendationRestaurants().get(i).getUser().getId().equals(UserSingleton.getInstance().getUser().getId())){
-                holder.favoriteImgBtn.setBackground(ContextCompat.getDrawable(context, R.drawable.ic_icon_heart_like_full));
-                holder.favoriteImgBtn.setClickable(false);
-                break;
-            }
-        }
+        holder.favoriteImgBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-
-        if (holder.favoriteImgBtn.isClickable()) {
-            holder.favoriteImgBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    //TODO: OPEN RECOMMENDATION POP UP //ADD TO THE WISH LIST
-
-                    View popUpView = LayoutInflater.from(context).inflate(R.layout.recommendation_pop_up_window, null);
-                    Dialog recommendationPopUp = new Dialog(context);
-                    recommendationPopUp.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    recommendationPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    recommendationPopUp.setContentView(popUpView);
-
-
-
-                    ImageButton closeWindowImgBtn = popUpView.findViewById(R.id.close_window_image_btn_recommendation_pop_up_window);
-                    TextView restaurantNameTextView = popUpView.findViewById(R.id.restaurant_name_text_name_recommendation_pop_up_window);
-                    RatingBar recommendationRatingBar = popUpView.findViewById(R.id.recommendation_rating_bar_recommendation_pop_up_window);
-                    EditText noteRecommendEditText = popUpView.findViewById(R.id.recommendation_note_edit_text_recommendation_pop_up_window);
-                    Button saveBtn = popUpView.findViewById(R.id.save_recommendation_btn_recommendation_pop_up_window);
-
-
-                    restaurantNameTextView.setText(restaurants.get(position).getName());
-
-
-                    closeWindowImgBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            recommendationPopUp.dismiss();
-                        }
-                    });
-
-
-
-                    saveBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                            int starNum = recommendationRatingBar.getNumStars();
-
-
-                            if (starNum == 0){
-                                Toast.makeText(context, "בבקשה בחר דירוג", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-
-
-                            RecommendationRestaurant recommendationRestaurant = new RecommendationRestaurant();
-                            recommendationRestaurant.setUser(UserSingleton.getInstance().getUser());
-                            recommendationRestaurant.setCreditStar(starNum);
-                            recommendationRestaurant.setDate(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
-
-                            if (!noteRecommendEditText.getText().toString().isEmpty()){
-                                recommendationRestaurant.setCreditLetter(noteRecommendEditText.getText().toString());
-                            }
-
-                            restaurants.get(position).getRecommendationRestaurants().add(recommendationRestaurant);
-
-                            //TODO: SAVE IN DATABASE
-                            FirebaseFirestore.getInstance().collection(context.getString(R.string.RESTAURANTS_PATH)).document(keys.get(position)).collection("recommendationRestaurants").add(recommendationRestaurant);
-
-                            recommendationPopUp.dismiss();
-
-                        }
-                    });
-
-
-
-
-                    recommendationPopUp.create();
-                    recommendationPopUp.show();
-
+                if (UserSingleton.getInstance().getUser().getRestaurantWishList().contains(keys.get(position))) {
+                    holder.favoriteImgBtn.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_icon_heart_like_empty));
+                } else {
+                    UserSingleton.getInstance().getUser().getRestaurantWishList().add(keys.get(position));
+                    holder.favoriteImgBtn.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_icon_heart_like_full));
                 }
-            });
-        }
+
+            }
+        });
+
+
+        holder.recommendationImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //OPEN RECOMMENDATION POP UP
+
+                View popUpView = LayoutInflater.from(context).inflate(R.layout.recommendation_pop_up_window, null);
+                Dialog recommendationPopUp = new Dialog(context);
+                recommendationPopUp.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                recommendationPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                recommendationPopUp.setContentView(popUpView);
+
+
+                ImageButton closeWindowImgBtn = popUpView.findViewById(R.id.close_window_image_btn_recommendation_pop_up_window);
+                TextView restaurantNameTextView = popUpView.findViewById(R.id.restaurant_name_text_name_recommendation_pop_up_window);
+                RatingBar recommendationRatingBar = popUpView.findViewById(R.id.recommendation_rating_bar_recommendation_pop_up_window);
+                EditText noteRecommendEditText = popUpView.findViewById(R.id.recommendation_note_edit_text_recommendation_pop_up_window);
+                Button saveBtn = popUpView.findViewById(R.id.save_recommendation_btn_recommendation_pop_up_window);
+
+
+                restaurantNameTextView.setText(restaurants.get(position).getName());
+
+
+                closeWindowImgBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        recommendationPopUp.dismiss();
+                    }
+                });
+
+
+                saveBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        int starNum = recommendationRatingBar.getNumStars();
+
+
+                        if (starNum == 0) {
+                            Toast.makeText(context, "בבקשה בחר דירוג", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+
+                        RecommendationRestaurant recommendationRestaurant = new RecommendationRestaurant();
+                        recommendationRestaurant.setUser(UserSingleton.getInstance().getUser());
+                        recommendationRestaurant.setCreditStar(starNum);
+                        recommendationRestaurant.setDate(new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
+
+                        if (!noteRecommendEditText.getText().toString().isEmpty()) {
+                            recommendationRestaurant.setCreditLetter(noteRecommendEditText.getText().toString());
+                        }
+
+                        restaurants.get(position).getRecommendationRestaurants().add(recommendationRestaurant);
+
+                        //TODO: SAVE IN DATABASE
+//                        collection("recommendationRestaurants").add(recommendationRestaurant);
+                        FirebaseFirestore.getInstance().collection(context.getString(R.string.RESTAURANTS_PATH)).document(keys.get(position))
+                                .update("recommendationRestaurants", FieldValue.arrayUnion(recommendationRestaurant));
+
+                        recommendationPopUp.dismiss();
+
+                    }
+                });
+
+
+                recommendationPopUp.create();
+                recommendationPopUp.show();
+
+//                recommendationPopUp.getWindow().setLayout(294, 248);
+
+
+            }
+        });
 
     }
-
-
-
-
 
 
     @Override
@@ -207,8 +210,7 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
     }
 
 
-
-    public class RestaurantDetailsViewHolder extends RecyclerView.ViewHolder{
+    public class RestaurantDetailsViewHolder extends RecyclerView.ViewHolder {
 
         ImageView logoRestaurantImageView, mainRestaurantImageView;
         TextView restaurantNameTextView, fullAddressRestaurantTextView, distanceTextView, deliveryAmountAmountTextView,
@@ -216,13 +218,14 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
         CardView detailsRestaurantCardView;
         LinearLayout whenCloseBackgroundLinearLayout;
         ImageButton favoriteImgBtn;
+        ImageView recommendationImageView;
 
 
         public RestaurantDetailsViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            logoRestaurantImageView  = itemView.findViewById(R.id.restaurant_logo_image_view_restaurant_item);
-            mainRestaurantImageView  = itemView.findViewById(R.id.restaurant_main_image_view_restaurant_details_item);
+            logoRestaurantImageView = itemView.findViewById(R.id.restaurant_logo_image_view_restaurant_item);
+            mainRestaurantImageView = itemView.findViewById(R.id.restaurant_main_image_view_restaurant_details_item);
 
             restaurantNameTextView = itemView.findViewById(R.id.restaurant_name_text_view_restaurant_detail_item);
             fullAddressRestaurantTextView = itemView.findViewById(R.id.full_address_text_view_restaurant_detail_item);
@@ -236,6 +239,7 @@ public class RestaurantDetailsAdapter extends RecyclerView.Adapter<RestaurantDet
             whenCloseBackgroundLinearLayout = itemView.findViewById(R.id.linear_layout_close_restaurant_background_restaurant_details_item);
             favoriteImgBtn = itemView.findViewById(R.id.restaurant_favorite_image_btn_restaurant_detail_item);
 
+            recommendationImageView = itemView.findViewById(R.id.recommendation_image_view_restaurant_details_item);
 
         }
     }

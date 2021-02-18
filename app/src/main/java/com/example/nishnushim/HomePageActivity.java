@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,6 +61,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.common.reflect.TypeToken;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -67,6 +69,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -74,7 +77,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HomePageActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, RestaurantTypeListener , OnSearchItemClicked {
+public class HomePageActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, RestaurantTypeListener, OnSearchItemClicked {
 
     private final static int REQUEST_PROFILE_RETURN = 1212;
 
@@ -88,10 +91,12 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     //    EditText searchRestaurantByStringEditTxt;
     FrameLayout frameLayout;
+    Fragment managerFragment;
     Drawable frameDrawable, filterDrawable, wrapDrawable;
 
 
     User user;
+    String userCity;
     NavigationView navigationView;
     TextView navigationHeaderTextView;
     ImageView navigationHeaderImageView;
@@ -113,8 +118,10 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     List<String> keys = new ArrayList<>();
 
     //SUB MAIN RESTAURANT LIST
+    List<Restaurant> subRestaurants = new ArrayList<>();
 
 
+    List<String> historySearch = new ArrayList<>();
     List<String> searchResultsList = new ArrayList<>();
     List<Restaurant> restaurantsResults = new ArrayList<>();
     List<String> keysResults = new ArrayList<>();
@@ -129,8 +136,9 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
     private void updateHomePageUI() {
         addressAppBarTextView.setText(user.getChosenAddress().fullMyAddress());
-    }
 
+
+    }
 
 
 
@@ -194,15 +202,27 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
-
-        ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT////////////
-        ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT////////////
-        SharedPreferences mPrefs = getSharedPreferences("noam", MODE_PRIVATE);
-
+        SharedPreferences sharedPreferences = getSharedPreferences("myPref", MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = mPrefs.getString("user", "");
+        String json = sharedPreferences.getString("history_search", null);
+        Type type = new TypeToken<ArrayList<String>>(){}.getType();
+        historySearch = gson.fromJson(json, type);
+        if (historySearch == null){
+            historySearch = new ArrayList<>();
+        }
 
-        User obj = gson.fromJson(json, User.class);
+        managerFragment = new NishnushimHomeFragment(restaurants, keys);
+        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, managerFragment).commit();
+
+
+        ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT////////////
+        ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT////////////
+//        SharedPreferences mPrefs = getSharedPreferences("noam", MODE_PRIVATE);
+//
+//        Gson gson = new Gson();
+//        String json = mPrefs.getString("user", "");
+//
+//        User obj = gson.fromJson(json, User.class);
 
 
 //        if (obj != null) {
@@ -215,23 +235,24 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 //            updateHomePageUI();
 //        } else {
 
-            //TODO: DO NOT FORGET TO REMOVE THE STRING KEY
-            //"LCl46tZA2wd53H8If1mWTb2VjGw2"
-            db.collection(getString(R.string.USERS_DB)).document("LCl46tZA2wd53H8If1mWTb2VjGw2").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+        //TODO: DO NOT FORGET TO REMOVE THE STRING KEY
+        //"LCl46tZA2wd53H8If1mWTb2VjGw2"
+        db.collection(getString(R.string.USERS_DB)).document("LCl46tZA2wd53H8If1mWTb2VjGw2").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
 
-                    if (task.isSuccessful()) {
+                if (task.isSuccessful()) {
 
-                        user = task.getResult().toObject(User.class);
+                    user = task.getResult().toObject(User.class);
 
-                        if (user != null) {
-                            navigationView.getMenu().clear();
-                            navigationView.inflateMenu(R.menu.menu_drawer_login);
-                            UserSingleton.getInstance().setUser(user);
+                    if (user != null) {
+                        navigationView.getMenu().clear();
+                        navigationView.inflateMenu(R.menu.menu_drawer_login);
+                        UserSingleton.getInstance().setUser(user);
+                        userCity = user.getChosenAddress().getCityName();
 
-                            //TODO: SET ADDRESS BY MY ADDRESS CLASS //
-                            updateHomePageUI();
+                        //TODO: SET ADDRESS BY MY ADDRESS CLASS //
+                        updateHomePageUI();
 
 //                            SharedPreferences mPrefs = getSharedPreferences("noam", MODE_PRIVATE);
 //                            SharedPreferences.Editor prefsEditor = mPrefs.edit();
@@ -241,113 +262,86 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 //                            prefsEditor.commit();
 
 
-                        db.collection(getResources().getString(R.string.RESTAURANTS_PATH)).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
-                                if (task.isSuccessful()) {
-
-                                    if (task.getResult() != null) {
-
-                                        for (DocumentSnapshot documentSnapshot :
-                                                task.getResult()) {
-
-                                            Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
-
-//                                            if (isRestaurantAdded(restaurant, documentSnapshot.getId())) {
-//                                                restaurant.setDistanceFromCurrentUser(distance(user.getChosenAddress().getLatitude(), user.getAddresses().get(0).getLongitude(),
-//                                                        restaurant.getMyAddress().getLatitude(), restaurant.getMyAddress().getLongitude()));
-//                                            }
-
-                                            restaurants.add(restaurant);
-                                            keys.add(documentSnapshot.getId());
-
-                                        }
+                        getCitiesFromServer();
 
 
+                    } else {
+                        managerFragment = new NishnushinAnonymousUserFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, managerFragment).commit();
+                        navigationView.getMenu().clear();
+                        navigationView.inflateMenu(R.menu.menu_drawer_guest);
+                    }
 
-                                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment(restaurants, keys)).commit();
+                } else if (task.isCanceled()) {
+                    Toast.makeText(HomePageActivity.this, "ישנה בעיית חיבור", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            ;
 
 
-                                    } else
-                                        Toast.makeText(getApplicationContext(), "אין מסעדות כרגע להציג", Toast.LENGTH_SHORT).show();
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(HomePageActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                managerFragment = new NishnushimHomeFragment(restaurants, keys);
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, managerFragment).commit();
+            }
+        });
 
-                                } else if (task.isCanceled() && task.getException() != null) {
+    }
 
-                                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment()).commit();
-                                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
+
+
+    private void getCitiesFromServer() {
+        db.collection(getResources().getString(R.string.RESTAURANTS_PATH)).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                if (task.isSuccessful()) {
+
+                    if (task.getResult() != null) {
+
+                        for (DocumentSnapshot documentSnapshot :
+                                task.getResult()) {
+
+                            Restaurant restaurant = documentSnapshot.toObject(Restaurant.class);
+
+                            if (restaurant != null) {
+                                if (restaurant.getMyAddress().getCityName().equals(userCity)) {
+
+                            restaurant.setDistanceFromCurrentUser(distance(user.getChosenAddress().getLatitude(), user.getChosenAddress().getLongitude(),
+                                                        restaurant.getMyAddress().getLatitude(), restaurant.getMyAddress().getLongitude()));
+
+                                    restaurants.add(restaurant);
+                                    keys.add(documentSnapshot.getId());
                                 }
 
-
                             }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment()).commit();
-                            }
-                        });
+                        }
+
+                        managerFragment = new NishnushimHomeFragment(restaurants, keys);
+                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, managerFragment).commit();
 
 
-                        } else
-                            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushinAnonymousUserFragment()).commit();
+                    } else
+                        Toast.makeText(getApplicationContext(), "אין מסעדות כרגע להציג", Toast.LENGTH_SHORT).show();
 
+                } else if (task.isCanceled() && task.getException() != null) {
+                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
-                    } else if (task.isCanceled()) {
-                        Toast.makeText(HomePageActivity.this, "ישנה בעיית חיבור", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
                 }
 
-                ;
 
-
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(HomePageActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment()).commit();
-                }
-            });
-
-//        }
+            }
+        });
     }
 
     ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT////////////
     ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT//////////// ///SAVE FOR THE MOMENT////////////
 
-
-
-    //ADDING RESTAURANT TO MAIN LIST RESTAURANTS
-    private boolean isRestaurantAdded(Restaurant restaurant, String key) {
-
-
-        //TODO: CHANGE THE ADDRESS LOGIC IN USER AND MYADDRESS
-        if (restaurant != null) {
-
-            if (user.getChosenAddress().getCityName().equals(restaurant.getMyAddress().getCityName())) {
-                restaurants.add(restaurant);
-                keys.add(key);
-                return true;
-            } else {
-
-                for (int i = 0; i < restaurant.getAreasForDeliveries().size(); i++) {
-
-                    if (user.getAddresses().get(0).getCityName().equals(restaurant.getAreasForDeliveries().get(i).getAreaName())) {
-                        restaurant.getAreasForDeliveries().get(i).setArea(true);
-                        restaurants.add(restaurant);
-                        keys.add(key);
-                        return true;
-                    }
-
-                }
-            }
-
-        }
-
-        return false;
-    }
 
 
     private void initializeTypeRestaurantFilterRecyclerView() {
@@ -369,21 +363,33 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
 
 
-
     @Override
-    public void onSearchClicked(int position) {
+    public void onSearchClicked(List<Restaurant> copiedRestaurants, List<String> copiedKeys, String searchWord) {
+
+
+        //TODO: SAVE IN PHONE LAST SEARCHES
+        if (!historySearch.contains(searchWord)){
+
+            historySearch.add(searchWord);
+            SharedPreferences sharedPref = getSharedPreferences("myPref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            Gson gson = new Gson();
+            String json = gson.toJson(historySearch);
+            editor.putString("history_search", json);
+            editor.apply();
+        }
 
 
         Intent intent = new Intent(this, SearchResultActivity.class);
-        intent.putExtra(getString(R.string.restaurant_detail), (Serializable) restaurantsResults);
-        intent.putExtra("key", keysResults.get(position));
-        intent.putExtra("search", searchResultsList.get(position));
+        intent.putExtra("keys", (Serializable) copiedKeys);
+        intent.putExtra(getString(R.string.restaurant_detail), (Serializable) copiedRestaurants);
+        intent.putExtra("search", searchWord);
         startActivity(intent);
 
 
+
+
     }
-
-
 
 
 
@@ -427,8 +433,11 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
             restaurantsResults = new ArrayList<>();
             keysResults = new ArrayList<>();
-            SearchAdapter searchAdapter = new SearchAdapter(this, searchResultsList, restaurantsResults, keys, this);
+            searchResultsList = new ArrayList<>();
+            SearchAdapter searchAdapter = new SearchAdapter(this, searchResultsList, restaurants, keys, this);
+            SearchAdapter historySearchAdapter = new SearchAdapter(this, historySearch, restaurants, keys, this);
             searchResultsListView.setAdapter(searchAdapter);
+            historyResultsListView.setAdapter(historySearchAdapter);
 
 
             searchEditText.addTextChangedListener(new TextWatcher() {
@@ -448,40 +457,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
                         firstScreenLinearLayout.setVisibility(View.GONE);
                         resultsListsLinearLayout.setVisibility(View.VISIBLE);
 
-                        if (mapRestaurantsSearch.containsKey(s.toString()) && mapSearchResultString.containsKey(s.toString()) && mapRestaurantKeyString.containsKey(s.toString())) {
-
-                            restaurantsResults.clear();
-                            searchResultsList.clear();
-                            keysResults.clear();
-
-                            restaurantsResults.addAll(mapRestaurantsSearch.get(s.toString()));
-                            searchResultsList.addAll(mapSearchResultString.get(s.toString()));
-                            keysResults.addAll(mapRestaurantKeyString.get(s.toString()));
-
-
-                            searchAdapter.setRestaurants(restaurantsResults);
-                            searchAdapter.setSearchList(searchResultsList);
-                            searchAdapter.setKeys(keysResults);
-                            searchAdapter.notifyDataSetChanged();
-
-
-                        } else {
-
-                            restaurantsResults.addAll(searchInRestaurants(s.toString()));
-
-                            if (mapSearchResultString.containsKey(s.toString())) {
-                                searchResultsList.clear();
-                                keysResults.clear();
-                                searchResultsList.addAll(mapSearchResultString.get(s.toString()));
-                                keysResults.addAll(mapRestaurantKeyString.get(s.toString()));
-                            } else searchResultsList.clear();
-
-                            searchAdapter.setRestaurants(restaurantsResults);
-                            searchAdapter.setSearchList(searchResultsList);
-                            searchAdapter.setKeys(keysResults);
-                            searchAdapter.notifyDataSetChanged();
-
-                        }
+                        searchAdapter.getFilter().filter(s.toString());
 
                     } else {
                         firstScreenLinearLayout.setVisibility(View.VISIBLE);
@@ -642,6 +618,13 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
 
                             filterDialog.dismiss();
+
+                            if (managerFragment instanceof NishnushimHomeFragment){
+                                ((NishnushimHomeFragment) managerFragment).getRestaurantDetailAdapter().notifyDataSetChanged();
+                            }else if (managerFragment instanceof RestaurantsFragment){
+                                ((RestaurantsFragment) managerFragment).getRestaurantDetailAdapter().notifyDataSetChanged();
+                            }
+
                         }
                         return false;
                     }
@@ -664,7 +647,6 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
 
         } else if (id == R.id.open_my_address_pop_up_image_btn_home_page_activity) {
-
 
             Toast.makeText(this, "MY ADDRESS", Toast.LENGTH_SHORT).show();
 
@@ -692,7 +674,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
             for (int i = 0; i < user.getAddresses().size(); i++) {
 
-                RadioButton radioButton = CreateCustomBtn.createRadioAddressBtn(this,myLocationToDeliverRadioBtn, i, 1, R.drawable.ic_icon_placeholder_small, user.getAddresses().get(i).fullMyAddress());
+                RadioButton radioButton = CreateCustomBtn.createRadioAddressBtn(this, myLocationToDeliverRadioBtn, i, 1, R.drawable.ic_icon_placeholder_small, user.getAddresses().get(i).fullMyAddress());
 
                 if (user.getAddresses().get(i).isChosen()) {
                     radioButton.setChecked(true);
@@ -706,7 +688,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             }
 
 
-            RadioButton radioButton = CreateCustomBtn.createRadioAddressBtn(this ,myLocationToDeliverRadioBtn, user.getAddresses().size(), 3, R.drawable.ic_icon_add_button, "אני כרגע נמצא בכתובת אחרת");
+            RadioButton radioButton = CreateCustomBtn.createRadioAddressBtn(this, myLocationToDeliverRadioBtn, user.getAddresses().size(), 3, R.drawable.ic_icon_add_button, "אני כרגע נמצא בכתובת אחרת");
             radioButtonList.add(radioButton);
 
             myAddressListRadioGroup.addView(radioButton);
@@ -747,6 +729,13 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
                             }
 
+                            if (user.getChosenAddress().getCityName().equals(userCity)){
+                                updateDistanceRestaurants();
+                            }else {
+                                getCitiesFromServer();
+                            }
+
+                            myAddressDialog.dismiss();
                             updateHomePageUI();
 
                         }
@@ -771,6 +760,19 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
             window.setGravity(Gravity.TOP);
 
         }
+    }
+
+
+
+    private void updateDistanceRestaurants() {
+
+        for (int i = 0; i < restaurants.size(); i++) {
+
+            restaurants.get(i).setDistanceFromCurrentUser(distance(user.getChosenAddress().getLatitude(), user.getChosenAddress().getLongitude(),
+                    restaurants.get(i).getMyAddress().getLatitude(), restaurants.get(i).getMyAddress().getLongitude()));
+
+        }
+
     }
 
 
@@ -836,6 +838,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
         });
 
     }
+
 
 
     private void filterByMinToDeliver() {
@@ -941,93 +944,10 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////WORKING ON SEARCH POP UP WINDOW
-
-
-    private List<Restaurant> searchInRestaurants(String s) {
-
-        List<Restaurant> restaurantList = new ArrayList<>();
-
-        for (Restaurant restaurant : restaurants) {
-            boolean isAdded = false;
-
-            for (int i = 0; i < restaurant.getClassificationList().size(); i++) {
-                if (classificationArray[restaurant.getClassificationList().get(i)].contains(s)) {
-                    addTextToSearchMap(s, classificationArray[restaurant.getClassificationList().get(i)]);
-                    isAdded = true;
-                }
-            }
-
-            for (int i = 0; i < restaurant.getMenu().getClassifications().size(); i++) {
-
-                if (restaurant.getMenu().getClassifications().get(i).getClassificationName().contains(s)) {
-                    addTextToSearchMap(s, restaurant.getMenu().getClassifications().get(i).getClassificationName());
-                    isAdded = true;
-                }
-
-
-                //TODO: TAKE THIS PART TO SEARCH A INGREDIENT
-                for (int j = 0; j < restaurant.getMenu().getClassifications().get(i).getDishList().size(); j++) {
-                    if (restaurant.getMenu().getClassifications().get(i).getDishList().get(j).getName().contains(s)) {
-                        addTextToSearchMap(s, restaurant.getMenu().getClassifications().get(i).getDishList().get(j).getName());
-                        isAdded = true;
-                    }
-                }
-            }
-
-
-            if (isAdded) {
-                restaurantList.add(restaurant);
-                addRestaurantToRestaurantMap(restaurant, s);
-            }
-
-        }
-
-
-        return restaurantList;
-
-    }
-
-
-    private void addRestaurantToRestaurantMap(Restaurant restaurant, String s) {
-
-        List<Restaurant> restaurantList = new ArrayList<>();
-
-        if (mapRestaurantsSearch.containsKey(s)) {
-            if (mapRestaurantsSearch.get(s).isEmpty()) {
-                restaurantList.add(restaurant);
-                mapRestaurantsSearch.get(s).addAll(restaurantList);
-            }
-            mapRestaurantsSearch.get(s).add(restaurant);
-        } else {
-            restaurantList.add(restaurant);
-            mapRestaurantsSearch.put(s, restaurantList);
-        }
-
-    }
-
-
-    private void addTextToSearchMap(String searchText, String addText) {
-
-        List<String> strings = new ArrayList<>();
-
-        if (!mapSearchResultString.containsKey(searchText)) {
-            strings.add(addText);
-            mapSearchResultString.put(searchText, strings);
-        } else if (mapSearchResultString.get(searchText).isEmpty()) {
-
-            if (mapSearchResultString.get(searchText).contains(addText)) {
-                mapSearchResultString.get(searchText).add(addText);
-            }
-        }
-    }
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////
-
-
 
 
     @Override
@@ -1090,7 +1010,7 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
 
             Toast.makeText(this, "אמצעי תשלום", Toast.LENGTH_SHORT).show();
 
-        }else if (id == R.id.log_out_settings_drawer_menu_login){
+        } else if (id == R.id.log_out_settings_drawer_menu_login) {
 
             //LOG OUT USER AND BACK TO THE WELCOME ACTIVITY WITH NO HISTORY
 
@@ -1104,38 +1024,25 @@ public class HomePageActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
+
     @Override
     public void onRestaurantTypeClicked(RestaurantTypeClass restaurantTypeClass) {
 
         if (restaurantTypeClass.getTitle().equals(this.getString(R.string.NISHNUSHIM))) {
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new NishnushimHomeFragment()).commit();
+            managerFragment = new NishnushimHomeFragment(restaurants, keys);
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, managerFragment).commit();
 
         } else {
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, new RestaurantsFragment()).commit();
+            managerFragment = new RestaurantsFragment(restaurants, keys);
+            getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_home_page_activity, managerFragment).commit();
 
         }
 
 
     }
 
-
-    private void filter(String text, List<String> resultSearchList) {
-        //new array list that will hold the filtered data
-        ArrayList<String> filterdNames = new ArrayList<>();
-
-        //looping through existing elements
-        for (String s : resultSearchList) {
-            //if the existing elements contains the search input
-            if (s.toLowerCase().contains(text.toLowerCase())) {
-                //adding the element to filtered list
-                filterdNames.add(s);
-            }
-        }
-
-
-    }
 
 
 }

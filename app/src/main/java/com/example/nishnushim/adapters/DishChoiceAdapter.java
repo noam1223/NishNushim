@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.nishnushim.AddDishActivity;
 import com.example.nishnushim.R;
 import com.example.nishnushim.helpclasses.Classification;
 import com.example.nishnushim.helpclasses.Dish;
@@ -183,6 +184,10 @@ public class DishChoiceAdapter extends BaseAdapter {
                 }
 
                 notifyDataSetChanged();
+
+                if (context instanceof AddDishActivity){
+                    ((AddDishActivity) context).updateSum();
+                }
 
                 //TODO: ADD ANIMATION THAT DISH IS ADDED
 

@@ -10,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.nishnushim.AddDishActivity;
 import com.example.nishnushim.R;
 import com.example.nishnushim.helpclasses.menuChanges.Changes;
 import com.example.nishnushim.helpclasses.menuChanges.RegularChange;
@@ -95,6 +96,10 @@ public class OneChoiceChangeAdapter extends BaseAdapter {
 
 
                 notifyDataSetChanged();
+
+                if (context instanceof AddDishActivity){
+                    ((AddDishActivity) context).updateSum();
+                }
 
             }
         });

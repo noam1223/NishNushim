@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="294dp"
-    android:layout_height="248dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:orientation="vertical"
-    android:background="@drawable/background_delete_pop_up">
+    android:background="@drawable/background_delete_pop_up"
+    android:paddingBottom="14dp">
 
 
 
@@ -20,6 +21,17 @@
         android:layout_marginTop="12dp"/>
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutDirection="rtl"
+        android:orientation="vertical"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal">
+
+
 
     <TextView
         android:id="@+id/restaurant_name_text_name_recommendation_pop_up_window"
@@ -30,9 +42,7 @@
         android:textColor="@color/custom_blue"
         android:fontFamily="@font/assistant_semibold"
         android:layout_marginTop="29dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        />
 
 
 
@@ -47,11 +57,7 @@
         android:secondaryProgressTint="#00000000"
         android:stepSize="1"
         android:maxHeight="16dp"
-        android:isIndicator="true"
-        style="@style/MyRatingBar"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/restaurant_name_text_name_recommendation_pop_up_window"/>
+        style="@style/MyRatingBar" />
 
 
 
@@ -68,26 +74,20 @@
         android:hint="היה ממש טעים! במיוחד אהבתי את ה..."
         android:textColorHint="#b3002144"
         android:paddingBottom="12dp"
-        android:layout_marginTop="26dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recommendation_rating_bar_recommendation_pop_up_window"/>
-
+        android:layout_marginTop="26dp" />
 
 
     <Button
         android:id="@+id/save_recommendation_btn_recommendation_pop_up_window"
         android:layout_width="168dp"
         android:layout_height="33dp"
-        android:layout_marginBottom="14dp"
+        android:layout_marginTop="84dp"
         android:background="@drawable/btn_sign_in_clicked_background"
+        android:fontFamily="@font/assistant_bold"
         android:text="שמירה"
         android:textColor="@drawable/btn_sign_in_clicked_text_view_opposite"
-        android:textSize="16sp"
-        android:fontFamily="@font/assistant_bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        android:textSize="16sp" />
 
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

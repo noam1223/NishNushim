@@ -54,6 +54,10 @@ public class SearchResultActivity extends AppCompatActivity {
                 restaurants.addAll((List<Restaurant>) intent.getSerializableExtra(getString(R.string.restaurant_detail)));
             }
 
+            if (intent.getSerializableExtra("keys") != null){
+                keys.addAll((List<String>) intent.getSerializableExtra("keys"));
+            }
+
             if (intent.getStringExtra("search") != null){
                 resultTextView.setText(intent.getStringExtra("search"));
             }
