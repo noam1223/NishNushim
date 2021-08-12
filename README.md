@@ -2,13 +2,19 @@
 
 ## Sign up + searching restaurant
 
-https://user-images.githubusercontent.com/39114234/129187780-87476737-0e76-4d9b-ace5-c4f20fad26af.mp4
+
+
+https://user-images.githubusercontent.com/39114234/129189490-028da188-5198-46a8-bf61-758e724ca084.mp4
+
 
 
 
 ## Restaurant details + Order
 
 
-https://user-images.githubusercontent.com/39114234/129189022-39f40611-913c-4b16-948d-3d3ecf5aa863.mp4
+
+
+https://user-images.githubusercontent.com/39114234/129189506-421e532f-453f-41e4-b065-2181bc43a150.mp4
+
 
 
